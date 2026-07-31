@@ -16,10 +16,10 @@
 <body class="bg-gray-100 text-gray-800 font-sans pb-28">
 
     <!-- Header / Navbar Utama -->
-    <header class="bg-emerald-700 text-white py-2.5 px-4 sticky top-0 z-50 shadow-md">
+    <header class="bg-emerald-700 text-white py-2.5 px-4 sticky top-0 z-40 shadow-md">
         <div class="max-w-md mx-auto flex justify-between items-center">
             <div class="flex items-center gap-2.5">
-                <img src="logo fix 1.png" alt="SayurBest Logo" class="h-9 w-auto object-contain" onerror="this.style.display='none'">
+                <img src="logo fix 1.png" alt="SayurBest Logo" loading="lazy" class="h-9 w-auto object-contain" onerror="this.style.display='none'">
                 <div class="text-left leading-tight">
                     <h1 class="text-base font-bold tracking-wide text-white leading-none">SayurBest</h1>
                     <p class="text-[10px] text-emerald-100 font-normal mt-0.5">Segar Setiap Hari</p>
@@ -60,10 +60,10 @@
                     </div>
                 </div>
                 <div class="snap-center shrink-0 w-full rounded-2xl overflow-hidden bg-gray-200">
-                    <img src="https://placehold.co/600x250/059669/ffffff?text=Banner+Desain+Anda+1" alt="Banner Promo 2" class="w-full h-full object-cover">
+                    <img src="https://placehold.co/600x250/059669/ffffff?text=Banner+Desain+Anda+1" alt="Banner Promo 2" loading="lazy" class="w-full h-full object-cover">
                 </div>
                 <div class="snap-center shrink-0 w-full rounded-2xl overflow-hidden bg-gray-200">
-                    <img src="https://placehold.co/600x250/0d9488/ffffff?text=Banner+Desain+Anda+2" alt="Banner Promo 3" class="w-full h-full object-cover">
+                    <img src="https://placehold.co/600x250/0d9488/ffffff?text=Banner+Desain+Anda+2" alt="Banner Promo 3" loading="lazy" class="w-full h-full object-cover">
                 </div>
             </div>
             <div class="flex justify-center gap-1.5 mt-2">
@@ -110,104 +110,104 @@
             </div>
 
             <div class="grid grid-cols-4 gap-2 text-center text-xs">
-                <button type="button" onclick="filterCategory('Sayuran')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                <button type="button" data-category="Sayuran" onclick="filterCategory('Sayuran')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center"><i class="fas fa-carrot text-xs"></i></div>
                     <span class="text-[9px] font-semibold text-gray-700 leading-tight">Sayuran</span>
                 </button>
 
-                <button type="button" onclick="filterCategory('Ayam & Bebek')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                <button type="button" data-category="Ayam & Bebek" onclick="filterCategory('Ayam & Bebek')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center"><i class="fas fa-drumstick-bite text-xs"></i></div>
                     <span class="text-[9px] font-semibold text-gray-700 leading-tight">Ayam & Bebek</span>
                 </button>
 
-                <button type="button" onclick="filterCategory('Ikan & Seafood')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                <button type="button" data-category="Ikan & Seafood" onclick="filterCategory('Ikan & Seafood')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center"><i class="fas fa-fish text-xs"></i></div>
                     <span class="text-[9px] font-semibold text-gray-700 leading-tight">Ikan & Seafood</span>
                 </button>
 
-                <button type="button" onclick="filterCategory('Daging Sapi')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                <button type="button" data-category="Daging Sapi" onclick="filterCategory('Daging Sapi')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center"><i class="fas fa-drumstick-bite text-xs"></i></div>
                     <span class="text-[9px] font-semibold text-gray-700 leading-tight">Daging Sapi</span>
                 </button>
 
-                <button type="button" onclick="filterCategory('Tahu, Tempe & Oncom')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                <button type="button" data-category="Tahu, Tempe & Oncom" onclick="filterCategory('Tahu, Tempe & Oncom')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center"><i class="fas fa-cubes text-xs"></i></div>
                     <span class="text-[9px] font-semibold text-gray-700 leading-tight">Tahu, Tempe, Oncom</span>
                 </button>
 
-                <button type="button" onclick="filterCategory('Ikan Asin & Pindang')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                <button type="button" data-category="Ikan Asin & Pindang" onclick="filterCategory('Ikan Asin & Pindang')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center"><i class="fas fa-water text-xs"></i></div>
                     <span class="text-[9px] font-semibold text-gray-700 leading-tight">Ikan Asin/Pindang</span>
                 </button>
 
-                <button type="button" onclick="filterCategory('Bumbu & Bahan Masak')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                <button type="button" data-category="Bumbu & Bahan Masak" onclick="filterCategory('Bumbu & Bahan Masak')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center"><i class="fas fa-pepper-hot text-xs"></i></div>
                     <span class="text-[9px] font-semibold text-gray-700 leading-tight">Bumbu & Masak</span>
                 </button>
 
-                <button type="button" onclick="filterCategory('Lauk Siap Masak & Frozen Food')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                <button type="button" data-category="Lauk Siap Masak & Frozen Food" onclick="filterCategory('Lauk Siap Masak & Frozen Food')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-cyan-100 text-cyan-600 flex items-center justify-center"><i class="fas fa-snowflake text-xs"></i></div>
                     <span class="text-[9px] font-semibold text-gray-700 leading-tight">Lauk Siap Masak & Frozen Food</span>
                 </button>
 
-                <button type="button" onclick="filterCategory('Lauk Matang')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                <button type="button" data-category="Lauk Matang" onclick="filterCategory('Lauk Matang')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center"><i class="fas fa-utensils text-xs"></i></div>
                     <span class="text-[9px] font-semibold text-gray-700 leading-tight">Lauk Matang</span>
                 </button>
 
-                <button type="button" onclick="filterCategory('Buah')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                <button type="button" data-category="Buah" onclick="filterCategory('Buah')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center"><i class="fas fa-apple-alt text-xs"></i></div>
                     <span class="text-[9px] font-semibold text-gray-700 leading-tight">Buah</span>
                 </button>
 
-                <button type="button" onclick="filterCategory('Beras, Telur, Minyak & Bahan Kue')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                <button type="button" data-category="Beras, Telur, Minyak & Bahan Kue" onclick="filterCategory('Beras, Telur, Minyak & Bahan Kue')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-yellow-100 text-yellow-700 flex items-center justify-center"><i class="fas fa-egg text-xs"></i></div>
                     <span class="text-[9px] font-semibold text-gray-700 leading-tight">Sembako & Kue</span>
                 </button>
 
-                <button type="button" onclick="filterCategory('Mie, Bihun, Soun & Kwetiau')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                <button type="button" data-category="Mie, Bihun, Soun & Kwetiau" onclick="filterCategory('Mie, Bihun, Soun & Kwetiau')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center"><i class="fas fa-bowl-food text-xs"></i></div>
                     <span class="text-[9px] font-semibold text-gray-700 leading-tight">Mie & Bihun</span>
                 </button>
 
-                <button type="button" onclick="filterCategory('Kerupuk, Kulit Pangsit & Kulit Lumpia')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                <button type="button" data-category="Kerupuk, Kulit Pangsit & Kulit Lumpia" onclick="filterCategory('Kerupuk, Kulit Pangsit & Kulit Lumpia')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center"><i class="fas fa-cookie text-xs"></i></div>
                     <span class="text-[9px] font-semibold text-gray-700 leading-tight">Kerupuk & Kulit</span>
                 </button>
 
-                <button type="button" onclick="filterCategory('Teh, Kopi & Air Mineral')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                <button type="button" data-category="Teh, Kopi & Air Mineral" onclick="filterCategory('Teh, Kopi & Air Mineral')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center"><i class="fas fa-mug-hot text-xs"></i></div>
                     <span class="text-[9px] font-semibold text-gray-700 leading-tight">Teh, Kopi & Air</span>
                 </button>
 
-                <button type="button" onclick="filterCategory('Roti, Cereal & Selai')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                <button type="button" data-category="Roti, Cereal & Selai" onclick="filterCategory('Roti, Cereal & Selai')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-stone-100 text-stone-600 flex items-center justify-center"><i class="fas fa-bread-slice text-xs"></i></div>
                     <span class="text-[9px] font-semibold text-gray-700 leading-tight">Roti & Selai</span>
                 </button>
 
-                <button type="button" onclick="filterCategory('Susu & Olahan SUsu')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                <button type="button" data-category="Susu & Olahan SUsu" onclick="filterCategory('Susu & Olahan SUsu')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center"><i class="fas fa-wine-bottle text-xs"></i></div>
                     <span class="text-[9px] font-semibold text-gray-700 leading-tight">Susu & Olahan</span>
                 </button>
 
-                <button type="button" onclick="filterCategory('Baby & Mom Produk')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                <button type="button" data-category="Baby & Mom Produk" onclick="filterCategory('Baby & Mom Produk')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-pink-100 text-pink-500 flex items-center justify-center"><i class="fas fa-baby text-xs"></i></div>
                     <span class="text-[9px] font-semibold text-gray-700 leading-tight">Baby & Mom</span>
                 </button>
 
-                <button type="button" onclick="filterCategory('Sabun Pembersih')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                <button type="button" data-category="Sabun Pembersih" onclick="filterCategory('Sabun Pembersih')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center"><i class="fas fa-pump-soap text-xs"></i></div>
                     <span class="text-[9px] font-semibold text-gray-700 leading-tight">Sabun & Bersih</span>
                 </button>
 
-                <button type="button" onclick="filterCategory('Perlengkapan Dapur')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                <button type="button" data-category="Perlengkapan Dapur" onclick="filterCategory('Perlengkapan Dapur')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center"><i class="fas fa-kitchen-set text-xs"></i></div>
                     <span class="text-[9px] font-semibold text-gray-700 leading-tight">Alat Dapur</span>
                 </button>
 
-                <button type="button" onclick="filterCategory('all')" class="p-2 bg-emerald-50 border border-emerald-300 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:bg-emerald-100 transition">
+                <button type="button" data-category="all" onclick="filterCategory('all')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
                     <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center"><i class="fas fa-th-large text-xs"></i></div>
-                    <span class="text-[9px] font-bold text-emerald-800 leading-tight">Semua</span>
+                    <span class="text-[9px] font-bold text-gray-700 leading-tight">Semua</span>
                 </button>
             </div>
         </section>
@@ -224,7 +224,7 @@
 
         <!-- Footer Ringkas & Link Kebijakan Privasi -->
         <footer class="pt-6 pb-2 border-t text-center text-[11px] text-gray-500 space-y-1.5">
-            <p>&copy; 2021 SayurBest. Segar Setiap Hari.</p>
+            <p>&copy; 2026 SayurBest. Segar Setiap Hari.</p>
             <div>
                 <a href="privacy.html" class="text-emerald-600 hover:underline font-semibold">Kebijakan Privasi & Syarat Ketentuan</a>
             </div>
@@ -232,8 +232,8 @@
 
     </main>
 
-    <!-- Bottom Bar: Checkout / WhatsApp -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t p-3 z-40 shadow-lg">
+    <!-- Floating Cart Bar -->
+    <div id="floating-cart-bar" class="fixed bottom-0 left-0 right-0 bg-white border-t p-3 z-30 shadow-2xl transition-transform duration-300">
         <div class="max-w-md mx-auto flex justify-between items-center gap-3">
             <div>
                 <p id="total-details" class="text-[10px] text-gray-500">Produk: Rp 0 | Ongkir: Rp 10.000</p>
@@ -304,12 +304,30 @@
         const productsCol = collection(db, "products");
 
         let allProducts = [];
-        let currentCategory = 'all';
+        let currentCategory = 'Sayuran'; 
         let searchQuery = '';
         let expandedDescriptions = {};
-        let cart = {};
+        let cart = loadCartFromStorage();
         let selectedOptions = {}; 
         let shippingCost = 10000;
+
+        function loadCartFromStorage() {
+            try {
+                const saved = localStorage.getItem('sayurbest_cart');
+                return saved ? JSON.parse(saved) : {};
+            } catch (e) {
+                console.error("Gagal membaca keranjang dari storage:", e);
+                return {};
+            }
+        }
+
+        function saveCartToStorage() {
+            try {
+                localStorage.setItem('sayurbest_cart', JSON.stringify(cart));
+            } catch (e) {
+                console.error("Gagal menyimpan keranjang ke storage:", e);
+            }
+        }
 
         function normalizeCategory(str) {
             if (!str) return '';
@@ -326,10 +344,18 @@
                 return data.map(item => {
                     if (typeof item === 'string') {
                         const parts = item.split(':');
-                        return { name: parts[0].trim(), price: parts[1] ? Number(parts[1].trim()) : null };
+                        return { 
+                            name: parts[0].trim(), 
+                            price: parts[1] && !isNaN(parts[1].trim()) ? Number(parts[1].trim()) : null 
+                        };
+                    } else if (typeof item === 'object' && item !== null) {
+                        return {
+                            name: item.name || '',
+                            price: item.price !== undefined && item.price !== null ? Number(item.price) : null
+                        };
                     }
                     return item;
-                });
+                }).filter(v => v.name !== '');
             }
             return [];
         }
@@ -347,21 +373,40 @@
                         parsedSizes: parseVariants(data.sizes)
                     });
                 });
+                updateCategoryUI();
                 renderProducts(getFilteredProducts());
+                updateCartTotals();
             } catch (err) {
                 console.error("Gagal memuat produk:", err);
                 document.getElementById('product-grid').innerHTML = `<p class="col-span-2 text-center text-red-500 py-6">Gagal memuat katalog produk.</p>`;
             }
         }
 
+        function updateCategoryUI() {
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => {
+                const cat = btn.getAttribute('data-category');
+                if (cat === currentCategory) {
+                    btn.classList.add('bg-emerald-50', 'border-emerald-400', 'ring-1', 'ring-emerald-400');
+                    btn.classList.remove('bg-white', 'border-gray-200');
+                } else {
+                    btn.classList.remove('bg-emerald-50', 'border-emerald-400', 'ring-1', 'ring-emerald-400');
+                    btn.classList.add('bg-white', 'border-gray-200');
+                }
+            });
+        }
+
         function getFilteredProducts() {
+            const q = searchQuery.toLowerCase().trim();
+
             return allProducts.filter(p => {
+                const matchSearch = !q || 
+                    (p.name && p.name.toLowerCase().includes(q)) || 
+                    (p.description && p.description.toLowerCase().includes(q)) ||
+                    (p.category && p.category.toLowerCase().includes(q));
+
                 if (currentCategory === 'all') {
-                    const q = searchQuery.toLowerCase();
-                    return !q || 
-                        (p.name && p.name.toLowerCase().includes(q)) || 
-                        (p.description && p.description.toLowerCase().includes(q)) ||
-                        (p.category && p.category.toLowerCase().includes(q));
+                    return matchSearch;
                 }
 
                 const prodCat = normalizeCategory(p.category);
@@ -370,12 +415,6 @@
                 const matchCategory = prodCat === currCat || 
                                       prodCat.includes(currCat) || 
                                       currCat.includes(prodCat);
-
-                const q = searchQuery.toLowerCase();
-                const matchSearch = !q || 
-                    (p.name && p.name.toLowerCase().includes(q)) || 
-                    (p.description && p.description.toLowerCase().includes(q)) ||
-                    (p.category && p.category.toLowerCase().includes(q));
 
                 return matchCategory && matchSearch;
             });
@@ -439,7 +478,7 @@
                         <div class="mt-1.5">
                             <label class="text-[9px] text-gray-500 font-semibold block mb-0.5">Jenis/Kondisi:</label>
                             <select onchange="onOptionChange('${p.id}', 'variant', this.value)" class="w-full text-[10px] bg-gray-50 border rounded-lg p-1 text-gray-700 font-medium focus:outline-none focus:border-emerald-600">
-                                ${p.parsedVariants.map(v => `<option value="${v.name}" ${v.name === currentVar ? 'selected' : ''}>${v.name}</option>`).join('')}
+                                ${p.parsedVariants.map(v => `<option value="${v.name}" ${v.name === currentVar ? 'selected' : ''}>${v.name}${v.price !== null ? ' (Rp ' + v.price.toLocaleString('id-ID') + ')' : ''}</option>`).join('')}
                             </select>
                         </div>
                     `;
@@ -451,7 +490,7 @@
                         <div class="mt-1.5">
                             <label class="text-[9px] text-gray-500 font-semibold block mb-0.5">Ukuran/Berat:</label>
                             <select onchange="onOptionChange('${p.id}', 'size', this.value)" class="w-full text-[10px] bg-gray-50 border rounded-lg p-1 text-gray-700 font-medium focus:outline-none focus:border-emerald-600">
-                                ${p.parsedSizes.map(s => `<option value="${s.name}" ${s.name === currentSize ? 'selected' : ''}>${s.name}</option>`).join('')}
+                                ${p.parsedSizes.map(s => `<option value="${s.name}" ${s.name === currentSize ? 'selected' : ''}>${s.name}${s.price !== null ? ' (Rp ' + s.price.toLocaleString('id-ID') + ')' : ''}</option>`).join('')}
                             </select>
                         </div>
                     `;
@@ -485,7 +524,7 @@
                 const html = `
                     <div class="bg-white border rounded-2xl p-2.5 flex flex-col justify-between relative shadow-sm hover:shadow transition">
                         ${badge}
-                        <img src="${img}" onerror="this.onerror=null;this.src='${fallbackImg}';" class="w-full h-28 object-cover rounded-xl mb-2 border">
+                        <img src="${img}" loading="lazy" onerror="this.onerror=null;this.src='${fallbackImg}';" class="w-full h-28 object-cover rounded-xl mb-2 border">
                         
                         <div class="flex-1">
                             <h4 class="font-bold text-gray-800 line-clamp-1">${p.name}</h4>
@@ -526,6 +565,7 @@
 
         window.filterCategory = function(category) {
             currentCategory = category;
+            updateCategoryUI();
             renderProducts(getFilteredProducts());
         };
 
@@ -549,12 +589,14 @@
                 };
             }
 
+            cart[cartKey].price = price;
             cart[cartKey].qty += change;
 
             if (cart[cartKey].qty <= 0) {
                 delete cart[cartKey];
             }
 
+            saveCartToStorage();
             updateCartTotals();
             renderProducts(getFilteredProducts());
         };
@@ -598,7 +640,6 @@
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         };
 
-        // Modal & Checkout Handlers
         window.openCheckoutModal = function() {
             document.getElementById('checkout-modal').classList.remove('hidden');
         };
@@ -615,9 +656,8 @@
                 return;
             }
 
-            // Minimal belanja Rp 5.000
             if (subtotal < 5000) {
-                alert(`Mohon maaf, minimal total belanja produk adalah Rp 5000.\nTotal belanja Anda saat ini: Rp ${subtotal.toLocaleString('id-ID')}`);
+                alert(`Mohon maaf, minimal total belanja produk adalah Rp 5.000.\nTotal belanja Anda saat ini: Rp ${subtotal.toLocaleString('id-ID')}`);
                 return;
             }
 
@@ -664,9 +704,13 @@
             message += `\n-----------------------------------`;
             message += `\n\n*Mohon diproses pesanan saya. Terima kasih!*`;
 
-            const phoneNumber = "6281513797839"; // <-- GANTI DENGAN NOMOR WA AKTIF TOKO SAYURBEST (Gunakan awalan 62)
+            const phoneNumber = "6281513797839";
             const encodedMessage = encodeURIComponent(message);
             
+            cart = {};
+            saveCartToStorage();
+            updateCartTotals();
+
             closeCheckoutModal();
             window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
         };

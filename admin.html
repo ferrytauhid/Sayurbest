@@ -10,6 +10,26 @@
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans pb-10">
 
+    <!-- Modal Lock Screen Password / PIN Admin -->
+    <div id="admin-lock-screen" class="fixed inset-0 bg-slate-900/90 z-50 flex items-center justify-center p-4">
+        <div class="bg-white p-6 rounded-2xl max-w-xs w-full text-center space-y-4 shadow-2xl">
+            <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl">
+                <i class="fas fa-lock"></i>
+            </div>
+            <div>
+                <h3 class="font-bold text-gray-800 text-base">Akses Admin SayurBest</h3>
+                <p class="text-xs text-gray-500 mt-1">Masukkan PIN Keamanan untuk mengelola toko.</p>
+            </div>
+            <div>
+                <input type="password" id="pin-input" maxlength="6" placeholder="******" class="w-full border border-gray-300 rounded-xl p-3 text-center text-xl font-bold tracking-widest focus:outline-none focus:border-emerald-600">
+                <p id="pin-error" class="text-[11px] text-red-500 font-semibold mt-1.5 hidden">PIN Admin Salah!</p>
+            </div>
+            <button type="button" onclick="checkAdminPin()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-md">
+                Masuk Panel Admin
+            </button>
+        </div>
+    </div>
+
     <!-- Header Admin -->
     <header class="bg-emerald-700 text-white p-4 sticky top-0 z-40 shadow-md">
         <div class="max-w-xl mx-auto flex justify-between items-center">
@@ -146,6 +166,24 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
         import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
+        // Konfigurasi PIN Admin bawaan (bisa Anda ubah di sini)
+        const ADMIN_PIN = "301915";
+
+        window.checkAdminPin = function() {
+            const inputPin = document.getElementById('pin-input').value.trim();
+            if (inputPin === ADMIN_PIN) {
+                document.getElementById('admin-lock-screen').classList.add('hidden');
+                sessionStorage.setItem('admin_auth', 'true');
+            } else {
+                document.getElementById('pin-error').classList.remove('hidden');
+            }
+        };
+
+        // Otomatis buka jika sudah login dalam satu sesi peramban
+        if (sessionStorage.getItem('admin_auth') === 'true') {
+            document.getElementById('admin-lock-screen').classList.add('hidden');
+        }
+
         const firebaseConfig = {
             apiKey: "AIzaSyCkZoh9h3ckqqpsrBxRNEZsQFZWkzAX42o",
             authDomain: "tokosayur-44c5e.firebaseapp.com",
@@ -188,7 +226,6 @@
             renderAdminList(filtered);
         }
 
-        // Listener untuk pencarian real-time
         document.getElementById('search-input').addEventListener('input', filterAndRender);
 
         function renderAdminList(items) {
@@ -209,7 +246,8 @@
 
                 const html = `
                     <div class="flex items-start justify-between p-2.5 bg-gray-50 rounded-xl border gap-2">
-                        <img src="${img}" onerror="this.onerror=null;this.src='${fallbackImg}';" class="w-12 h-12 object-cover rounded-lg border mt-0.5">
+                        <!-- Ditambahkan loading="lazy" -->
+                        <img src="${img}" loading="lazy" onerror="this.onerror=null;this.src='${fallbackImg}';" class="w-12 h-12 object-cover rounded-lg border mt-0.5">
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center gap-1.5">
                                 <h4 class="font-bold text-gray-800 truncate">${p.name}</h4>
@@ -233,7 +271,6 @@
             });
         }
 
-        // Helper untuk parse input string varian/ukuran ke Array String
         function parseInputToArray(str) {
             if (!str) return [];
             return str.split(',')
@@ -241,12 +278,11 @@
                       .filter(s => s.length > 0);
         }
 
-        // Helper untuk memformat data varian saat diedit
         function formatArrayToString(arr) {
             if (!arr || !Array.isArray(arr)) return '';
             return arr.map(item => {
                 if (typeof item === 'object' && item !== null) {
-                    return item.name ? `${item.name}:${item.price || 0}` : JSON.stringify(item);
+                    return item.name ? `${item.name}${item.price !== null && item.price !== undefined ? ':' + item.price : ''}` : JSON.stringify(item);
                 }
                 return String(item);
             }).join(', ');
