@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SayurBest - Segar Setiap Hari</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans pb-28">
+
+    <!-- Header / Navbar Utama -->
+    <header class="bg-emerald-700 text-white py-2.5 px-4 sticky top-0 z-50 shadow-md">
+        <div class="max-w-md mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2.5">
+                <img src="logo fix 1.png" alt="SayurBest Logo" class="h-9 w-auto object-contain" onerror="this.style.display='none'">
+                <div class="text-left leading-tight">
+                    <h1 class="text-base font-bold tracking-wide text-white leading-none">SayurBest</h1>
+                    <p class="text-[10px] text-emerald-100 font-normal mt-0.5">Segar Setiap Hari</p>
+                </div>
+            </div>
+            <div class="relative cursor-pointer flex items-center justify-end" onclick="scrollToCart()">
+                <i class="fas fa-shopping-cart text-xl"></i>
+                <span id="cart-badge" class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-emerald-700">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-md mx-auto p-4 space-y-5">
+
+        <!-- SECTION PENCARIAN PRODUK -->
+        <section class="relative">
+            <div class="relative">
+                <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-emerald-600 text-xs"></i>
+                <input type="text" id="search-input" placeholder="Cari sayur, buah, bumbu, atau kebutuhan dapur..." class="w-full pl-9 pr-8 py-2.5 text-xs bg-white border border-gray-200 rounded-xl shadow-sm focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600 transition">
+                <button type="button" id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xs">
+                    <i class="fas fa-times-circle"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- SECTION 1: Banner Promo Slider -->
+        <section class="relative">
+            <div id="banner-slider" class="flex overflow-x-auto snap-x snap-mandatory no-scrollbar rounded-2xl shadow-sm space-x-3 scroll-smooth">
+                <div class="snap-center shrink-0 w-full rounded-2xl overflow-hidden bg-gradient-to-r from-emerald-600 to-teal-700 text-white p-4 relative">
+                    <div class="relative z-10">
+                        <span class="bg-amber-400 text-emerald-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">PROMO BEJI DEPOK</span>
+                        <h2 class="text-base font-bold mt-1.5 leading-snug">Ongkir Murah Diantar Langsung! 🚚</h2>
+                        <ul class="text-[11px] mt-1 space-y-0.5 text-emerald-50">
+                            <li>• <strong>Sayur & Sembako:</strong> Ready Stock & Cepat Sampai</li>
+                            <li>• <strong>Ikan, Daging & Ayam:</strong> PO s/d 20.00 WIB, dikirim Besok Pagi jam 06.00!</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="snap-center shrink-0 w-full rounded-2xl overflow-hidden bg-gray-200">
+                    <img src="https://placehold.co/600x250/059669/ffffff?text=Banner+Desain+Anda+1" alt="Banner Promo 2" class="w-full h-full object-cover">
+                </div>
+                <div class="snap-center shrink-0 w-full rounded-2xl overflow-hidden bg-gray-200">
+                    <img src="https://placehold.co/600x250/0d9488/ffffff?text=Banner+Desain+Anda+2" alt="Banner Promo 3" class="w-full h-full object-cover">
+                </div>
+            </div>
+            <div class="flex justify-center gap-1.5 mt-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+                <span class="w-2 h-2 rounded-full bg-gray-300"></span>
+                <span class="w-2 h-2 rounded-full bg-gray-300"></span>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Pilih Metode Pengiriman -->
+        <section class="bg-white p-3.5 rounded-2xl border shadow-sm space-y-2.5">
+            <h3 class="text-xs font-bold text-gray-800 flex items-center gap-1.5">
+                <i class="fas fa-truck text-emerald-600"></i> Pilih Metode Pengiriman
+            </h3>
+            <div class="space-y-2 text-xs">
+                <label class="flex items-start gap-2.5 p-2.5 border rounded-xl cursor-pointer hover:bg-emerald-50/50 transition border-emerald-500 bg-emerald-50/30">
+                    <input type="radio" name="shipping" value="Kurir Toko (Rp 10.000)" checked class="mt-0.5 accent-emerald-600" onchange="updateShipping(10000)">
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-gray-800">Kurir Toko (Kecamatan Terdekat)</span>
+                            <span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-[11px]">Rp 10.000</span>
+                        </div>
+                        <p class="text-[10px] text-gray-500 mt-0.5">Jangkauan: Beji, Pancoran Mas, Limo, Sawangan, & Sukmajaya.</p>
+                    </div>
+                </label>
+                <label class="flex items-start gap-2.5 p-2.5 border rounded-xl cursor-pointer hover:bg-emerald-50/50 transition border-gray-200">
+                    <input type="radio" name="shipping" value="Gojek / GrabExpress (Cek via WA)" class="mt-0.5 accent-emerald-600" onchange="updateShipping(0)">
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-gray-800">Gojek / GrabExpress (Jabodetabek)</span>
+                            <span class="text-gray-500 font-medium text-[11px]">Cek via WA</span>
+                        </div>
+                        <p class="text-[10px] text-gray-500 mt-0.5">Tarif dihitung sesuai titik lokasi di aplikasi Gojek/Grab dari Swadaya 8 Beji.</p>
+                    </div>
+                </label>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Kategori Produk -->
+        <section>
+            <div class="flex justify-between items-center mb-2.5">
+                <h3 class="text-xs font-bold text-gray-800">Pilih Kategori</h3>
+                <button type="button" onclick="filterCategory('all')" class="text-[11px] text-emerald-600 font-semibold hover:underline">Tampilkan Semua</button>
+            </div>
+
+            <div class="grid grid-cols-4 gap-2 text-center text-xs">
+                <button type="button" onclick="filterCategory('Sayuran')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                    <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center"><i class="fas fa-carrot text-xs"></i></div>
+                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Sayuran</span>
+                </button>
+
+                <button type="button" onclick="filterCategory('Ayam & Bebek')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                    <div class="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center"><i class="fas fa-drumstick-bite text-xs"></i></div>
+                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Ayam & Bebek</span>
+                </button>
+
+                <button type="button" onclick="filterCategory('Ikan & Seafood')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center"><i class="fas fa-fish text-xs"></i></div>
+                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Ikan & Seafood</span>
+                </button>
+
+                <button type="button" onclick="filterCategory('Daging Sapi')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                    <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center"><i class="fas fa-drumstick-bite text-xs"></i></div>
+                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Daging Sapi</span>
+                </button>
+
+                <button type="button" onclick="filterCategory('Tahu, Tempe & Oncom')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                    <div class="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center"><i class="fas fa-cubes text-xs"></i></div>
+                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Tahu, Tempe, Oncom</span>
+                </button>
+
+                <button type="button" onclick="filterCategory('Ikan Asin & Pindang')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                    <div class="w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center"><i class="fas fa-water text-xs"></i></div>
+                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Ikan Asin/Pindang</span>
+                </button>
+
+                <button type="button" onclick="filterCategory('Bumbu & Bahan Masak')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                    <div class="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center"><i class="fas fa-pepper-hot text-xs"></i></div>
+                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Bumbu & Masak</span>
+                </button>
+
+                <button type="button" onclick="filterCategory('Lauk Siap Masak & Frozen Food')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                    <div class="w-8 h-8 rounded-full bg-cyan-100 text-cyan-600 flex items-center justify-center"><i class="fas fa-snowflake text-xs"></i></div>
+                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Lauk Siap Masak & Frozen Food</span>
+                </button>
+
+                <button type="button" onclick="filterCategory('Lauk Matang')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                    <div class="w-8 h-8 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center"><i class="fas fa-utensils text-xs"></i></div>
+                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Lauk Matang</span>
+                </button>
+
+                <button type="button" onclick="filterCategory('Buah')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                    <div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center"><i class="fas fa-apple-alt text-xs"></i></div>
+                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Buah</span>
+                </button>
+
+                <button type="button" onclick="filterCategory('Beras, Telur, Minyak & Bahan Kue')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                    <div class="w-8 h-8 rounded-full bg-yellow-100 text-yellow-700 flex items-center justify-center"><i class="fas fa-egg text-xs"></i></div>
+                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Sembako & Kue</span>
+                </button>
+
+                <button type="button" onclick="filterCategory('Mie, Bihun, Soun & Kwetiau')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                    <div class="w-8 h-8 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center"><i class="fas fa-bowl-food text-xs"></i></div>
+                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Mie & Bihun</span>
+                </button>
+
+                <button type="button" onclick="filterCategory('Kerupuk, Kulit Pangsit & Kulit Lumpia')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                    <div class="w-8 h-8 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center"><i class="fas fa-cookie text-xs"></i></div>
+                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Kerupuk & Kulit</span>
+                </button>
+
+                <button type="button" onclick="filterCategory('Teh, Kopi & Air Mineral')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                    <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center"><i class="fas fa-mug-hot text-xs"></i></div>
+                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Teh, Kopi & Air</span>
+                </button>
+
+                <button type="button" onclick="filterCategory('Roti, Cereal & Selai')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                    <div class="w-8 h-8 rounded-full bg-stone-100 text-stone-600 flex items-center justify-center"><i class="fas fa-bread-slice text-xs"></i></div>
+                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Roti & Selai</span>
+                </button>
+
+                <button type="button" onclick="filterCategory('Susu & Olahan SUsu')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                    <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center"><i class="fas fa-wine-bottle text-xs"></i></div>
+                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Susu & Olahan</span>
+                </button>
+
+                <button type="button" onclick="filterCategory('Baby & Mom Produk')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                    <div class="w-8 h-8 rounded-full bg-pink-100 text-pink-500 flex items-center justify-center"><i class="fas fa-baby text-xs"></i></div>
+                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Baby & Mom</span>
+                </button>
+
+                <button type="button" onclick="filterCategory('Sabun Pembersih')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                    <div class="w-8 h-8 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center"><i class="fas fa-pump-soap text-xs"></i></div>
+                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Sabun & Bersih</span>
+                </button>
+
+                <button type="button" onclick="filterCategory('Perlengkapan Dapur')" class="p-2 bg-white border rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:border-emerald-500 transition">
+                    <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center"><i class="fas fa-kitchen-set text-xs"></i></div>
+                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Alat Dapur</span>
+                </button>
+
+                <button type="button" onclick="filterCategory('all')" class="p-2 bg-emerald-50 border border-emerald-300 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm hover:bg-emerald-100 transition">
+                    <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center"><i class="fas fa-th-large text-xs"></i></div>
+                    <span class="text-[9px] font-bold text-emerald-800 leading-tight">Semua</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- SECTION 4: Katalog Produk -->
+        <section id="catalog-section">
+            <h3 class="text-xs font-bold text-gray-800 mb-2.5 flex items-center gap-1.5">
+                <i class="fas fa-store text-emerald-600"></i> Katalog Bahan Segar
+            </h3>
+            <div id="product-grid" class="grid grid-cols-2 gap-3 text-xs">
+                <p class="col-span-2 text-center text-gray-400 py-8">Memuat produk segar...</p>
+            </div>
+        </section>
+
+        <!-- Footer Ringkas & Link Kebijakan Privasi -->
+        <footer class="pt-6 pb-2 border-t text-center text-[11px] text-gray-500 space-y-1.5">
+            <p>&copy; 2021 SayurBest. Segar Setiap Hari.</p>
+            <div>
+                <a href="privacy.html" class="text-emerald-600 hover:underline font-semibold">Kebijakan Privasi & Syarat Ketentuan</a>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Bottom Bar: Checkout / WhatsApp -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t p-3 z-40 shadow-lg">
+        <div class="max-w-md mx-auto flex justify-between items-center gap-3">
+            <div>
+                <p id="total-details" class="text-[10px] text-gray-500">Produk: Rp 0 | Ongkir: Rp 10.000</p>
+                <p id="total-price" class="text-base font-extrabold text-emerald-700 leading-tight">Rp 10.000</p>
+            </div>
+            <button type="button" onclick="triggerPesanWA()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-4 rounded-xl flex items-center gap-2 shadow-md transition text-xs">
+                <i class="fab fa-whatsapp text-lg"></i> Pesan via WA
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal Form Detail Pengiriman Pembeli -->
+    <div id="checkout-modal" class="fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center hidden p-0 sm:p-4 transition-opacity">
+        <div class="bg-white w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-5 shadow-xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4 border-b pb-3">
+                <h3 class="text-base font-bold text-gray-800">Detail Pengiriman</h3>
+                <button type="button" onclick="closeCheckoutModal()" class="text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+            </div>
+
+            <form id="checkout-form" onsubmit="handleCheckout(event)" class="space-y-3.5">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Nama Penerima <span class="text-red-500">*</span></label>
+                    <input type="text" id="cust-name" required placeholder="Contoh: Budi Santoso" class="w-full border rounded-xl p-2.5 text-xs focus:border-emerald-600 focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Nomor WhatsApp <span class="text-red-500">*</span></label>
+                    <input type="tel" id="cust-phone" required placeholder="Contoh: 08123456789" class="w-full border rounded-xl p-2.5 text-xs focus:border-emerald-600 focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Alamat Lengkap <span class="text-red-500">*</span></label>
+                    <textarea id="cust-address" rows="3" required placeholder="Nama jalan, nomor rumah, RT/RW, kelurahan, kecamatan, serta patokan rumah..." class="w-full border rounded-xl p-2.5 text-xs focus:border-emerald-600 focus:outline-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Catatan Tambahan (Opsional)</label>
+                    <input type="text" id="cust-notes" placeholder="Contoh: Titip di satpam / Pagar warna hitam" class="w-full border rounded-xl p-2.5 text-xs focus:border-emerald-600 focus:outline-none">
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-md transition flex items-center justify-center gap-2 text-xs">
+                        <i class="fab fa-whatsapp text-lg"></i>
+                        <span>Kirim Pesanan ke WhatsApp</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase & Logic Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCkZoh9h3ckqqpsrBxRNEZsQFZWkzAX42o",
+            authDomain: "tokosayur-44c5e.firebaseapp.com",
+            projectId: "tokosayur-44c5e",
+            storageBucket: "tokosayur-44c5e.firebasestorage.app",
+            messagingSenderId: "272668584834",
+            appId: "1:272668584834:web:258a983b01bfbe08f87d9b",
+            measurementId: "G-XDC529DV1Y"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const productsCol = collection(db, "products");
+
+        let allProducts = [];
+        let currentCategory = 'all';
+        let searchQuery = '';
+        let expandedDescriptions = {};
+        let cart = {};
+        let selectedOptions = {}; 
+        let shippingCost = 10000;
+
+        function normalizeCategory(str) {
+            if (!str) return '';
+            return str.toLowerCase()
+                      .replace(/&/g, 'dan')
+                      .replace(/,/g, ' ')
+                      .replace(/\s+/g, ' ')
+                      .trim();
+        }
+
+        function parseVariants(data) {
+            if (!data) return [];
+            if (Array.isArray(data)) {
+                return data.map(item => {
+                    if (typeof item === 'string') {
+                        const parts = item.split(':');
+                        return { name: parts[0].trim(), price: parts[1] ? Number(parts[1].trim()) : null };
+                    }
+                    return item;
+                });
+            }
+            return [];
+        }
+
+        async function fetchProducts() {
+            try {
+                const snapshot = await getDocs(productsCol);
+                allProducts = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    allProducts.push({
+                        id: doc.id,
+                        ...data,
+                        parsedVariants: parseVariants(data.variants),
+                        parsedSizes: parseVariants(data.sizes)
+                    });
+                });
+                renderProducts(getFilteredProducts());
+            } catch (err) {
+                console.error("Gagal memuat produk:", err);
+                document.getElementById('product-grid').innerHTML = `<p class="col-span-2 text-center text-red-500 py-6">Gagal memuat katalog produk.</p>`;
+            }
+        }
+
+        function getFilteredProducts() {
+            return allProducts.filter(p => {
+                if (currentCategory === 'all') {
+                    const q = searchQuery.toLowerCase();
+                    return !q || 
+                        (p.name && p.name.toLowerCase().includes(q)) || 
+                        (p.description && p.description.toLowerCase().includes(q)) ||
+                        (p.category && p.category.toLowerCase().includes(q));
+                }
+
+                const prodCat = normalizeCategory(p.category);
+                const currCat = normalizeCategory(currentCategory);
+
+                const matchCategory = prodCat === currCat || 
+                                      prodCat.includes(currCat) || 
+                                      currCat.includes(prodCat);
+
+                const q = searchQuery.toLowerCase();
+                const matchSearch = !q || 
+                    (p.name && p.name.toLowerCase().includes(q)) || 
+                    (p.description && p.description.toLowerCase().includes(q)) ||
+                    (p.category && p.category.toLowerCase().includes(q));
+
+                return matchCategory && matchSearch;
+            });
+        }
+
+        function calculateProductPrice(product, selectedVarName, selectedSizeName) {
+            let basePrice = Number(product.price) || 0;
+
+            if (selectedVarName && product.parsedVariants.length > 0) {
+                const foundVar = product.parsedVariants.find(v => v.name === selectedVarName);
+                if (foundVar && foundVar.price !== null && !isNaN(foundVar.price)) {
+                    basePrice = foundVar.price;
+                }
+            }
+
+            if (selectedSizeName && product.parsedSizes.length > 0) {
+                const foundSize = product.parsedSizes.find(s => s.name === selectedSizeName);
+                if (foundSize && foundSize.price !== null && !isNaN(foundSize.price)) {
+                    basePrice = foundSize.price;
+                }
+            }
+
+            return basePrice;
+        }
+
+        function renderProducts(items) {
+            const container = document.getElementById('product-grid');
+            container.innerHTML = '';
+
+            if (items.length === 0) {
+                container.innerHTML = `<p class="col-span-2 text-center text-gray-400 py-8">Produk tidak ditemukan.</p>`;
+                return;
+            }
+
+            const fallbackImg = "https://placehold.co/300x300/10b981/ffffff?text=SayurBest";
+
+            items.forEach(p => {
+                const img = (p.imageUrl && p.imageUrl.trim() !== '') ? p.imageUrl : fallbackImg;
+                
+                if (!selectedOptions[p.id]) {
+                    selectedOptions[p.id] = {
+                        variant: p.parsedVariants.length > 0 ? p.parsedVariants[0].name : '',
+                        size: p.parsedSizes.length > 0 ? p.parsedSizes[0].name : ''
+                    };
+                }
+
+                const currentVar = selectedOptions[p.id].variant;
+                const currentSize = selectedOptions[p.id].size;
+                const currentPrice = calculateProductPrice(p, currentVar, currentSize);
+
+                const cartKey = `${p.id}_${currentVar}_${currentSize}`;
+                const qty = cart[cartKey] ? cart[cartKey].qty : 0;
+
+                const badge = p.type === 'po' 
+                    ? '<span class="absolute top-2 left-2 bg-blue-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow z-10">PO</span>' 
+                    : '<span class="absolute top-2 left-2 bg-emerald-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow z-10">Ready Stock</span>';
+
+                let variantSelectorHTML = '';
+                if (p.parsedVariants.length > 0) {
+                    variantSelectorHTML += `
+                        <div class="mt-1.5">
+                            <label class="text-[9px] text-gray-500 font-semibold block mb-0.5">Jenis/Kondisi:</label>
+                            <select onchange="onOptionChange('${p.id}', 'variant', this.value)" class="w-full text-[10px] bg-gray-50 border rounded-lg p-1 text-gray-700 font-medium focus:outline-none focus:border-emerald-600">
+                                ${p.parsedVariants.map(v => `<option value="${v.name}" ${v.name === currentVar ? 'selected' : ''}>${v.name}</option>`).join('')}
+                            </select>
+                        </div>
+                    `;
+                }
+
+                let sizeSelectorHTML = '';
+                if (p.parsedSizes.length > 0) {
+                    sizeSelectorHTML += `
+                        <div class="mt-1.5">
+                            <label class="text-[9px] text-gray-500 font-semibold block mb-0.5">Ukuran/Berat:</label>
+                            <select onchange="onOptionChange('${p.id}', 'size', this.value)" class="w-full text-[10px] bg-gray-50 border rounded-lg p-1 text-gray-700 font-medium focus:outline-none focus:border-emerald-600">
+                                ${p.parsedSizes.map(s => `<option value="${s.name}" ${s.name === currentSize ? 'selected' : ''}>${s.name}</option>`).join('')}
+                            </select>
+                        </div>
+                    `;
+                }
+
+                let descriptionHTML = '';
+                if (p.description) {
+                    const isExpanded = expandedDescriptions[p.id] || false;
+                    const isLong = p.description.length > 50;
+
+                    if (isLong && !isExpanded) {
+                        const shortText = p.description.substring(0, 50) + '...';
+                        descriptionHTML = `
+                            <p class="text-[10px] text-gray-500 mt-0.5">
+                                ${shortText} 
+                                <button type="button" onclick="toggleDescription('${p.id}')" class="text-emerald-600 font-bold hover:underline ml-0.5">selengkapnya</button>
+                            </p>
+                        `;
+                    } else if (isLong && isExpanded) {
+                        descriptionHTML = `
+                            <p class="text-[10px] text-gray-500 mt-0.5">
+                                ${p.description} 
+                                <button type="button" onclick="toggleDescription('${p.id}')" class="text-emerald-600 font-bold hover:underline ml-0.5">sembunyikan</button>
+                            </p>
+                        `;
+                    } else {
+                        descriptionHTML = `<p class="text-[10px] text-gray-500 mt-0.5">${p.description}</p>`;
+                    }
+                }
+
+                const html = `
+                    <div class="bg-white border rounded-2xl p-2.5 flex flex-col justify-between relative shadow-sm hover:shadow transition">
+                        ${badge}
+                        <img src="${img}" onerror="this.onerror=null;this.src='${fallbackImg}';" class="w-full h-28 object-cover rounded-xl mb-2 border">
+                        
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800 line-clamp-1">${p.name}</h4>
+                            <p class="text-[10px] text-gray-400">${p.unit || ''}</p>
+                            
+                            ${descriptionHTML}
+                            ${variantSelectorHTML}
+                            ${sizeSelectorHTML}
+
+                            <p class="text-xs font-extrabold text-emerald-700 mt-2">Rp ${currentPrice.toLocaleString('id-ID')}</p>
+                        </div>
+
+                        <div class="mt-2.5 flex items-center justify-between bg-gray-50 p-1 rounded-xl border">
+                            <button type="button" onclick="updateCart('${p.id}', -1)" class="w-7 h-7 bg-white text-gray-700 border rounded-lg font-bold flex items-center justify-center hover:bg-gray-100">-</button>
+                            <span class="font-bold text-xs px-2">${qty}</span>
+                            <button type="button" onclick="updateCart('${p.id}', 1)" class="w-7 h-7 bg-emerald-600 text-white rounded-lg font-bold flex items-center justify-center hover:bg-emerald-700">+</button>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
+        // --- GLOBAL FUNCTIONS & BINDING --- //
+
+        window.toggleDescription = function(productId) {
+            expandedDescriptions[productId] = !expandedDescriptions[productId];
+            renderProducts(getFilteredProducts());
+        };
+
+        window.onOptionChange = function(productId, type, val) {
+            if (!selectedOptions[productId]) {
+                selectedOptions[productId] = { variant: '', size: '' };
+            }
+            selectedOptions[productId][type] = val;
+            renderProducts(getFilteredProducts());
+        };
+
+        window.filterCategory = function(category) {
+            currentCategory = category;
+            renderProducts(getFilteredProducts());
+        };
+
+        window.updateCart = function(productId, change) {
+            const product = allProducts.find(p => p.id === productId);
+            if (!product) return;
+
+            const currentVar = selectedOptions[productId] ? selectedOptions[productId].variant : '';
+            const currentSize = selectedOptions[productId] ? selectedOptions[productId].size : '';
+            const price = calculateProductPrice(product, currentVar, currentSize);
+            const cartKey = `${productId}_${currentVar}_${currentSize}`;
+
+            if (!cart[cartKey]) {
+                cart[cartKey] = {
+                    id: productId,
+                    name: product.name,
+                    variant: currentVar,
+                    size: currentSize,
+                    price: price,
+                    qty: 0
+                };
+            }
+
+            cart[cartKey].qty += change;
+
+            if (cart[cartKey].qty <= 0) {
+                delete cart[cartKey];
+            }
+
+            updateCartTotals();
+            renderProducts(getFilteredProducts());
+        };
+
+        function getCartSubtotal() {
+            let total = 0;
+            Object.values(cart).forEach(item => {
+                total += item.price * item.qty;
+            });
+            return total;
+        }
+
+        function updateCartTotals() {
+            let totalItems = 0;
+            let totalPrice = getCartSubtotal();
+
+            Object.values(cart).forEach(item => {
+                totalItems += item.qty;
+            });
+
+            document.getElementById('cart-badge').innerText = totalItems;
+            const grandTotal = totalPrice + shippingCost;
+            document.getElementById('total-details').innerText = `Produk: Rp ${totalPrice.toLocaleString('id-ID')} | Ongkir: Rp ${shippingCost.toLocaleString('id-ID')}`;
+            document.getElementById('total-price').innerText = `Rp ${grandTotal.toLocaleString('id-ID')}`;
+        }
+
+        window.updateShipping = function(cost) {
+            shippingCost = cost;
+            updateCartTotals();
+        };
+
+        window.clearSearch = function() {
+            const input = document.getElementById('search-input');
+            input.value = '';
+            searchQuery = '';
+            document.getElementById('clear-search-btn').classList.add('hidden');
+            renderProducts(getFilteredProducts());
+        };
+
+        window.scrollToCart = function() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        };
+
+        // Modal & Checkout Handlers
+        window.openCheckoutModal = function() {
+            document.getElementById('checkout-modal').classList.remove('hidden');
+        };
+
+        window.closeCheckoutModal = function() {
+            document.getElementById('checkout-modal').classList.add('hidden');
+        };
+
+        window.triggerPesanWA = function() {
+            const subtotal = getCartSubtotal();
+            
+            if (subtotal === 0) {
+                alert("Keranjang belanja Anda masih kosong! Silakan pilih produk terlebih dahulu.");
+                return;
+            }
+
+            // Minimal belanja Rp 5.000
+            if (subtotal < 5000) {
+                alert(`Mohon maaf, minimal total belanja produk adalah Rp 5000.\nTotal belanja Anda saat ini: Rp ${subtotal.toLocaleString('id-ID')}`);
+                return;
+            }
+
+            openCheckoutModal();
+        };
+
+        window.handleCheckout = function(event) {
+            event.preventDefault();
+
+            const items = Object.values(cart);
+            const name = document.getElementById('cust-name').value.trim();
+            const phone = document.getElementById('cust-phone').value.trim();
+            const address = document.getElementById('cust-address').value.trim();
+            const notes = document.getElementById('cust-notes').value.trim();
+
+            let message = "*HALO SAYURBEST, SAYA MAU PESAN:*\n\n";
+            message += "*DATA PEMESAN:*\n";
+            message += `• Nama: ${name}\n`;
+            message += `• No. WA: ${phone}\n`;
+            message += `• Alamat: ${address}\n`;
+            if (notes) message += `• Catatan: ${notes}\n`;
+
+            message += `\n*DAFTAR PESANAN:*\n`;
+            let totalPrice = 0;
+
+            items.forEach((item, idx) => {
+                const subtotal = item.price * item.qty;
+                totalPrice += subtotal;
+                let optText = [];
+                if (item.variant) optText.push(item.variant);
+                if (item.size) optText.push(item.size);
+                const detailStr = optText.length > 0 ? ` (${optText.join(', ')})` : '';
+
+                message += `${idx + 1}. *${item.name}${detailStr}*\n   ${item.qty} x Rp ${item.price.toLocaleString('id-ID')} = Rp ${subtotal.toLocaleString('id-ID')}\n`;
+            });
+
+            const selectedShippingRadio = document.querySelector('input[name="shipping"]:checked');
+            const shippingText = selectedShippingRadio ? selectedShippingRadio.value : 'Kurir Toko (Rp 10.000)';
+
+            message += `\n-----------------------------------`;
+            message += `\n*Total Produk:* Rp ${totalPrice.toLocaleString('id-ID')}`;
+            message += `\n*Metode Pengiriman:* ${shippingText}`;
+            message += `\n*Grand Total:* Rp ${(totalPrice + shippingCost).toLocaleString('id-ID')}`;
+            message += `\n-----------------------------------`;
+            message += `\n\n*Mohon diproses pesanan saya. Terima kasih!*`;
+
+            const phoneNumber = "6281513797839"; // <-- GANTI DENGAN NOMOR WA AKTIF TOKO SAYURBEST (Gunakan awalan 62)
+            const encodedMessage = encodeURIComponent(message);
+            
+            closeCheckoutModal();
+            window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+        };
+
+        const searchInput = document.getElementById('search-input');
+        const clearBtn = document.getElementById('clear-search-btn');
+
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value;
+                if (searchQuery.length > 0) {
+                    clearBtn.classList.remove('hidden');
+                } else {
+                    clearBtn.classList.add('hidden');
+                }
+                renderProducts(getFilteredProducts());
+            });
+        }
+
+        fetchProducts();
+    </script>
+</body>
+</html>
