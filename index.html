@@ -742,6 +742,66 @@
         }
 
         fetchProducts();
+        // Auto-slide Banner Slider
+document.addEventListener('DOMContentLoaded', () => {
+    const slider = document.getElementById('banner-slider');
+    const dots = document.querySelectorAll('section.relative .flex.justify-center span');
+    if (!slider || dots.length === 0) return;
+
+    let currentIndex = 0;
+    const totalSlides = dots.length;
+    const slideInterval = 4000; // Waktu ganti banner (4000ms = 4 detik)
+
+    // Fungsi untuk menggeser slide
+    function scrollToSlide(index) {
+        const slideWidth = slider.clientWidth;
+        slider.scrollTo({
+            left: slideWidth * index,
+            behavior: 'smooth'
+        });
+        updateDots(index);
+    }
+
+    // Fungsi untuk update indikator titik
+    function updateDots(index) {
+        dots.forEach((dot, i) => {
+            if (i === index) {
+                dot.classList.remove('bg-gray-300');
+                dot.classList.add('bg-emerald-600');
+            } else {
+                dot.classList.remove('bg-emerald-600');
+                dot.classList.add('bg-gray-300');
+            }
+        });
+    }
+
+    // Jalankan timer otomatis
+    let autoSlideTimer = setInterval(() => {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        scrollToSlide(currentIndex);
+    }, slideInterval);
+
+    // Deteksi saat pengguna menggeser manual (HP/Mouse) untuk menyesuaikan indikator
+    slider.addEventListener('scroll', () => {
+        const slideWidth = slider.clientWidth;
+        if (slideWidth > 0) {
+            const newIndex = Math.round(slider.scrollLeft / slideWidth);
+            if (newIndex !== currentIndex && newIndex < totalSlides) {
+                currentIndex = newIndex;
+                updateDots(currentIndex);
+            }
+        }
+    });
+
+    // Pause auto-slide saat mouse di-hover di atas banner (PC)
+    slider.addEventListener('mouseenter', () => clearInterval(autoSlideTimer));
+    slider.addEventListener('mouseleave', () => {
+        autoSlideTimer = setInterval(() => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            scrollToSlide(currentIndex);
+        }, slideInterval);
+    });
+});
     </script>
 </body>
 </html>
