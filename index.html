@@ -3,23 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SayurBest - Segar Setiap Hari</title>
+
+    <!-- =================================================== -->
+    <!-- 1. SEO META TAGS UTAMA -->
+    <!-- =================================================== -->
+    <title>SayurBest - Toko Sayur Segar Online Beji Depok | Bayar Tempat & Bebas Ongkir</title>
+    <meta name="description" content="Belanja sayur segar, buah, ayam, daging, dan kebutuhan dapur harian online murah di Beji, Pancoran Mas, Limo, Sawangan & Sukmajaya Depok. Pengiriman cepat setiap hari!">
+    <meta name="keywords" content="toko sayur online depok, jual sayur beji, sayur segar pancoran mas, kebutuhan dapur limo, belanja sayur sawangan, supplier sayur sukmajaya, sayurbest">
+    <meta name="author" content="SayurBest">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://sayurbest.com/">
+
+    <!-- =================================================== -->
+    <!-- 2. OPEN GRAPH & SOCIAL MEDIA META (FB, IG, WA) -->
+    <!-- =================================================== -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sayurbest.com/">
+    <meta property="og:title" content="SayurBest - Segar Setiap Hari | Toko Sayur Online Depok">
+    <meta property="og:description" content="Pesan sayur, buah, dan lauk segar harian praktis via WhatsApp. Melayani Beji, Panmas, Limo, Sawangan & Sukmajaya.">
+    <meta property="og:image" content="https://sayurbest.com/logo%20fix%201.png">
+
+    <!-- Twitter Card Meta -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SayurBest - Segar Setiap Hari">
+    <meta name="twitter:description" content="Belanja kebutuhan dapur & sayur segar online praktis via WhatsApp di Depok.">
+    <meta name="twitter:image" content="https://sayurbest.com/logo%20fix%201.png">
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
+
     <!-- PWA Settings -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#047857">
     <script>
     if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js');
+      navigator.serviceWorker.register('sw.js');
     }
     </script>
+
+    <!-- =================================================== -->
+    <!-- 3. META PIXEL SCRIPT (GANTI ID PIXEL DI BAWAH) -->
+    <!-- =================================================== -->
+    <!-- UBAH '1234567890123456' DENGAN ID META PIXEL ASLI ANDA -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      
+      fbq('init', '1234567890123456'); 
+      fbq('track', 'PageView');
+    </script>
+    <noscript>
+      <img height="1" width="1" style="display:none" 
+           src="https://www.facebook.com/tr?id=1234567890123456&ev=PageView&noscript=1"/>
+    </noscript>
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans pb-28">
 
@@ -56,41 +105,41 @@
 
         <!-- SECTION 1: Banner Promo Slider -->
         <section class="relative">
-    <div id="banner-slider" class="flex overflow-x-auto snap-x snap-mandatory no-scrollbar rounded-2xl shadow-sm space-x-3 scroll-smooth">
-        
-        <!-- Banner 1: Informasi Layanan Utama (Aman & Fleksibel) -->
-        <div class="snap-center shrink-0 w-full rounded-2xl overflow-hidden bg-gradient-to-r from-emerald-600 to-teal-700 text-white p-4 relative">
-            <div class="relative z-10">
-                <span class="bg-amber-400 text-emerald-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">LAYANAN SAYURBEST</span>
-                <h2 class="text-base font-bold mt-1.5 leading-snug">Selamat Datang di SayurBest! 👋</h2>
-                <ul class="text-[11px] mt-1.5 space-y-1 text-emerald-50">
-                    <li>• <strong>Pengiriman:</strong> Start mulai jam 08.00 pagi</li>
-                    <li>• <strong>Produk PO:</strong> Diproses & dikirim H+1 (Besoknya)</li>
-                    <li>• <strong>Request Jam Kirim / Catatan:</strong> Hubungi admin via WhatsApp</li>
-                    <li>• <strong>Garansi Produk:</strong> Kendala/barang kurang? Infokan ke admin untuk penanganan cepat</li>
-                </ul>
+            <div id="banner-slider" class="flex overflow-x-auto snap-x snap-mandatory no-scrollbar rounded-2xl shadow-sm space-x-3 scroll-smooth">
+                
+                <!-- Banner 1: Informasi Layanan Utama -->
+                <div class="snap-center shrink-0 w-full rounded-2xl overflow-hidden bg-gradient-to-r from-emerald-600 to-teal-700 text-white p-4 relative">
+                    <div class="relative z-10">
+                        <span class="bg-amber-400 text-emerald-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">LAYANAN SAYURBEST</span>
+                        <h2 class="text-base font-bold mt-1.5 leading-snug">Selamat Datang di SayurBest! 👋</h2>
+                        <ul class="text-[11px] mt-1.5 space-y-1 text-emerald-50">
+                            <li>• <strong>Pengiriman:</strong> Start mulai jam 08.00 pagi</li>
+                            <li>• <strong>Produk PO:</strong> Diproses & dikirim H+1 (Besoknya)</li>
+                            <li>• <strong>Request Jam Kirim / Catatan:</strong> Hubungi admin via WhatsApp</li>
+                            <li>• <strong>Garansi Produk:</strong> Kendala/barang kurang? Infokan ke admin untuk penanganan cepat</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Banner 2 -->
+                <div class="snap-center shrink-0 w-full rounded-2xl overflow-hidden bg-gray-200">
+                    <img src="https://i.postimg.cc/63jz3LmL/Whats-App-Image-2026-06-27-at-5-11-17-PM.jpg" alt="Banner Promo SayurBest" loading="lazy" class="w-full h-full object-cover">
+                </div>
+
+                <!-- Banner 3 -->
+                <div class="snap-center shrink-0 w-full rounded-2xl overflow-hidden bg-gray-200">
+                    <img src="https://i.postimg.cc/gJS4JqTV/Whats-App-Image-2026-06-27-at-6-02-35-PM.jpg" alt="Banner Promo Hemat SayurBest" loading="lazy" class="w-full h-full object-cover">
+                </div>
+
             </div>
-        </div>
 
-        <!-- Banner 2: Placeholder Gambar -->
-        <div class="snap-center shrink-0 w-full rounded-2xl overflow-hidden bg-gray-200">
-            <img src="https://i.postimg.cc/63jz3LmL/Whats-App-Image-2026-06-27-at-5-11-17-PM.jpg" alt="Banner Promo 2" loading="lazy" class="w-full h-full object-cover">
-        </div>
-
-        <!-- Banner 3: Placeholder Gambar -->
-        <div class="snap-center shrink-0 w-full rounded-2xl overflow-hidden bg-gray-200">
-            <img src="https://i.postimg.cc/gJS4JqTV/Whats-App-Image-2026-06-27-at-6-02-35-PM.jpg" alt="Banner Promo 3" loading="lazy" class="w-full h-full object-cover">
-        </div>
-
-    </div>
-
-    <!-- Indicator Dots -->
-    <div class="flex justify-center gap-1.5 mt-2">
-        <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
-        <span class="w-2 h-2 rounded-full bg-gray-300"></span>
-        <span class="w-2 h-2 rounded-full bg-gray-300"></span>
-    </div>
-</section>
+            <!-- Indicator Dots -->
+            <div class="flex justify-center gap-1.5 mt-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+                <span class="w-2 h-2 rounded-full bg-gray-300"></span>
+                <span class="w-2 h-2 rounded-full bg-gray-300"></span>
+            </div>
+        </section>
 
         <!-- SECTION 2: Pilih Metode Pengiriman -->
         <section class="bg-white p-3.5 rounded-2xl border shadow-sm space-y-2.5">
@@ -615,6 +664,15 @@
                 delete cart[cartKey];
             }
 
+            // Meta Pixel Track AddToCart ketika pengguna menambah produk
+            if (typeof fbq === 'function' && change > 0) {
+                fbq('track', 'AddToCart', {
+                    content_name: product.name,
+                    value: price,
+                    currency: 'IDR'
+                });
+            }
+
             saveCartToStorage();
             updateCartTotals();
             renderProducts(getFilteredProducts());
@@ -661,6 +719,10 @@
 
         window.openCheckoutModal = function() {
             document.getElementById('checkout-modal').classList.remove('hidden');
+            // Meta Pixel Track InitiateCheckout
+            if (typeof fbq === 'function') {
+                fbq('track', 'InitiateCheckout');
+            }
         };
 
         window.closeCheckoutModal = function() {
@@ -715,13 +777,23 @@
 
             const selectedShippingRadio = document.querySelector('input[name="shipping"]:checked');
             const shippingText = selectedShippingRadio ? selectedShippingRadio.value : 'Kurir Toko (Rp 10.000)';
+            const grandTotal = totalPrice + shippingCost;
 
             message += `\n-----------------------------------`;
             message += `\n*Total Produk:* Rp ${totalPrice.toLocaleString('id-ID')}`;
             message += `\n*Metode Pengiriman:* ${shippingText}`;
-            message += `\n*Grand Total:* Rp ${(totalPrice + shippingCost).toLocaleString('id-ID')}`;
+            message += `\n*Grand Total:* Rp ${grandTotal.toLocaleString('id-ID')}`;
             message += `\n-----------------------------------`;
             message += `\n\n*Mohon diproses pesanan saya. Terima kasih!*`;
+
+            // Meta Pixel Track Lead & Purchase
+            if (typeof fbq === 'function') {
+                fbq('track', 'Lead');
+                fbq('track', 'Purchase', {
+                    value: grandTotal,
+                    currency: 'IDR'
+                });
+            }
 
             const phoneNumber = "6281513797839";
             const encodedMessage = encodeURIComponent(message);
@@ -750,66 +822,62 @@
         }
 
         fetchProducts();
+
         // Auto-slide Banner Slider
-document.addEventListener('DOMContentLoaded', () => {
-    const slider = document.getElementById('banner-slider');
-    const dots = document.querySelectorAll('section.relative .flex.justify-center span');
-    if (!slider || dots.length === 0) return;
+        document.addEventListener('DOMContentLoaded', () => {
+            const slider = document.getElementById('banner-slider');
+            const dots = document.querySelectorAll('section.relative .flex.justify-center span');
+            if (!slider || dots.length === 0) return;
 
-    let currentIndex = 0;
-    const totalSlides = dots.length;
-    const slideInterval = 4000; // Waktu ganti banner (4000ms = 4 detik)
+            let currentIndex = 0;
+            const totalSlides = dots.length;
+            const slideInterval = 4000;
 
-    // Fungsi untuk menggeser slide
-    function scrollToSlide(index) {
-        const slideWidth = slider.clientWidth;
-        slider.scrollTo({
-            left: slideWidth * index,
-            behavior: 'smooth'
-        });
-        updateDots(index);
-    }
-
-    // Fungsi untuk update indikator titik
-    function updateDots(index) {
-        dots.forEach((dot, i) => {
-            if (i === index) {
-                dot.classList.remove('bg-gray-300');
-                dot.classList.add('bg-emerald-600');
-            } else {
-                dot.classList.remove('bg-emerald-600');
-                dot.classList.add('bg-gray-300');
+            function scrollToSlide(index) {
+                const slideWidth = slider.clientWidth;
+                slider.scrollTo({
+                    left: slideWidth * index,
+                    behavior: 'smooth'
+                });
+                updateDots(index);
             }
-        });
-    }
 
-    // Jalankan timer otomatis
-    let autoSlideTimer = setInterval(() => {
-        currentIndex = (currentIndex + 1) % totalSlides;
-        scrollToSlide(currentIndex);
-    }, slideInterval);
-
-    // Deteksi saat pengguna menggeser manual (HP/Mouse) untuk menyesuaikan indikator
-    slider.addEventListener('scroll', () => {
-        const slideWidth = slider.clientWidth;
-        if (slideWidth > 0) {
-            const newIndex = Math.round(slider.scrollLeft / slideWidth);
-            if (newIndex !== currentIndex && newIndex < totalSlides) {
-                currentIndex = newIndex;
-                updateDots(currentIndex);
+            function updateDots(index) {
+                dots.forEach((dot, i) => {
+                    if (i === index) {
+                        dot.classList.remove('bg-gray-300');
+                        dot.classList.add('bg-emerald-600');
+                    } else {
+                        dot.classList.remove('bg-emerald-600');
+                        dot.classList.add('bg-gray-300');
+                    }
+                });
             }
-        }
-    });
 
-    // Pause auto-slide saat mouse di-hover di atas banner (PC)
-    slider.addEventListener('mouseenter', () => clearInterval(autoSlideTimer));
-    slider.addEventListener('mouseleave', () => {
-        autoSlideTimer = setInterval(() => {
-            currentIndex = (currentIndex + 1) % totalSlides;
-            scrollToSlide(currentIndex);
-        }, slideInterval);
-    });
-});
+            let autoSlideTimer = setInterval(() => {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                scrollToSlide(currentIndex);
+            }, slideInterval);
+
+            slider.addEventListener('scroll', () => {
+                const slideWidth = slider.clientWidth;
+                if (slideWidth > 0) {
+                    const newIndex = Math.round(slider.scrollLeft / slideWidth);
+                    if (newIndex !== currentIndex && newIndex < totalSlides) {
+                        currentIndex = newIndex;
+                        updateDots(currentIndex);
+                    }
+                }
+            });
+
+            slider.addEventListener('mouseenter', () => clearInterval(autoSlideTimer));
+            slider.addEventListener('mouseleave', () => {
+                autoSlideTimer = setInterval(() => {
+                    currentIndex = (currentIndex + 1) % totalSlides;
+                    scrollToSlide(currentIndex);
+                }, slideInterval);
+            });
+        });
     </script>
 </body>
 </html>
