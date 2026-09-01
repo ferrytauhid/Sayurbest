@@ -51,7 +51,6 @@
     <!-- =================================================== -->
     <!-- 3. META PIXEL SCRIPT (GANTI ID PIXEL DI BAWAH) -->
     <!-- =================================================== -->
-    <!-- UBAH '1234567890123456' DENGAN ID META PIXEL ASLI ANDA -->
     <script>
       !function(f,b,e,v,n,t,s)
       {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -62,32 +61,48 @@
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
       
-      fbq('init', '1234567890123456'); 
+      fbq('init', '1507233428105048'); 
       fbq('track', 'PageView');
     </script>
     <noscript>
       <img height="1" width="1" style="display:none" 
-           src="https://www.facebook.com/tr?id=1234567890123456&ev=PageView&noscript=1"/>
+           src="https://www.facebook.com/tr?id=1507233428105048&ev=PageView&noscript=1"/>
     </noscript>
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans pb-28">
 
     <!-- Header / Navbar Utama -->
-    <header class="bg-emerald-700 text-white py-2.5 px-4 sticky top-0 z-40 shadow-md">
-        <div class="max-w-md mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-2.5">
+<header class="bg-emerald-700 text-white py-2.5 px-4 sticky top-0 z-40 shadow-md">
+    <div class="max-w-md mx-auto flex items-center justify-between gap-2">
+        
+       <div class="flex items-center gap-2.5">
                 <img src="logo fix 1.png" alt="SayurBest Logo" loading="lazy" class="h-9 w-auto object-contain" onerror="this.style.display='none'">
                 <div class="text-left leading-tight">
                     <h1 class="text-base font-bold tracking-wide text-white leading-none">SayurBest</h1>
                     <p class="text-[10px] text-emerald-100 font-normal mt-0.5">Segar Setiap Hari</p>
                 </div>
             </div>
-            <div class="relative cursor-pointer flex items-center justify-end" onclick="scrollToCart()">
-                <i class="fas fa-shopping-cart text-xl"></i>
-                <span id="cart-badge" class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-emerald-700">0</span>
-            </div>
+
+        <div class="flex items-center gap-2 shrink-0">
+            <!-- Tombol FnB -->
+            <button type="button" 
+                    onclick="showComingSoonModal('FnB')" 
+                    class="p-1.5 px-2.5 border rounded-xl bg-white/10 hover:bg-white/20 flex flex-col items-center justify-center gap-0.5 transition active:scale-95">
+                <i class="fas fa-utensils text-xs"></i>
+                <span class="text-[10px] font-semibold leading-none">FnB</span>
+            </button>
+
+            <!-- Tombol BnB -->
+            <button type="button" 
+                    onclick="showComingSoonModal('BnB')" 
+                    class="p-1.5 px-2.5 border rounded-xl bg-white/10 hover:bg-white/20 flex flex-col items-center justify-center gap-0.5 transition active:scale-95">
+                <i class="fas fa-pump-soap text-xs"></i>
+                <span class="text-[10px] font-semibold leading-none">BnB</span>
+            </button>
         </div>
-    </header>
+        
+    </div>
+</header>
 
     <!-- Main Container -->
     <main class="max-w-md mx-auto p-4 space-y-5">
@@ -141,144 +156,121 @@
             </div>
         </section>
 
-        <!-- SECTION 2: Pilih Metode Pengiriman -->
-        <section class="bg-white p-3.5 rounded-2xl border shadow-sm space-y-2.5">
-            <h3 class="text-xs font-bold text-gray-800 flex items-center gap-1.5">
-                <i class="fas fa-truck text-emerald-600"></i> Pilih Metode Pengiriman
-            </h3>
-            <div class="space-y-2 text-xs">
-                <label class="flex items-start gap-2.5 p-2.5 border rounded-xl cursor-pointer hover:bg-emerald-50/50 transition border-emerald-500 bg-emerald-50/30">
-                    <input type="radio" name="shipping" value="Kurir Toko (Rp 10.000)" checked class="mt-0.5 accent-emerald-600" onchange="updateShipping(10000)">
-                    <div class="flex-1">
-                        <div class="flex justify-between items-center">
-                            <span class="font-bold text-gray-800">Kurir Toko (Kecamatan Terdekat)</span>
-                            <span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-[11px]">Rp 10.000</span>
-                        </div>
-                        <p class="text-[10px] text-gray-500 mt-0.5">Jangkauan: Beji, Pancoran Mas, Limo, Sawangan, & Sukmajaya.</p>
-                    </div>
-                </label>
-                <label class="flex items-start gap-2.5 p-2.5 border rounded-xl cursor-pointer hover:bg-emerald-50/50 transition border-gray-200">
-                    <input type="radio" name="shipping" value="Gojek / GrabExpress (Cek via WA)" class="mt-0.5 accent-emerald-600" onchange="updateShipping(0)">
-                    <div class="flex-1">
-                        <div class="flex justify-between items-center">
-                            <span class="font-bold text-gray-800">Gojek / GrabExpress (Jabodetabek)</span>
-                            <span class="text-gray-500 font-medium text-[11px]">Cek via WA</span>
-                        </div>
-                        <p class="text-[10px] text-gray-500 mt-0.5">Tarif dihitung sesuai titik lokasi di aplikasi Gojek/Grab dari Swadaya 8 Beji.</p>
-                    </div>
-                </label>
-            </div>
-        </section>
-
         <!-- SECTION 3: Kategori Produk -->
-        <section>
-            <div class="flex justify-between items-center mb-2.5">
-                <h3 class="text-xs font-bold text-gray-800">Pilih Kategori</h3>
-                <button type="button" onclick="filterCategory('all')" class="text-[11px] text-emerald-600 font-semibold hover:underline">Tampilkan Semua</button>
-            </div>
+<section>
+    <div class="flex justify-between items-center mb-2.5">
+        <h3 class="text-xs font-bold text-gray-800">Pilih Kategori</h3>
+        <!-- Tombol Tampilkan Semua / Sembunyikan -->
+        <button type="button" id="toggle-category-btn" onclick="toggleCategories()" class="text-[11px] text-emerald-600 font-semibold hover:underline">
+            Tampilkan Semua
+        </button>
+    </div>
 
-            <div class="grid grid-cols-4 gap-2 text-center text-xs">
-                <button type="button" data-category="Sayuran" onclick="filterCategory('Sayuran')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center"><i class="fas fa-carrot text-xs"></i></div>
-                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Sayuran</span>
-                </button>
+    <!-- Container Grid dengan Pembatas Tinggi (Default 2 Baris) -->
+    <div id="category-grid" class="grid grid-cols-4 gap-2 text-center text-xs max-h-[165px] overflow-hidden transition-all duration-300">
+        
+        <button type="button" data-category="Sayuran" onclick="filterCategory('Sayuran')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center"><i class="fas fa-carrot text-xs"></i></div>
+            <span class="text-[9px] font-semibold text-gray-700 leading-tight">Sayuran</span>
+        </button>
 
-                <button type="button" data-category="Ayam & Bebek" onclick="filterCategory('Ayam & Bebek')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center"><i class="fas fa-drumstick-bite text-xs"></i></div>
-                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Ayam & Bebek</span>
-                </button>
+        <button type="button" data-category="Ayam & Bebek" onclick="filterCategory('Ayam & Bebek')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center"><i class="fas fa-drumstick-bite text-xs"></i></div>
+            <span class="text-[9px] font-semibold text-gray-700 leading-tight">Ayam & Bebek</span>
+        </button>
 
-                <button type="button" data-category="Ikan & Seafood" onclick="filterCategory('Ikan & Seafood')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center"><i class="fas fa-fish text-xs"></i></div>
-                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Ikan & Seafood</span>
-                </button>
+        <button type="button" data-category="Ikan & Seafood" onclick="filterCategory('Ikan & Seafood')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center"><i class="fas fa-fish text-xs"></i></div>
+            <span class="text-[9px] font-semibold text-gray-700 leading-tight">Ikan & Seafood</span>
+        </button>
 
-                <button type="button" data-category="Daging Sapi" onclick="filterCategory('Daging Sapi')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center"><i class="fas fa-drumstick-bite text-xs"></i></div>
-                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Daging Sapi</span>
-                </button>
+        <button type="button" data-category="Daging Sapi" onclick="filterCategory('Daging Sapi')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center"><i class="fas fa-drumstick-bite text-xs"></i></div>
+            <span class="text-[9px] font-semibold text-gray-700 leading-tight">Daging Sapi</span>
+        </button>
 
-                <button type="button" data-category="Tahu, Tempe & Oncom" onclick="filterCategory('Tahu, Tempe & Oncom')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center"><i class="fas fa-cubes text-xs"></i></div>
-                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Tahu, Tempe, Oncom</span>
-                </button>
+        <button type="button" data-category="Tahu, Tempe & Oncom" onclick="filterCategory('Tahu, Tempe & Oncom')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center"><i class="fas fa-cubes text-xs"></i></div>
+            <span class="text-[9px] font-semibold text-gray-700 leading-tight">Tahu, Tempe, Oncom</span>
+        </button>
 
-                <button type="button" data-category="Ikan Asin & Pindang" onclick="filterCategory('Ikan Asin & Pindang')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center"><i class="fas fa-water text-xs"></i></div>
-                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Ikan Asin/Pindang</span>
-                </button>
+        <button type="button" data-category="Ikan Asin & Pindang" onclick="filterCategory('Ikan Asin & Pindang')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center"><i class="fas fa-water text-xs"></i></div>
+            <span class="text-[9px] font-semibold text-gray-700 leading-tight">Ikan Asin/Pindang</span>
+        </button>
 
-                <button type="button" data-category="Bumbu & Bahan Masak" onclick="filterCategory('Bumbu & Bahan Masak')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center"><i class="fas fa-pepper-hot text-xs"></i></div>
-                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Bumbu & Masak</span>
-                </button>
+        <button type="button" data-category="Bumbu & Bahan Masak" onclick="filterCategory('Bumbu & Bahan Masak')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center"><i class="fas fa-pepper-hot text-xs"></i></div>
+            <span class="text-[9px] font-semibold text-gray-700 leading-tight">Bumbu & Masak</span>
+        </button>
 
-                <button type="button" data-category="Lauk Siap Masak & Frozen Food" onclick="filterCategory('Lauk Siap Masak & Frozen Food')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-cyan-100 text-cyan-600 flex items-center justify-center"><i class="fas fa-snowflake text-xs"></i></div>
-                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Lauk Siap Masak & Frozen Food</span>
-                </button>
+        <button type="button" data-category="Lauk Siap Masak & Frozen Food" onclick="filterCategory('Lauk Siap Masak & Frozen Food')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-cyan-100 text-cyan-600 flex items-center justify-center"><i class="fas fa-snowflake text-xs"></i></div>
+            <span class="text-[9px] font-semibold text-gray-700 leading-tight">Lauk Siap Masak & Frozen Food</span>
+        </button>
 
-                <button type="button" data-category="Lauk Matang" onclick="filterCategory('Lauk Matang')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center"><i class="fas fa-utensils text-xs"></i></div>
-                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Lauk Matang</span>
-                </button>
+        <!-- SISA KATEGORI AKAN TERSEMBUNYI OTOMATIS SEBELUM DIKLIK -->
+        <button type="button" data-category="Lauk Matang" onclick="filterCategory('Lauk Matang')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center"><i class="fas fa-utensils text-xs"></i></div>
+            <span class="text-[9px] font-semibold text-gray-700 leading-tight">Lauk Matang</span>
+        </button>
 
-                <button type="button" data-category="Buah" onclick="filterCategory('Buah')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center"><i class="fas fa-apple-alt text-xs"></i></div>
-                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Buah</span>
-                </button>
+        <button type="button" data-category="Buah" onclick="filterCategory('Buah')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center"><i class="fas fa-apple-alt text-xs"></i></div>
+            <span class="text-[9px] font-semibold text-gray-700 leading-tight">Buah</span>
+        </button>
 
-                <button type="button" data-category="Beras, Telur, Minyak & Bahan Kue" onclick="filterCategory('Beras, Telur, Minyak & Bahan Kue')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-yellow-100 text-yellow-700 flex items-center justify-center"><i class="fas fa-egg text-xs"></i></div>
-                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Sembako & Kue</span>
-                </button>
+        <button type="button" data-category="Beras, Telur, Minyak & Bahan Kue" onclick="filterCategory('Beras, Telur, Minyak & Bahan Kue')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-yellow-100 text-yellow-700 flex items-center justify-center"><i class="fas fa-egg text-xs"></i></div>
+            <span class="text-[9px] font-semibold text-gray-700 leading-tight">Sembako & Kue</span>
+        </button>
 
-                <button type="button" data-category="Mie, Bihun, Soun & Kwetiau" onclick="filterCategory('Mie, Bihun, Soun & Kwetiau')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center"><i class="fas fa-bowl-food text-xs"></i></div>
-                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Mie & Bihun</span>
-                </button>
+        <button type="button" data-category="Mie, Bihun, Soun & Kwetiau" onclick="filterCategory('Mie, Bihun, Soun & Kwetiau')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center"><i class="fas fa-bowl-food text-xs"></i></div>
+            <span class="text-[9px] font-semibold text-gray-700 leading-tight">Mie & Bihun</span>
+        </button>
 
-                <button type="button" data-category="Kerupuk, Kulit Pangsit & Kulit Lumpia" onclick="filterCategory('Kerupuk, Kulit Pangsit & Kulit Lumpia')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center"><i class="fas fa-cookie text-xs"></i></div>
-                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Kerupuk & Kulit</span>
-                </button>
+        <button type="button" data-category="Kerupuk, Kulit Pangsit & Kulit Lumpia" onclick="filterCategory('Kerupuk, Kulit Pangsit & Kulit Lumpia')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center"><i class="fas fa-cookie text-xs"></i></div>
+            <span class="text-[9px] font-semibold text-gray-700 leading-tight">Kerupuk & Kulit</span>
+        </button>
 
-                <button type="button" data-category="Teh, Kopi & Air Mineral" onclick="filterCategory('Teh, Kopi & Air Mineral')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center"><i class="fas fa-mug-hot text-xs"></i></div>
-                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Teh, Kopi & Air</span>
-                </button>
+        <button type="button" data-category="Teh, Kopi & Air Mineral" onclick="filterCategory('Teh, Kopi & Air Mineral')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center"><i class="fas fa-mug-hot text-xs"></i></div>
+            <span class="text-[9px] font-semibold text-gray-700 leading-tight">Teh, Kopi & Air</span>
+        </button>
 
-                <button type="button" data-category="Roti, Cereal & Selai" onclick="filterCategory('Roti, Cereal & Selai')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-stone-100 text-stone-600 flex items-center justify-center"><i class="fas fa-bread-slice text-xs"></i></div>
-                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Roti & Selai</span>
-                </button>
+        <button type="button" data-category="Roti, Cereal & Selai" onclick="filterCategory('Roti, Cereal & Selai')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-stone-100 text-stone-600 flex items-center justify-center"><i class="fas fa-bread-slice text-xs"></i></div>
+            <span class="text-[9px] font-semibold text-gray-700 leading-tight">Roti & Selai</span>
+        </button>
 
-                <button type="button" data-category="Susu & Olahan SUsu" onclick="filterCategory('Susu & Olahan SUsu')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center"><i class="fas fa-wine-bottle text-xs"></i></div>
-                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Susu & Olahan</span>
-                </button>
+        <button type="button" data-category="Susu & Olahan SUsu" onclick="filterCategory('Susu & Olahan SUsu')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center"><i class="fas fa-wine-bottle text-xs"></i></div>
+            <span class="text-[9px] font-semibold text-gray-700 leading-tight">Susu & Olahan</span>
+        </button>
 
-                <button type="button" data-category="Baby & Mom Produk" onclick="filterCategory('Baby & Mom Produk')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-pink-100 text-pink-500 flex items-center justify-center"><i class="fas fa-baby text-xs"></i></div>
-                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Baby & Mom</span>
-                </button>
+        <button type="button" data-category="Baby & Mom Produk" onclick="filterCategory('Baby & Mom Produk')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-pink-100 text-pink-500 flex items-center justify-center"><i class="fas fa-baby text-xs"></i></div>
+            <span class="text-[9px] font-semibold text-gray-700 leading-tight">Baby & Mom</span>
+        </button>
 
-                <button type="button" data-category="Sabun Pembersih" onclick="filterCategory('Sabun Pembersih')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center"><i class="fas fa-pump-soap text-xs"></i></div>
-                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Sabun & Bersih</span>
-                </button>
+        <button type="button" data-category="Sabun Pembersih" onclick="filterCategory('Sabun Pembersih')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center"><i class="fas fa-pump-soap text-xs"></i></div>
+            <span class="text-[9px] font-semibold text-gray-700 leading-tight">Sabun & Bersih</span>
+        </button>
 
-                <button type="button" data-category="Perlengkapan Dapur" onclick="filterCategory('Perlengkapan Dapur')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center"><i class="fas fa-kitchen-set text-xs"></i></div>
-                    <span class="text-[9px] font-semibold text-gray-700 leading-tight">Alat Dapur</span>
-                </button>
+        <button type="button" data-category="Perlengkapan Dapur" onclick="filterCategory('Perlengkapan Dapur')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center"><i class="fas fa-kitchen-set text-xs"></i></div>
+            <span class="text-[9px] font-semibold text-gray-700 leading-tight">Alat Dapur</span>
+        </button>
 
-                <button type="button" data-category="all" onclick="filterCategory('all')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
-                    <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center"><i class="fas fa-th-large text-xs"></i></div>
-                    <span class="text-[9px] font-bold text-gray-700 leading-tight">Semua</span>
-                </button>
-            </div>
-        </section>
+        <button type="button" data-category="all" onclick="filterCategory('all')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
+            <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center"><i class="fas fa-th-large text-xs"></i></div>
+            <span class="text-[9px] font-bold text-gray-700 leading-tight">Semua</span>
+        </button>
+    </div>
+</section>
 
         <!-- SECTION 4: Katalog Produk -->
         <section id="catalog-section">
@@ -300,18 +292,36 @@
 
     </main>
 
-    <!-- Floating Cart Bar -->
-    <div id="floating-cart-bar" class="fixed bottom-0 left-0 right-0 bg-white border-t p-3 z-30 shadow-2xl transition-transform duration-300">
-        <div class="max-w-md mx-auto flex justify-between items-center gap-3">
-            <div>
-                <p id="total-details" class="text-[10px] text-gray-500">Produk: Rp 0 | Ongkir: Rp 10.000</p>
-                <p id="total-price" class="text-base font-extrabold text-emerald-700 leading-tight">Rp 10.000</p>
+    <!-- FLOATING BOTTOM BAR (SATU TOMBOL PANJANG) -->
+<div id="floating-cart-bar" class="fixed bottom-0 left-0 right-0 z-40 p-3 bg-white/90 backdrop-blur-md border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+    <div class="max-w-md mx-auto">
+        <button type="button" onclick="openCartModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white p-3 rounded-2xl flex items-center justify-between shadow-lg shadow-emerald-600/25 transition-all">
+            
+            <!-- Sisi Kiri: Detail Rincian & Total -->
+            <div class="text-left leading-tight">
+                <p class="text-[10px] text-emerald-100 font-medium">
+                    <span id="bottom-bar-product-text">Produk: Rp 0</span> | 
+                    <span id="bottom-bar-shipping-text">Ongkir: Rp 10.000</span>
+                </p>
+                <p class="text-sm font-extrabold text-white mt-0.5" id="bottom-bar-total-text">Rp 10.000</p>
             </div>
-            <button type="button" onclick="triggerPesanWA()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-4 rounded-xl flex items-center gap-2 shadow-md transition text-xs">
-                <i class="fab fa-whatsapp text-lg"></i> Pesan via WA
-            </button>
-        </div>
+
+            <!-- Sisi Kanan: Icon Keranjang & Badge Jumlah Item -->
+            <div class="flex items-center gap-2">
+                <span class="text-xs font-bold bg-emerald-700 text-emerald-100 px-2 py-1 rounded-lg">
+                    Lihat Keranjang
+                </span>
+                <div class="relative flex items-center justify-center w-8 h-8 bg-white/20 rounded-xl">
+                    <i class="fas fa-shopping-cart text-white text-xs"></i>
+                    <span id="bottom-bar-badge" class="absolute -top-1.5 -right-1.5 bg-amber-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border-2 border-emerald-600 shadow-sm">
+                        0
+                    </span>
+                </div>
+            </div>
+
+        </button>
     </div>
+</div>
 
     <!-- Modal Form Detail Pengiriman Pembeli -->
     <div id="checkout-modal" class="fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center hidden p-0 sm:p-4 transition-opacity">
@@ -352,483 +362,704 @@
         </div>
     </div>
 
+<!-- MODAL KERANJANG CHECKOUT (STYLE ALA SEGARI) -->
+<div id="cart-modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden">
+    <!-- Ubah rounded-t-2xl menjadi rounded-2xl di baris bawah ini -->
+    <div class="bg-gray-100 w-full max-w-md rounded-2xl max-h-[92vh] flex flex-col overflow-hidden shadow-2xl">
+        
+        <!-- Header Keranjang (Sticky Top) -->
+        <div class="bg-white px-4 py-3 border-b flex items-center justify-between sticky top-0 z-10">
+            <div class="flex items-center gap-3">
+                <button type="button" onclick="closeCartModal()" class="text-gray-600 hover:text-gray-900">
+                    <i class="fas fa-chevron-left text-base"></i>
+                </button>
+                <h2 class="font-bold text-gray-800 text-sm">Keranjang</h2>
+            </div>
+            <button type="button" onclick="closeCartModal()" class="text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times text-base"></i>
+            </button>
+        </div>
+
+        <!-- Body Content (Scrollable) -->
+        <div class="flex-1 overflow-y-auto space-y-2.5 pb-6">
+            
+            <!-- SECTION 2: Pilih Metode Pengiriman -->
+            <div class="bg-white p-3.5 shadow-sm space-y-2.5">
+                <div class="flex items-center gap-2 mb-1">
+                    <i class="fas fa-truck text-emerald-600 text-xs"></i>
+                    <h3 class="text-xs font-bold text-gray-800">Pilih Metode Pengiriman</h3>
+                </div>
+
+                <!-- Option 1: Kurir Toko -->
+                <label class="flex items-start gap-2.5 p-2.5 border rounded-xl cursor-pointer hover:bg-emerald-50/40 transition border-emerald-500 bg-emerald-50/20">
+                    <input type="radio" name="cart_shipping" value="Kurir Toko (Rp 10.000)" checked class="mt-0.5 accent-emerald-600" onchange="updateCartShipping(10000)">
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-xs text-gray-800">Kurir Toko (Kecamatan Terdekat)</span>
+                            <span class="text-emerald-700 font-extrabold text-[11px]">Rp 10.000</span>
+                        </div>
+                        <p class="text-[10px] text-gray-500 mt-0.5">Beji, Pancoran Mas, Limo, Sawangan, & Sukmajaya.</p>
+                    </div>
+                </label>
+
+                <!-- Option 2: Ojol / GrabExpress -->
+                <label class="flex items-start gap-2.5 p-2.5 border rounded-xl cursor-pointer hover:bg-emerald-50/40 transition border-gray-200">
+                    <input type="radio" name="cart_shipping" value="Gojek / GrabExpress (Cek via WA)" class="mt-0.5 accent-emerald-600" onchange="updateCartShipping(0)">
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-xs text-gray-800">Gojek / GrabExpress (Jabodetabek)</span>
+                            <span class="text-gray-500 font-medium text-[10px]">Cek via WA</span>
+                        </div>
+                        <p class="text-[10px] text-gray-500 mt-0.5">Tarif sesuai aplikasi Gojek/Grab dari Swadaya 8 Beji.</p>
+                    </div>
+                </label>
+            </div>
+
+            <!-- SECTION 3: Daftar Item Dalam Keranjang -->
+            <div class="bg-white p-3.5 shadow-sm">
+                <h3 class="text-xs font-bold text-gray-800 mb-3">Item Pesanan</h3>
+                <div id="cart-items-container" class="space-y-3.5 divide-y divide-gray-100">
+                    <!-- Produk keranjang akan di-render dinamis lewat JavaScript -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Sticky Footer Checkout -->
+        <div class="bg-white border-t p-3.5 space-y-3 sticky bottom-0 z-20 shadow-lg">
+            <!-- Subtotal & Detail Biaya -->
+            <div class="space-y-1 text-xs">
+                <div class="flex justify-between text-gray-500">
+                    <span>Subtotal Produk</span>
+                    <span id="cart-subtotal-text" class="font-semibold text-gray-700">Rp 0</span>
+                </div>
+                <div class="flex justify-between text-gray-500">
+                    <span>Ongkos Kirim</span>
+                    <span id="cart-shipping-text" class="font-semibold text-gray-700">Rp 10.000</span>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-2 border-t">
+                <div>
+                    <p class="text-[10px] text-gray-500 font-medium">Total Pembayaran</p>
+                    <p class="text-base font-extrabold text-emerald-700 leading-tight" id="cart-grandtotal-text">Rp 0</p>
+                </div>
+                <button type="button" onclick="handleCheckoutWA()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-xl flex items-center gap-2 text-xs shadow-md transition">
+                    <i class="fab fa-whatsapp text-sm"></i> Lanjut Bayar
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
     <!-- Firebase & Logic Script -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCkZoh9h3ckqqpsrBxRNEZsQFZWkzAX42o",
-            authDomain: "tokosayur-44c5e.firebaseapp.com",
-            projectId: "tokosayur-44c5e",
-            storageBucket: "tokosayur-44c5e.firebasestorage.app",
-            messagingSenderId: "272668584834",
-            appId: "1:272668584834:web:258a983b01bfbe08f87d9b",
-            measurementId: "G-XDC529DV1Y"
-        };
+    // --- FIREBASE CONFIGURATION ---
+    const firebaseConfig = {
+        apiKey: "AIzaSyCkZoh9h3ckqqpsrBxRNEZsQFZWkzAX42o",
+        authDomain: "tokosayur-44c5e.firebaseapp.com",
+        projectId: "tokosayur-44c5e",
+        storageBucket: "tokosayur-44c5e.firebasestorage.app",
+        messagingSenderId: "272668584834",
+        appId: "1:272668584834:web:258a983b01bfbe08f87d9b",
+        measurementId: "G-XDC529DV1Y"
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const productsCol = collection(db, "products");
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const productsCol = collection(db, "products");
 
-        let allProducts = [];
-        let currentCategory = 'Sayuran'; 
-        let searchQuery = '';
-        let expandedDescriptions = {};
-        let cart = loadCartFromStorage();
-        let selectedOptions = {}; 
-        let shippingCost = 10000;
+    // --- STATE VARIABLES ---
+    let allProducts = [];
+    let currentCategory = 'Sayuran'; 
+    let searchQuery = '';
+    let expandedDescriptions = {};
+    let cart = loadCartFromStorage();
+    let selectedOptions = {}; 
+    let shippingCost = 10000; // Default Kurir Toko
 
-        function loadCartFromStorage() {
-            try {
-                const saved = localStorage.getItem('sayurbest_cart');
-                return saved ? JSON.parse(saved) : {};
-            } catch (e) {
-                console.error("Gagal membaca keranjang dari storage:", e);
-                return {};
-            }
+    // --- LOCAL STORAGE FUNCTIONS ---
+    function loadCartFromStorage() {
+        try {
+            const saved = localStorage.getItem('sayurbest_cart');
+            return saved ? JSON.parse(saved) : {};
+        } catch (e) {
+            console.error("Gagal membaca keranjang dari storage:", e);
+            return {};
         }
+    }
 
-        function saveCartToStorage() {
-            try {
-                localStorage.setItem('sayurbest_cart', JSON.stringify(cart));
-            } catch (e) {
-                console.error("Gagal menyimpan keranjang ke storage:", e);
-            }
+    function saveCartToStorage() {
+        try {
+            localStorage.setItem('sayurbest_cart', JSON.stringify(cart));
+        } catch (e) {
+            console.error("Gagal menyimpan keranjang ke storage:", e);
         }
+    }
 
-        function normalizeCategory(str) {
-            if (!str) return '';
-            return str.toLowerCase()
-                      .replace(/&/g, 'dan')
-                      .replace(/,/g, ' ')
-                      .replace(/\s+/g, ' ')
-                      .trim();
-        }
+    // --- HELPER FUNCTIONS ---
+    function normalizeCategory(str) {
+        if (!str) return '';
+        return str.toLowerCase()
+                .replace(/&/g, 'dan')
+                .replace(/,/g, ' ')
+                .replace(/\s+/g, ' ')
+                .trim();
+    }
 
-        function parseVariants(data) {
-            if (!data) return [];
-            if (Array.isArray(data)) {
-                return data.map(item => {
-                    if (typeof item === 'string') {
-                        const parts = item.split(':');
-                        return { 
-                            name: parts[0].trim(), 
-                            price: parts[1] && !isNaN(parts[1].trim()) ? Number(parts[1].trim()) : null 
-                        };
-                    } else if (typeof item === 'object' && item !== null) {
-                        return {
-                            name: item.name || '',
-                            price: item.price !== undefined && item.price !== null ? Number(item.price) : null
-                        };
-                    }
-                    return item;
-                }).filter(v => v.name !== '');
-            }
-            return [];
-        }
-
-        async function fetchProducts() {
-            try {
-                const snapshot = await getDocs(productsCol);
-                allProducts = [];
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    allProducts.push({
-                        id: doc.id,
-                        ...data,
-                        parsedVariants: parseVariants(data.variants),
-                        parsedSizes: parseVariants(data.sizes)
-                    });
-                });
-                updateCategoryUI();
-                renderProducts(getFilteredProducts());
-                updateCartTotals();
-            } catch (err) {
-                console.error("Gagal memuat produk:", err);
-                document.getElementById('product-grid').innerHTML = `<p class="col-span-2 text-center text-red-500 py-6">Gagal memuat katalog produk.</p>`;
-            }
-        }
-
-        function updateCategoryUI() {
-            const buttons = document.querySelectorAll('.category-btn');
-            buttons.forEach(btn => {
-                const cat = btn.getAttribute('data-category');
-                if (cat === currentCategory) {
-                    btn.classList.add('bg-emerald-50', 'border-emerald-400', 'ring-1', 'ring-emerald-400');
-                    btn.classList.remove('bg-white', 'border-gray-200');
-                } else {
-                    btn.classList.remove('bg-emerald-50', 'border-emerald-400', 'ring-1', 'ring-emerald-400');
-                    btn.classList.add('bg-white', 'border-gray-200');
-                }
-            });
-        }
-
-        function getFilteredProducts() {
-            const q = searchQuery.toLowerCase().trim();
-
-            return allProducts.filter(p => {
-                const matchSearch = !q || 
-                    (p.name && p.name.toLowerCase().includes(q)) || 
-                    (p.description && p.description.toLowerCase().includes(q)) ||
-                    (p.category && p.category.toLowerCase().includes(q));
-
-                if (currentCategory === 'all') {
-                    return matchSearch;
-                }
-
-                const prodCat = normalizeCategory(p.category);
-                const currCat = normalizeCategory(currentCategory);
-
-                const matchCategory = prodCat === currCat || 
-                                      prodCat.includes(currCat) || 
-                                      currCat.includes(prodCat);
-
-                return matchCategory && matchSearch;
-            });
-        }
-
-        function calculateProductPrice(product, selectedVarName, selectedSizeName) {
-            let basePrice = Number(product.price) || 0;
-
-            if (selectedVarName && product.parsedVariants.length > 0) {
-                const foundVar = product.parsedVariants.find(v => v.name === selectedVarName);
-                if (foundVar && foundVar.price !== null && !isNaN(foundVar.price)) {
-                    basePrice = foundVar.price;
-                }
-            }
-
-            if (selectedSizeName && product.parsedSizes.length > 0) {
-                const foundSize = product.parsedSizes.find(s => s.name === selectedSizeName);
-                if (foundSize && foundSize.price !== null && !isNaN(foundSize.price)) {
-                    basePrice = foundSize.price;
-                }
-            }
-
-            return basePrice;
-        }
-
-        function renderProducts(items) {
-            const container = document.getElementById('product-grid');
-            container.innerHTML = '';
-
-            if (items.length === 0) {
-                container.innerHTML = `<p class="col-span-2 text-center text-gray-400 py-8">Produk tidak ditemukan.</p>`;
-                return;
-            }
-
-            const fallbackImg = "https://placehold.co/300x300/10b981/ffffff?text=SayurBest";
-
-            items.forEach(p => {
-                const img = (p.imageUrl && p.imageUrl.trim() !== '') ? p.imageUrl : fallbackImg;
-                
-                if (!selectedOptions[p.id]) {
-                    selectedOptions[p.id] = {
-                        variant: p.parsedVariants.length > 0 ? p.parsedVariants[0].name : '',
-                        size: p.parsedSizes.length > 0 ? p.parsedSizes[0].name : ''
+    function parseVariants(data) {
+        if (!data) return [];
+        if (Array.isArray(data)) {
+            return data.map(item => {
+                if (typeof item === 'string') {
+                    const parts = item.split(':');
+                    return { 
+                        name: parts[0].trim(), 
+                        price: parts[1] && !isNaN(parts[1].trim()) ? Number(parts[1].trim()) : null 
+                    };
+                } else if (typeof item === 'object' && item !== null) {
+                    return {
+                        name: item.name || '',
+                        price: item.price !== undefined && item.price !== null ? Number(item.price) : null
                     };
                 }
+                return item;
+            }).filter(v => v.name !== '');
+        }
+        return [];
+    }
 
-                const currentVar = selectedOptions[p.id].variant;
-                const currentSize = selectedOptions[p.id].size;
-                const currentPrice = calculateProductPrice(p, currentVar, currentSize);
+    function calculateProductPrice(product, selectedVarName, selectedSizeName) {
+        let basePrice = Number(product.price) || 0;
 
-                const cartKey = `${p.id}_${currentVar}_${currentSize}`;
-                const qty = cart[cartKey] ? cart[cartKey].qty : 0;
-
-                const badge = p.type === 'po' 
-                    ? '<span class="absolute top-2 left-2 bg-blue-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow z-10">PO</span>' 
-                    : '<span class="absolute top-2 left-2 bg-emerald-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow z-10">Ready Stock</span>';
-
-                let variantSelectorHTML = '';
-                if (p.parsedVariants.length > 0) {
-                    variantSelectorHTML += `
-                        <div class="mt-1.5">
-                            <label class="text-[9px] text-gray-500 font-semibold block mb-0.5">Jenis/Kondisi:</label>
-                            <select onchange="onOptionChange('${p.id}', 'variant', this.value)" class="w-full text-[10px] bg-gray-50 border rounded-lg p-1 text-gray-700 font-medium focus:outline-none focus:border-emerald-600">
-                                ${p.parsedVariants.map(v => `<option value="${v.name}" ${v.name === currentVar ? 'selected' : ''}>${v.name}${v.price !== null ? ' (Rp ' + v.price.toLocaleString('id-ID') + ')' : ''}</option>`).join('')}
-                            </select>
-                        </div>
-                    `;
-                }
-
-                let sizeSelectorHTML = '';
-                if (p.parsedSizes.length > 0) {
-                    sizeSelectorHTML += `
-                        <div class="mt-1.5">
-                            <label class="text-[9px] text-gray-500 font-semibold block mb-0.5">Ukuran/Berat:</label>
-                            <select onchange="onOptionChange('${p.id}', 'size', this.value)" class="w-full text-[10px] bg-gray-50 border rounded-lg p-1 text-gray-700 font-medium focus:outline-none focus:border-emerald-600">
-                                ${p.parsedSizes.map(s => `<option value="${s.name}" ${s.name === currentSize ? 'selected' : ''}>${s.name}${s.price !== null ? ' (Rp ' + s.price.toLocaleString('id-ID') + ')' : ''}</option>`).join('')}
-                            </select>
-                        </div>
-                    `;
-                }
-
-                let descriptionHTML = '';
-                if (p.description) {
-                    const isExpanded = expandedDescriptions[p.id] || false;
-                    const isLong = p.description.length > 50;
-
-                    if (isLong && !isExpanded) {
-                        const shortText = p.description.substring(0, 50) + '...';
-                        descriptionHTML = `
-                            <p class="text-[10px] text-gray-500 mt-0.5">
-                                ${shortText} 
-                                <button type="button" onclick="toggleDescription('${p.id}')" class="text-emerald-600 font-bold hover:underline ml-0.5">selengkapnya</button>
-                            </p>
-                        `;
-                    } else if (isLong && isExpanded) {
-                        descriptionHTML = `
-                            <p class="text-[10px] text-gray-500 mt-0.5">
-                                ${p.description} 
-                                <button type="button" onclick="toggleDescription('${p.id}')" class="text-emerald-600 font-bold hover:underline ml-0.5">sembunyikan</button>
-                            </p>
-                        `;
-                    } else {
-                        descriptionHTML = `<p class="text-[10px] text-gray-500 mt-0.5">${p.description}</p>`;
-                    }
-                }
-
-                const html = `
-                    <div class="bg-white border rounded-2xl p-2.5 flex flex-col justify-between relative shadow-sm hover:shadow transition">
-                        ${badge}
-                        <img src="${img}" loading="lazy" onerror="this.onerror=null;this.src='${fallbackImg}';" class="w-full h-28 object-cover rounded-xl mb-2 border">
-                        
-                        <div class="flex-1">
-                            <h4 class="font-bold text-gray-800 line-clamp-1">${p.name}</h4>
-                            <p class="text-[10px] text-gray-400">${p.unit || ''}</p>
-                            
-                            ${descriptionHTML}
-                            ${variantSelectorHTML}
-                            ${sizeSelectorHTML}
-
-                            <p class="text-xs font-extrabold text-emerald-700 mt-2">Rp ${currentPrice.toLocaleString('id-ID')}</p>
-                        </div>
-
-                        <div class="mt-2.5 flex items-center justify-between bg-gray-50 p-1 rounded-xl border">
-                            <button type="button" onclick="updateCart('${p.id}', -1)" class="w-7 h-7 bg-white text-gray-700 border rounded-lg font-bold flex items-center justify-center hover:bg-gray-100">-</button>
-                            <span class="font-bold text-xs px-2">${qty}</span>
-                            <button type="button" onclick="updateCart('${p.id}', 1)" class="w-7 h-7 bg-emerald-600 text-white rounded-lg font-bold flex items-center justify-center hover:bg-emerald-700">+</button>
-                        </div>
-                    </div>
-                `;
-                container.innerHTML += html;
-            });
+        if (selectedVarName && product.parsedVariants.length > 0) {
+            const foundVar = product.parsedVariants.find(v => v.name === selectedVarName);
+            if (foundVar && foundVar.price !== null && !isNaN(foundVar.price)) {
+                basePrice = foundVar.price;
+            }
         }
 
-        // --- GLOBAL FUNCTIONS & BINDING --- //
-
-        window.toggleDescription = function(productId) {
-            expandedDescriptions[productId] = !expandedDescriptions[productId];
-            renderProducts(getFilteredProducts());
-        };
-
-        window.onOptionChange = function(productId, type, val) {
-            if (!selectedOptions[productId]) {
-                selectedOptions[productId] = { variant: '', size: '' };
+        if (selectedSizeName && product.parsedSizes.length > 0) {
+            const foundSize = product.parsedSizes.find(s => s.name === selectedSizeName);
+            if (foundSize && foundSize.price !== null && !isNaN(foundSize.price)) {
+                basePrice = foundSize.price;
             }
-            selectedOptions[productId][type] = val;
-            renderProducts(getFilteredProducts());
-        };
+        }
 
-        window.filterCategory = function(category) {
-            currentCategory = category;
+        return basePrice;
+    }
+
+    function getCartSubtotal() {
+        let total = 0;
+        Object.values(cart).forEach(item => {
+            total += (Number(item.price) || 0) * (Number(item.qty) || 0);
+        });
+        return total;
+    }
+
+    function updateCartTotals() {
+        let totalItems = 0;
+        let subtotal = getCartSubtotal();
+
+        Object.values(cart).forEach(item => {
+            totalItems += item.qty;
+        });
+
+        // 1. Update Badge Keranjang di Header Utama
+        const badge = document.getElementById('cart-badge');
+        if (badge) badge.innerText = totalItems;
+
+        const grandTotal = subtotal + shippingCost;
+
+        // 2. Update Element Bar Melayang (Single Long Button Footer)
+        const bottomProd = document.getElementById('bottom-bar-product-text');
+        if (bottomProd) bottomProd.innerText = `Produk: Rp ${subtotal.toLocaleString('id-ID')}`;
+
+        const bottomShip = document.getElementById('bottom-bar-shipping-text');
+        if (bottomShip) bottomShip.innerText = `Ongkir: Rp ${shippingCost.toLocaleString('id-ID')}`;
+
+        const bottomTotal = document.getElementById('bottom-bar-total-text');
+        if (bottomTotal) bottomTotal.innerText = `Rp ${grandTotal.toLocaleString('id-ID')}`;
+
+        const bottomBadge = document.getElementById('bottom-bar-badge');
+        if (bottomBadge) bottomBadge.innerText = totalItems;
+
+        // Fallback jika elemen lama ID total-details / total-price masih dipakai
+        const details = document.getElementById('total-details');
+        if (details) details.innerText = `Produk: Rp ${subtotal.toLocaleString('id-ID')} | Ongkir: Rp ${shippingCost.toLocaleString('id-ID')}`;
+        
+        const price = document.getElementById('total-price');
+        if (price) price.innerText = `Rp ${grandTotal.toLocaleString('id-ID')}`;
+
+        // 3. UPDATE RINCIAN BIAYA MODAL KERANJANG
+        const subtotalText = document.getElementById('cart-subtotal-text');
+        if (subtotalText) subtotalText.innerText = `Rp ${subtotal.toLocaleString('id-ID')}`;
+
+        const shippingText = document.getElementById('cart-shipping-text');
+        if (shippingText) shippingText.innerText = `Rp ${shippingCost.toLocaleString('id-ID')}`;
+
+        const grandtotalText = document.getElementById('cart-grandtotal-text');
+        if (grandtotalText) grandtotalText.innerText = `Rp ${grandTotal.toLocaleString('id-ID')}`;
+    }
+
+    function getFilteredProducts() {
+        const q = searchQuery.toLowerCase().trim();
+
+        return allProducts.filter(p => {
+            const matchSearch = !q || 
+                (p.name && p.name.toLowerCase().includes(q)) || 
+                (p.description && p.description.toLowerCase().includes(q)) ||
+                (p.category && p.category.toLowerCase().includes(q));
+
+            if (currentCategory === 'all') {
+                return matchSearch;
+            }
+
+            const prodCat = normalizeCategory(p.category);
+            const currCat = normalizeCategory(currentCategory);
+
+            const matchCategory = prodCat === currCat || 
+                                  prodCat.includes(currCat) || 
+                                  currCat.includes(prodCat);
+
+            return matchCategory && matchSearch;
+        });
+    }
+
+    // --- FETCH & RENDER DATA ---
+    async function fetchProducts() {
+        try {
+            const snapshot = await getDocs(productsCol);
+            allProducts = [];
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                allProducts.push({
+                    id: doc.id,
+                    ...data,
+                    parsedVariants: parseVariants(data.variants),
+                    parsedSizes: parseVariants(data.sizes)
+                });
+            });
             updateCategoryUI();
             renderProducts(getFilteredProducts());
-        };
+            updateCartTotals();
+        } catch (err) {
+            console.error("Gagal memuat produk:", err);
+            const grid = document.getElementById('product-grid');
+            if (grid) grid.innerHTML = `<p class="col-span-2 text-center text-red-500 py-6">Gagal memuat katalog produk.</p>`;
+        }
+    }
 
-        window.updateCart = function(productId, change) {
-            const product = allProducts.find(p => p.id === productId);
-            if (!product) return;
+    function updateCategoryUI() {
+        const buttons = document.querySelectorAll('.category-btn');
+        buttons.forEach(btn => {
+            const cat = btn.getAttribute('data-category');
+            if (cat === currentCategory) {
+                btn.classList.add('bg-emerald-50', 'border-emerald-400', 'ring-1', 'ring-emerald-400');
+                btn.classList.remove('bg-white', 'border-gray-200');
+            } else {
+                btn.classList.remove('bg-emerald-50', 'border-emerald-400', 'ring-1', 'ring-emerald-400');
+                btn.classList.add('bg-white', 'border-gray-200');
+            }
+        });
+    }
 
-            const currentVar = selectedOptions[productId] ? selectedOptions[productId].variant : '';
-            const currentSize = selectedOptions[productId] ? selectedOptions[productId].size : '';
-            const price = calculateProductPrice(product, currentVar, currentSize);
-            const cartKey = `${productId}_${currentVar}_${currentSize}`;
+    function renderProducts(items) {
+        const container = document.getElementById('product-grid');
+        if (!container) return;
+        container.innerHTML = '';
 
-            if (!cart[cartKey]) {
-                cart[cartKey] = {
-                    id: productId,
-                    name: product.name,
-                    variant: currentVar,
-                    size: currentSize,
-                    price: price,
-                    qty: 0
+        if (items.length === 0) {
+            container.innerHTML = `<p class="col-span-2 text-center text-gray-400 py-8">Produk tidak ditemukan.</p>`;
+            return;
+        }
+
+        const fallbackImg = "https://placehold.co/300x300/10b981/ffffff?text=SayurBest";
+
+        items.forEach(p => {
+            const img = (p.imageUrl && p.imageUrl.trim() !== '') ? p.imageUrl : fallbackImg;
+            
+            if (!selectedOptions[p.id]) {
+                selectedOptions[p.id] = {
+                    variant: p.parsedVariants.length > 0 ? p.parsedVariants[0].name : '',
+                    size: p.parsedSizes.length > 0 ? p.parsedSizes[0].name : ''
                 };
             }
 
-            cart[cartKey].price = price;
-            cart[cartKey].qty += change;
+            const currentVar = selectedOptions[p.id].variant;
+            const currentSize = selectedOptions[p.id].size;
+            const currentPrice = calculateProductPrice(p, currentVar, currentSize);
 
+            const cartKey = `${p.id}_${currentVar}_${currentSize}`;
+            const qty = cart[cartKey] ? cart[cartKey].qty : 0;
+
+            const badge = p.type === 'po' 
+                ? '<span class="absolute top-2 left-2 bg-blue-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow z-10">PO</span>' 
+                : '<span class="absolute top-2 left-2 bg-emerald-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow z-10">Ready Stock</span>';
+
+            let variantSelectorHTML = '';
+            if (p.parsedVariants.length > 0) {
+                variantSelectorHTML += `
+                    <div class="mt-1.5">
+                        <label class="text-[9px] text-gray-500 font-semibold block mb-0.5">Jenis/Kondisi:</label>
+                        <select onchange="onOptionChange('${p.id}', 'variant', this.value)" class="w-full text-[10px] bg-gray-50 border rounded-lg p-1 text-gray-700 font-medium focus:outline-none focus:border-emerald-600">
+                            ${p.parsedVariants.map(v => `<option value="${v.name}" ${v.name === currentVar ? 'selected' : ''}>${v.name}${v.price !== null ? ' (Rp ' + v.price.toLocaleString('id-ID') + ')' : ''}</option>`).join('')}
+                        </select>
+                    </div>
+                `;
+            }
+
+            let sizeSelectorHTML = '';
+            if (p.parsedSizes.length > 0) {
+                sizeSelectorHTML += `
+                    <div class="mt-1.5">
+                        <label class="text-[9px] text-gray-500 font-semibold block mb-0.5">Ukuran/Berat:</label>
+                        <select onchange="onOptionChange('${p.id}', 'size', this.value)" class="w-full text-[10px] bg-gray-50 border rounded-lg p-1 text-gray-700 font-medium focus:outline-none focus:border-emerald-600">
+                            ${p.parsedSizes.map(s => `<option value="${s.name}" ${s.name === currentSize ? 'selected' : ''}>${s.name}${s.price !== null ? ' (Rp ' + s.price.toLocaleString('id-ID') + ')' : ''}</option>`).join('')}
+                        </select>
+                    </div>
+                `;
+            }
+
+            let descriptionHTML = '';
+            if (p.description) {
+                const isExpanded = expandedDescriptions[p.id] || false;
+                const isLong = p.description.length > 50;
+
+                if (isLong && !isExpanded) {
+                    const shortText = p.description.substring(0, 50) + '...';
+                    descriptionHTML = `
+                        <p class="text-[10px] text-gray-500 mt-0.5">
+                            ${shortText} 
+                            <button type="button" onclick="toggleDescription('${p.id}')" class="text-emerald-600 font-bold hover:underline ml-0.5">selengkapnya</button>
+                        </p>
+                    `;
+                } else if (isLong && isExpanded) {
+                    descriptionHTML = `
+                        <p class="text-[10px] text-gray-500 mt-0.5">
+                            ${p.description} 
+                            <button type="button" onclick="toggleDescription('${p.id}')" class="text-emerald-600 font-bold hover:underline ml-0.5">sembunyikan</button>
+                        </p>
+                    `;
+                } else {
+                    descriptionHTML = `<p class="text-[10px] text-gray-500 mt-0.5">${p.description}</p>`;
+                }
+            }
+
+            const html = `
+                <div class="bg-white border rounded-2xl p-2.5 flex flex-col justify-between relative shadow-sm hover:shadow transition">
+                    ${badge}
+                    <img src="${img}" loading="lazy" onerror="this.onerror=null;this.src='${fallbackImg}';" class="w-full h-28 object-cover rounded-xl mb-2 border">
+                    
+                    <div class="flex-1">
+                        <h4 class="font-bold text-gray-800 line-clamp-1">${p.name}</h4>
+                        <p class="text-[10px] text-gray-400">${p.unit || ''}</p>
+                        
+                        ${descriptionHTML}
+                        ${variantSelectorHTML}
+                        ${sizeSelectorHTML}
+
+                        <p class="text-xs font-extrabold text-emerald-700 mt-2">Rp ${currentPrice.toLocaleString('id-ID')}</p>
+                    </div>
+
+                    <div class="mt-2.5 flex items-center justify-between bg-gray-50 p-1 rounded-xl border">
+                        <button type="button" onclick="updateCart('${p.id}', -1)" class="w-7 h-7 bg-white text-gray-700 border rounded-lg font-bold flex items-center justify-center hover:bg-gray-100">-</button>
+                        <span class="font-bold text-xs px-2">${qty}</span>
+                        <button type="button" onclick="updateCart('${p.id}', 1)" class="w-7 h-7 bg-emerald-600 text-white rounded-lg font-bold flex items-center justify-center hover:bg-emerald-700">+</button>
+                    </div>
+                </div>
+            `;
+            container.innerHTML += html;
+        });
+    }
+
+    function renderCartModalItems() {
+        const container = document.getElementById('cart-items-container');
+        if (!container) return;
+
+        const items = Object.entries(cart);
+
+        if (items.length === 0) {
+            container.innerHTML = '<p class="text-center text-gray-400 text-xs py-8">Keranjang belanja Anda masih kosong</p>';
+            updateCartTotals();
+            return;
+        }
+
+        container.innerHTML = items.map(([cartKey, item]) => {
+            let optText = [];
+            if (item.variant) optText.push(item.variant);
+            if (item.size) optText.push(item.size);
+            const detailStr = optText.length > 0 ? ` (${optText.join(', ')})` : '';
+            const itemImg = item.imageUrl || 'https://placehold.co/100x100/10b981/ffffff?text=SayurBest';
+
+            return `
+                <div class="flex items-center gap-3 pt-3 first:pt-0">
+                    <div class="text-emerald-600">
+                        <i class="fas fa-check-circle text-base"></i>
+                    </div>
+
+                    <img src="${itemImg}" alt="${item.name}" class="w-14 h-14 object-cover rounded-xl border bg-gray-50 shrink-0">
+
+                    <div class="flex-1 min-w-0">
+                        <h4 class="text-xs font-bold text-gray-800 line-clamp-1 leading-snug">${item.name}</h4>
+                        <p class="text-[10px] text-gray-400 mt-0.5">${detailStr || '1 pack'}</p>
+                        <p class="text-xs font-extrabold text-emerald-700 mt-1">Rp ${item.price.toLocaleString('id-ID')}</p>
+                    </div>
+
+                    <div class="flex items-center gap-2 border border-gray-200 rounded-lg px-2 py-1 bg-white shadow-sm shrink-0">
+                        <button type="button" onclick="modifyCartFromModal('${cartKey}', -1)" class="text-gray-400 hover:text-emerald-600 text-xs font-bold px-1">-</button>
+                        <span class="text-xs font-bold text-gray-800 min-w-[16px] text-center">${item.qty}</span>
+                        <button type="button" onclick="modifyCartFromModal('${cartKey}', 1)" class="text-emerald-600 hover:text-emerald-700 text-xs font-bold px-1">+</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        updateCartTotals();
+    }
+
+    // --- GLOBAL FUNCTIONS BINDING ---
+    window.toggleDescription = function(productId) {
+        expandedDescriptions[productId] = !expandedDescriptions[productId];
+        renderProducts(getFilteredProducts());
+    };
+
+    window.onOptionChange = function(productId, type, val) {
+        if (!selectedOptions[productId]) {
+            selectedOptions[productId] = { variant: '', size: '' };
+        }
+        selectedOptions[productId][type] = val;
+        renderProducts(getFilteredProducts());
+    };
+
+    window.filterCategory = function(category) {
+        currentCategory = category;
+        updateCategoryUI();
+        renderProducts(getFilteredProducts());
+    };
+
+    window.updateCart = function(productId, change) {
+        const product = allProducts.find(p => p.id === productId);
+        if (!product) return;
+
+        const currentVar = selectedOptions[productId] ? selectedOptions[productId].variant : '';
+        const currentSize = selectedOptions[productId] ? selectedOptions[productId].size : '';
+        const price = calculateProductPrice(product, currentVar, currentSize);
+        const cartKey = `${productId}_${currentVar}_${currentSize}`;
+
+        if (!cart[cartKey]) {
+            cart[cartKey] = {
+                id: productId,
+                name: product.name,
+                variant: currentVar,
+                size: currentSize,
+                price: price,
+                imageUrl: product.imageUrl || '',
+                qty: 0
+            };
+        }
+
+        cart[cartKey].price = price;
+        cart[cartKey].qty += change;
+
+        if (cart[cartKey].qty <= 0) {
+            delete cart[cartKey];
+        }
+
+        if (typeof fbq === 'function' && change > 0) {
+            fbq('track', 'AddToCart', {
+                content_name: product.name,
+                value: price,
+                currency: 'IDR'
+            });
+        }
+
+        saveCartToStorage();
+        updateCartTotals();
+        renderProducts(getFilteredProducts());
+    };
+
+    window.updateCartShipping = function(cost) {
+        shippingCost = Number(cost) || 0;
+        updateCartTotals();
+    };
+
+    window.clearSearch = function() {
+        const input = document.getElementById('search-input');
+        if (input) input.value = '';
+        searchQuery = '';
+        const clearBtn = document.getElementById('clear-search-btn');
+        if (clearBtn) clearBtn.classList.add('hidden');
+        renderProducts(getFilteredProducts());
+    };
+
+    window.scrollToCart = function() {
+        openCartModal();
+    };
+
+    window.openCheckoutModal = function() {
+        const modal = document.getElementById('checkout-modal');
+        if (modal) modal.classList.remove('hidden');
+        if (typeof fbq === 'function') {
+            fbq('track', 'InitiateCheckout');
+        }
+    };
+
+    window.closeCheckoutModal = function() {
+        const modal = document.getElementById('checkout-modal');
+        if (modal) modal.classList.add('hidden');
+    };
+
+    window.triggerPesanWA = function() {
+        const subtotal = getCartSubtotal();
+        
+        if (subtotal === 0) {
+            alert("Keranjang belanja Anda masih kosong! Silakan pilih produk terlebih dahulu.");
+            return;
+        }
+
+        if (subtotal < 5000) {
+            alert(`Mohon maaf, minimal total belanja produk adalah Rp 5.000.\nTotal belanja Anda saat ini: Rp ${subtotal.toLocaleString('id-ID')}`);
+            return;
+        }
+
+        openCheckoutModal();
+    };
+
+    window.handleCheckout = function(event) {
+        event.preventDefault();
+
+        const items = Object.values(cart);
+        const name = document.getElementById('cust-name').value.trim();
+        const phone = document.getElementById('cust-phone').value.trim();
+        const address = document.getElementById('cust-address').value.trim();
+        const notes = document.getElementById('cust-notes').value.trim();
+
+        let message = "*HALO SAYURBEST, SAYA MAU PESAN:*\n\n";
+        message += "*DATA PEMESAN:*\n";
+        message += `• Nama: ${name}\n`;
+        message += `• No. WA: ${phone}\n`;
+        message += `• Alamat: ${address}\n`;
+        if (notes) message += `• Catatan: ${notes}\n`;
+
+        message += `\n*DAFTAR PESANAN:*\n`;
+        let totalPrice = 0;
+
+        items.forEach((item, idx) => {
+            const subtotal = item.price * item.qty;
+            totalPrice += subtotal;
+            let optText = [];
+            if (item.variant) optText.push(item.variant);
+            if (item.size) optText.push(item.size);
+            const detailStr = optText.length > 0 ? ` (${optText.join(', ')})` : '';
+
+            message += `${idx + 1}. *${item.name}${detailStr}*\n   ${item.qty} x Rp ${item.price.toLocaleString('id-ID')} = Rp ${subtotal.toLocaleString('id-ID')}\n`;
+        });
+
+        const selectedShippingRadio = document.querySelector('input[name="cart_shipping"]:checked') || document.querySelector('input[name="modal_shipping"]:checked');
+        const shippingText = selectedShippingRadio ? selectedShippingRadio.value : 'Kurir Toko (Rp 10.000)';
+        const grandTotal = totalPrice + shippingCost;
+
+        message += `\n-----------------------------------`;
+        message += `\n*Total Produk:* Rp ${totalPrice.toLocaleString('id-ID')}`;
+        message += `\n*Metode Pengiriman:* ${shippingText}`;
+        message += `\n*Grand Total:* Rp ${grandTotal.toLocaleString('id-ID')}`;
+        message += `\n-----------------------------------`;
+        message += `\n\n*Mohon diproses pesanan saya. Terima kasih!*`;
+
+        if (typeof fbq === 'function') {
+            fbq('track', 'Lead');
+            fbq('track', 'Purchase', {
+                value: grandTotal,
+                currency: 'IDR'
+            });
+        }
+
+        const phoneNumber = "6281513797839";
+        const encodedMessage = encodeURIComponent(message);
+        
+        cart = {};
+        saveCartToStorage();
+        updateCartTotals();
+
+        closeCheckoutModal();
+        window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+    };
+
+    window.toggleCategories = function() {
+        const grid = document.getElementById('category-grid');
+        const btn = document.getElementById('toggle-category-btn');
+        if (!grid || !btn) return;
+
+        if (grid.classList.contains('max-h-[165px]')) {
+            grid.classList.remove('max-h-[165px]', 'overflow-hidden');
+            grid.classList.add('max-h-[2000px]');
+            btn.textContent = 'Sembunyikan';
+        } else {
+            grid.classList.add('max-h-[165px]', 'overflow-hidden');
+            grid.classList.remove('max-h-[2000px]');
+            btn.textContent = 'Tampilkan Semua';
+        }
+    };
+
+    window.openCartModal = function() {
+        renderCartModalItems();
+        const modal = document.getElementById('cart-modal');
+        if (modal) modal.classList.remove('hidden');
+    };
+
+    window.closeCartModal = function() {
+        const modal = document.getElementById('cart-modal');
+        if (modal) modal.classList.add('hidden');
+    };
+
+    window.modifyCartFromModal = function(cartKey, change) {
+        if (cart[cartKey]) {
+            cart[cartKey].qty += change;
+            
             if (cart[cartKey].qty <= 0) {
                 delete cart[cartKey];
             }
-
-            // Meta Pixel Track AddToCart ketika pengguna menambah produk
-            if (typeof fbq === 'function' && change > 0) {
-                fbq('track', 'AddToCart', {
-                    content_name: product.name,
-                    value: price,
-                    currency: 'IDR'
-                });
-            }
-
-            saveCartToStorage();
-            updateCartTotals();
-            renderProducts(getFilteredProducts());
-        };
-
-        function getCartSubtotal() {
-            let total = 0;
-            Object.values(cart).forEach(item => {
-                total += item.price * item.qty;
-            });
-            return total;
-        }
-
-        function updateCartTotals() {
-            let totalItems = 0;
-            let totalPrice = getCartSubtotal();
-
-            Object.values(cart).forEach(item => {
-                totalItems += item.qty;
-            });
-
-            document.getElementById('cart-badge').innerText = totalItems;
-            const grandTotal = totalPrice + shippingCost;
-            document.getElementById('total-details').innerText = `Produk: Rp ${totalPrice.toLocaleString('id-ID')} | Ongkir: Rp ${shippingCost.toLocaleString('id-ID')}`;
-            document.getElementById('total-price').innerText = `Rp ${grandTotal.toLocaleString('id-ID')}`;
-        }
-
-        window.updateShipping = function(cost) {
-            shippingCost = cost;
-            updateCartTotals();
-        };
-
-        window.clearSearch = function() {
-            const input = document.getElementById('search-input');
-            input.value = '';
-            searchQuery = '';
-            document.getElementById('clear-search-btn').classList.add('hidden');
-            renderProducts(getFilteredProducts());
-        };
-
-        window.scrollToCart = function() {
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        };
-
-        window.openCheckoutModal = function() {
-            document.getElementById('checkout-modal').classList.remove('hidden');
-            // Meta Pixel Track InitiateCheckout
-            if (typeof fbq === 'function') {
-                fbq('track', 'InitiateCheckout');
-            }
-        };
-
-        window.closeCheckoutModal = function() {
-            document.getElementById('checkout-modal').classList.add('hidden');
-        };
-
-        window.triggerPesanWA = function() {
-            const subtotal = getCartSubtotal();
             
-            if (subtotal === 0) {
-                alert("Keranjang belanja Anda masih kosong! Silakan pilih produk terlebih dahulu.");
-                return;
-            }
-
-            if (subtotal < 5000) {
-                alert(`Mohon maaf, minimal total belanja produk adalah Rp 5.000.\nTotal belanja Anda saat ini: Rp ${subtotal.toLocaleString('id-ID')}`);
-                return;
-            }
-
-            openCheckoutModal();
-        };
-
-        window.handleCheckout = function(event) {
-            event.preventDefault();
-
-            const items = Object.values(cart);
-            const name = document.getElementById('cust-name').value.trim();
-            const phone = document.getElementById('cust-phone').value.trim();
-            const address = document.getElementById('cust-address').value.trim();
-            const notes = document.getElementById('cust-notes').value.trim();
-
-            let message = "*HALO SAYURBEST, SAYA MAU PESAN:*\n\n";
-            message += "*DATA PEMESAN:*\n";
-            message += `• Nama: ${name}\n`;
-            message += `• No. WA: ${phone}\n`;
-            message += `• Alamat: ${address}\n`;
-            if (notes) message += `• Catatan: ${notes}\n`;
-
-            message += `\n*DAFTAR PESANAN:*\n`;
-            let totalPrice = 0;
-
-            items.forEach((item, idx) => {
-                const subtotal = item.price * item.qty;
-                totalPrice += subtotal;
-                let optText = [];
-                if (item.variant) optText.push(item.variant);
-                if (item.size) optText.push(item.size);
-                const detailStr = optText.length > 0 ? ` (${optText.join(', ')})` : '';
-
-                message += `${idx + 1}. *${item.name}${detailStr}*\n   ${item.qty} x Rp ${item.price.toLocaleString('id-ID')} = Rp ${subtotal.toLocaleString('id-ID')}\n`;
-            });
-
-            const selectedShippingRadio = document.querySelector('input[name="shipping"]:checked');
-            const shippingText = selectedShippingRadio ? selectedShippingRadio.value : 'Kurir Toko (Rp 10.000)';
-            const grandTotal = totalPrice + shippingCost;
-
-            message += `\n-----------------------------------`;
-            message += `\n*Total Produk:* Rp ${totalPrice.toLocaleString('id-ID')}`;
-            message += `\n*Metode Pengiriman:* ${shippingText}`;
-            message += `\n*Grand Total:* Rp ${grandTotal.toLocaleString('id-ID')}`;
-            message += `\n-----------------------------------`;
-            message += `\n\n*Mohon diproses pesanan saya. Terima kasih!*`;
-
-            // Meta Pixel Track Lead & Purchase
-            if (typeof fbq === 'function') {
-                fbq('track', 'Lead');
-                fbq('track', 'Purchase', {
-                    value: grandTotal,
-                    currency: 'IDR'
-                });
-            }
-
-            const phoneNumber = "6281513797839";
-            const encodedMessage = encodeURIComponent(message);
-            
-            cart = {};
             saveCartToStorage();
+            renderCartModalItems();
+            renderProducts(getFilteredProducts());
             updateCartTotals();
+        }
+    };
 
-            closeCheckoutModal();
-            window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
-        };
+    window.handleCheckoutWA = function() {
+        closeCartModal();
+        triggerPesanWA();
+    };
 
-        const searchInput = document.getElementById('search-input');
-        const clearBtn = document.getElementById('clear-search-btn');
+    // --- EVENT LISTENERS & INITIALIZATION ---
+    const searchInput = document.getElementById('search-input');
+    const clearBtn = document.getElementById('clear-search-btn');
 
-        if (searchInput) {
-            searchInput.addEventListener('input', (e) => {
-                searchQuery = e.target.value;
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            if (clearBtn) {
                 if (searchQuery.length > 0) {
                     clearBtn.classList.remove('hidden');
                 } else {
                     clearBtn.classList.add('hidden');
                 }
-                renderProducts(getFilteredProducts());
-            });
-        }
+            }
+            renderProducts(getFilteredProducts());
+        });
+    }
 
-        fetchProducts();
-
-        // Auto-slide Banner Slider
-        document.addEventListener('DOMContentLoaded', () => {
-            const slider = document.getElementById('banner-slider');
-            const dots = document.querySelectorAll('section.relative .flex.justify-center span');
-            if (!slider || dots.length === 0) return;
-
+    document.addEventListener('DOMContentLoaded', () => {
+        // Banner Slider Logic
+        const slider = document.getElementById('banner-slider');
+        const dots = document.querySelectorAll('section.relative .flex.justify-center span');
+        if (slider && dots.length > 0) {
             let currentIndex = 0;
             const totalSlides = dots.length;
             const slideInterval = 4000;
@@ -877,7 +1108,42 @@
                     scrollToSlide(currentIndex);
                 }, slideInterval);
             });
-        });
-    </script>
+        }
+    });
+
+    fetchProducts();
+    
+    window.showComingSoonModal = function(categoryName) {
+    const textElem = document.getElementById('coming-soon-text');
+    if (textElem) {
+        textElem.textContent = `Kategori ${categoryName} sedang dalam persiapan dan akan segera hadir untuk Anda!`;
+    }
+    const modal = document.getElementById('coming-soon-modal');
+    if (modal) modal.classList.remove('hidden');
+};
+
+window.closeComingSoonModal = function() {
+    const modal = document.getElementById('coming-soon-modal');
+    if (modal) modal.classList.add('hidden');
+};
+</script>
+ 
+    <!-- MODAL COMING SOON -->
+<div id="coming-soon-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden p-4">
+    <div class="bg-white rounded-2xl p-5 max-w-xs w-full text-center shadow-xl transform transition-all scale-100">
+        <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+            <i class="fas fa-rocket"></i>
+        </div>
+        <h3 class="text-base font-bold text-gray-800">Segera Hadir!</h3>
+        <p class="text-xs text-gray-500 mt-1" id="coming-soon-text">
+            Kategori ini sedang dalam persiapan dan akan segera hadir untuk Anda.
+        </p>
+        <button type="button" 
+                onclick="closeComingSoonModal()" 
+                class="mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 rounded-xl transition">
+            Mengerti
+        </button>
+    </div>
+</div>
 </body>
 </html>
