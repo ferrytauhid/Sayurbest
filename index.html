@@ -49,7 +49,7 @@
     </script>
 
     <!-- =================================================== -->
-    <!-- 3. META PIXEL SCRIPT (GANTI ID PIXEL DI BAWAH) -->
+    <!-- 3. META PIXEL SCRIPT -->
     <!-- =================================================== -->
     <script>
       !function(f,b,e,v,n,t,s)
@@ -87,7 +87,7 @@
             <!-- Tombol FnB -->
             <button type="button" 
                     onclick="showComingSoonModal('FnB')" 
-                    class="p-1.5 px-2.5 border rounded-xl bg-white/10 hover:bg-white/20 flex flex-col items-center justify-center gap-0.5 transition active:scale-95">
+                    class="p-1.5 px-2.5 border border-white/20 rounded-xl bg-white/10 hover:bg-white/20 flex flex-col items-center justify-center gap-0.5 transition active:scale-95">
                 <i class="fas fa-utensils text-xs"></i>
                 <span class="text-[10px] font-semibold leading-none">FnB</span>
             </button>
@@ -95,10 +95,11 @@
             <!-- Tombol BnB -->
             <button type="button" 
                     onclick="showComingSoonModal('BnB')" 
-                    class="p-1.5 px-2.5 border rounded-xl bg-white/10 hover:bg-white/20 flex flex-col items-center justify-center gap-0.5 transition active:scale-95">
+                    class="p-1.5 px-2.5 border border-white/20 rounded-xl bg-white/10 hover:bg-white/20 flex flex-col items-center justify-center gap-0.5 transition active:scale-95">
                 <i class="fas fa-pump-soap text-xs"></i>
                 <span class="text-[10px] font-semibold leading-none">BnB</span>
             </button>
+
         </div>
         
     </div>
@@ -129,7 +130,7 @@
                         <h2 class="text-base font-bold mt-1.5 leading-snug">Selamat Datang di SayurBest! 👋</h2>
                         <ul class="text-[11px] mt-1.5 space-y-1 text-emerald-50">
                             <li>• <strong>Pengiriman:</strong> Start mulai jam 08.00 pagi</li>
-                            <li>• <strong>Produk PO:</strong> Diproses & dikirim H+1 (Besoknya)</li>
+                            <li>• <strong>Produk PO:</strong> Dipproses & dikirim H+1 (Besoknya)</li>
                             <li>• <strong>Request Jam Kirim / Catatan:</strong> Hubungi admin via WhatsApp</li>
                             <li>• <strong>Garansi Produk:</strong> Kendala/barang kurang? Infokan ke admin untuk penanganan cepat</li>
                         </ul>
@@ -160,13 +161,12 @@
 <section>
     <div class="flex justify-between items-center mb-2.5">
         <h3 class="text-xs font-bold text-gray-800">Pilih Kategori</h3>
-        <!-- Tombol Tampilkan Semua / Sembunyikan -->
         <button type="button" id="toggle-category-btn" onclick="toggleCategories()" class="text-[11px] text-emerald-600 font-semibold hover:underline">
             Tampilkan Semua
         </button>
     </div>
 
-    <!-- Container Grid dengan Pembatas Tinggi (Default 2 Baris) -->
+    <!-- Container Grid dengan Pembatas Tinggi -->
     <div id="category-grid" class="grid grid-cols-4 gap-2 text-center text-xs max-h-[165px] overflow-hidden transition-all duration-300">
         
         <button type="button" data-category="Sayuran" onclick="filterCategory('Sayuran')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
@@ -209,7 +209,6 @@
             <span class="text-[9px] font-semibold text-gray-700 leading-tight">Lauk Siap Masak & Frozen Food</span>
         </button>
 
-        <!-- SISA KATEGORI AKAN TERSEMBUNYI OTOMATIS SEBELUM DIKLIK -->
         <button type="button" data-category="Lauk Matang" onclick="filterCategory('Lauk Matang')" class="category-btn p-2 bg-white border border-gray-200 rounded-xl flex flex-col items-center justify-center gap-1 shadow-sm transition">
             <div class="w-8 h-8 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center"><i class="fas fa-utensils text-xs"></i></div>
             <span class="text-[9px] font-semibold text-gray-700 leading-tight">Lauk Matang</span>
@@ -292,12 +291,11 @@
 
     </main>
 
-    <!-- FLOATING BOTTOM BAR (SATU TOMBOL PANJANG) -->
+    <!-- FLOATING BOTTOM BAR -->
 <div id="floating-cart-bar" class="fixed bottom-0 left-0 right-0 z-40 p-3 bg-white/90 backdrop-blur-md border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
     <div class="max-w-md mx-auto">
         <button type="button" onclick="openCartModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white p-3 rounded-2xl flex items-center justify-between shadow-lg shadow-emerald-600/25 transition-all">
             
-            <!-- Sisi Kiri: Detail Rincian & Total -->
             <div class="text-left leading-tight">
                 <p class="text-[10px] text-emerald-100 font-medium">
                     <span id="bottom-bar-product-text">Produk: Rp 0</span> | 
@@ -306,7 +304,6 @@
                 <p class="text-sm font-extrabold text-white mt-0.5" id="bottom-bar-total-text">Rp 10.000</p>
             </div>
 
-            <!-- Sisi Kanan: Icon Keranjang & Badge Jumlah Item -->
             <div class="flex items-center gap-2">
                 <span class="text-xs font-bold bg-emerald-700 text-emerald-100 px-2 py-1 rounded-lg">
                     Lihat Keranjang
@@ -362,12 +359,11 @@
         </div>
     </div>
 
-<!-- MODAL KERANJANG CHECKOUT (STYLE ALA SEGARI) -->
+<!-- MODAL KERANJANG CHECKOUT -->
 <div id="cart-modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden">
-    <!-- Ubah rounded-t-2xl menjadi rounded-2xl di baris bawah ini -->
     <div class="bg-gray-100 w-full max-w-md rounded-2xl max-h-[92vh] flex flex-col overflow-hidden shadow-2xl">
         
-        <!-- Header Keranjang (Sticky Top) -->
+        <!-- Header Keranjang -->
         <div class="bg-white px-4 py-3 border-b flex items-center justify-between sticky top-0 z-10">
             <div class="flex items-center gap-3">
                 <button type="button" onclick="closeCartModal()" class="text-gray-600 hover:text-gray-900">
@@ -380,7 +376,7 @@
             </button>
         </div>
 
-        <!-- Body Content (Scrollable) -->
+        <!-- Body Content -->
         <div class="flex-1 overflow-y-auto space-y-2.5 pb-6">
             
             <!-- SECTION 2: Pilih Metode Pengiriman -->
@@ -390,7 +386,6 @@
                     <h3 class="text-xs font-bold text-gray-800">Pilih Metode Pengiriman</h3>
                 </div>
 
-                <!-- Option 1: Kurir Toko -->
                 <label class="flex items-start gap-2.5 p-2.5 border rounded-xl cursor-pointer hover:bg-emerald-50/40 transition border-emerald-500 bg-emerald-50/20">
                     <input type="radio" name="cart_shipping" value="Kurir Toko (Rp 10.000)" checked class="mt-0.5 accent-emerald-600" onchange="updateCartShipping(10000)">
                     <div class="flex-1">
@@ -402,7 +397,6 @@
                     </div>
                 </label>
 
-                <!-- Option 2: Ojol / GrabExpress -->
                 <label class="flex items-start gap-2.5 p-2.5 border rounded-xl cursor-pointer hover:bg-emerald-50/40 transition border-gray-200">
                     <input type="radio" name="cart_shipping" value="Gojek / GrabExpress (Cek via WA)" class="mt-0.5 accent-emerald-600" onchange="updateCartShipping(0)">
                     <div class="flex-1">
@@ -419,7 +413,6 @@
             <div class="bg-white p-3.5 shadow-sm">
                 <h3 class="text-xs font-bold text-gray-800 mb-3">Item Pesanan</h3>
                 <div id="cart-items-container" class="space-y-3.5 divide-y divide-gray-100">
-                    <!-- Produk keranjang akan di-render dinamis lewat JavaScript -->
                 </div>
             </div>
 
@@ -427,7 +420,6 @@
 
         <!-- Sticky Footer Checkout -->
         <div class="bg-white border-t p-3.5 space-y-3 sticky bottom-0 z-20 shadow-lg">
-            <!-- Subtotal & Detail Biaya -->
             <div class="space-y-1 text-xs">
                 <div class="flex justify-between text-gray-500">
                     <span>Subtotal Produk</span>
@@ -480,7 +472,7 @@
     let expandedDescriptions = {};
     let cart = loadCartFromStorage();
     let selectedOptions = {}; 
-    let shippingCost = 10000; // Default Kurir Toko
+    let shippingCost = 10000;
 
     // --- LOCAL STORAGE FUNCTIONS ---
     function loadCartFromStorage() {
@@ -500,6 +492,7 @@
             console.error("Gagal menyimpan keranjang ke storage:", e);
         }
     }
+    
 
     // --- HELPER FUNCTIONS ---
     function normalizeCategory(str) {
@@ -569,13 +562,13 @@
             totalItems += item.qty;
         });
 
-        // 1. Update Badge Keranjang di Header Utama
+        // Update Badge Keranjang di Header Utama
         const badge = document.getElementById('cart-badge');
         if (badge) badge.innerText = totalItems;
 
         const grandTotal = subtotal + shippingCost;
 
-        // 2. Update Element Bar Melayang (Single Long Button Footer)
+        // Update Floating Bottom Bar
         const bottomProd = document.getElementById('bottom-bar-product-text');
         if (bottomProd) bottomProd.innerText = `Produk: Rp ${subtotal.toLocaleString('id-ID')}`;
 
@@ -588,14 +581,7 @@
         const bottomBadge = document.getElementById('bottom-bar-badge');
         if (bottomBadge) bottomBadge.innerText = totalItems;
 
-        // Fallback jika elemen lama ID total-details / total-price masih dipakai
-        const details = document.getElementById('total-details');
-        if (details) details.innerText = `Produk: Rp ${subtotal.toLocaleString('id-ID')} | Ongkir: Rp ${shippingCost.toLocaleString('id-ID')}`;
-        
-        const price = document.getElementById('total-price');
-        if (price) price.innerText = `Rp ${grandTotal.toLocaleString('id-ID')}`;
-
-        // 3. UPDATE RINCIAN BIAYA MODAL KERANJANG
+        // Update Rincian Biaya Modal Keranjang
         const subtotalText = document.getElementById('cart-subtotal-text');
         if (subtotalText) subtotalText.innerText = `Rp ${subtotal.toLocaleString('id-ID')}`;
 
@@ -897,10 +883,6 @@
         renderProducts(getFilteredProducts());
     };
 
-    window.scrollToCart = function() {
-        openCartModal();
-    };
-
     window.openCheckoutModal = function() {
         const modal = document.getElementById('checkout-modal');
         if (modal) modal.classList.remove('hidden');
@@ -934,10 +916,15 @@
         event.preventDefault();
 
         const items = Object.values(cart);
-        const name = document.getElementById('cust-name').value.trim();
-        const phone = document.getElementById('cust-phone').value.trim();
-        const address = document.getElementById('cust-address').value.trim();
-        const notes = document.getElementById('cust-notes').value.trim();
+        const nameInput = document.getElementById('cust-name');
+        const phoneInput = document.getElementById('cust-phone');
+        const addressInput = document.getElementById('cust-address');
+        const notesInput = document.getElementById('cust-notes');
+
+        const name = nameInput.value.trim();
+        const phone = phoneInput.value.trim();
+        const address = addressInput.value.trim();
+        const notes = notesInput.value.trim();
 
         let message = "*HALO SAYURBEST, SAYA MAU PESAN:*\n\n";
         message += "*DATA PEMESAN:*\n";
@@ -960,7 +947,7 @@
             message += `${idx + 1}. *${item.name}${detailStr}*\n   ${item.qty} x Rp ${item.price.toLocaleString('id-ID')} = Rp ${subtotal.toLocaleString('id-ID')}\n`;
         });
 
-        const selectedShippingRadio = document.querySelector('input[name="cart_shipping"]:checked') || document.querySelector('input[name="modal_shipping"]:checked');
+        const selectedShippingRadio = document.querySelector('input[name="cart_shipping"]:checked');
         const shippingText = selectedShippingRadio ? selectedShippingRadio.value : 'Kurir Toko (Rp 10.000)';
         const grandTotal = totalPrice + shippingCost;
 
@@ -982,9 +969,13 @@
         const phoneNumber = "6281513797839";
         const encodedMessage = encodeURIComponent(message);
         
+        // Reset Cart & Form
         cart = {};
         saveCartToStorage();
         updateCartTotals();
+
+        const checkoutForm = document.getElementById('checkout-form');
+        if (checkoutForm) checkoutForm.reset();
 
         closeCheckoutModal();
         window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
@@ -1035,6 +1026,20 @@
     window.handleCheckoutWA = function() {
         closeCartModal();
         triggerPesanWA();
+    };
+
+    window.showComingSoonModal = function(categoryName) {
+        const textElem = document.getElementById('coming-soon-text');
+        if (textElem) {
+            textElem.textContent = `Kategori ${categoryName} sedang dalam persiapan dan akan segera hadir untuk Anda!`;
+        }
+        const modal = document.getElementById('coming-soon-modal');
+        if (modal) modal.classList.remove('hidden');
+    };
+
+    window.closeComingSoonModal = function() {
+        const modal = document.getElementById('coming-soon-modal');
+        if (modal) modal.classList.add('hidden');
     };
 
     // --- EVENT LISTENERS & INITIALIZATION ---
@@ -1112,20 +1117,6 @@
     });
 
     fetchProducts();
-    
-    window.showComingSoonModal = function(categoryName) {
-    const textElem = document.getElementById('coming-soon-text');
-    if (textElem) {
-        textElem.textContent = `Kategori ${categoryName} sedang dalam persiapan dan akan segera hadir untuk Anda!`;
-    }
-    const modal = document.getElementById('coming-soon-modal');
-    if (modal) modal.classList.remove('hidden');
-};
-
-window.closeComingSoonModal = function() {
-    const modal = document.getElementById('coming-soon-modal');
-    if (modal) modal.classList.add('hidden');
-};
 </script>
  
     <!-- MODAL COMING SOON -->
