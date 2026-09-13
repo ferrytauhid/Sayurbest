@@ -7,6 +7,8 @@
     <!-- Tailwind CSS & FontAwesome CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SheetJS CDN untuk Ekspor & Impor Excel/CSV -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans pb-10">
 
@@ -106,27 +108,35 @@
                 <!-- Input Deskripsi Produk -->
                 <div>
                     <label class="block font-semibold text-gray-700 mb-1">Deskripsi Produk</label>
-                    <textarea id="prod-description" rows="3" placeholder="Contoh: Sayur dipetik langsung dari petani lokal. Kondisi segar dan tanpa bahan pengawet..." class="w-full border rounded-lg p-2.5 focus:border-emerald-600 focus:outline-none"></textarea>
+                    <textarea id="prod-description" rows="3" placeholder="Contoh: Sayur dipetik langsung dari petani lokal..." class="w-full border rounded-lg p-2.5 focus:border-emerald-600 focus:outline-none"></textarea>
                 </div>
 
                 <!-- Opsi Varian Tambahan -->
-                <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 space-y-2">
-                    <p class="font-bold text-emerald-800 text-[11px] flex items-center gap-1">
-                        <i class="fas fa-tags"></i> Fitur Varian (Format: Nama:Harga, Dipisahkan Koma)
+                <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 space-y-2.5">
+                    <p class="font-bold text-emerald-800 text-[11px] flex items-center justify-between">
+                        <span><i class="fas fa-tags"></i> Fitur Varian (Format: Nama:Harga, Dipisahkan Koma)</span>
                     </p>
+
                     <div>
-                        <label class="block text-gray-600 mb-0.5">Opsi Jenis / Kondisi</label>
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="block text-gray-600 text-[10px] font-semibold">Opsi Jenis / Kondisi</label>
+                            <button type="button" onclick="setPreset('variants', 'Utuh, Potong 4, Potong 8, Fillet')" class="text-[9px] text-emerald-700 font-bold hover:underline">+ Preset Ayam/Ikan</button>
+                        </div>
                         <input type="text" id="prod-variants" placeholder="Contoh: Utuh:35000, Bersih/Potong:38000" class="w-full border rounded-lg p-2 focus:border-emerald-600 focus:outline-none bg-white">
                     </div>
+
                     <div>
-                        <label class="block text-gray-600 mb-0.5">Opsi Ukuran / Berat</label>
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="block text-gray-600 text-[10px] font-semibold">Opsi Ukuran / Berat</label>
+                            <button type="button" onclick="setPreset('sizes', '250 gram, 500 gram, 1 Kg')" class="text-[9px] text-emerald-700 font-bold hover:underline">+ Preset Berat</button>
+                        </div>
                         <input type="text" id="prod-sizes" placeholder="Contoh: 500 gram:20000, 1 Kg:39000" class="w-full border rounded-lg p-2 focus:border-emerald-600 focus:outline-none bg-white">
                     </div>
                 </div>
 
                 <div>
                     <label class="block font-semibold text-gray-700 mb-1">URL Gambar (Opsional)</label>
-                    <input type="url" id="prod-image" placeholder="https://images.unsplash.com/..." class="w-full border rounded-lg p-2.5 focus:border-emerald-600 focus:outline-none">
+                    <input type="url" id="prod-image" placeholder="https://ik.imagekit.io/..." class="w-full border rounded-lg p-2.5 focus:border-emerald-600 focus:outline-none">
                 </div>
 
                 <div class="flex gap-2 pt-2">
@@ -140,7 +150,7 @@
             </form>
         </section>
 
-        <!-- Daftar Produk -->
+        <!-- Kelola Stok Produk & Filter -->
         <section class="bg-white rounded-xl p-4 border shadow-sm space-y-3">
             <div class="flex justify-between items-center border-b pb-2">
                 <h2 class="font-bold text-gray-800 text-sm flex items-center gap-2">
@@ -149,10 +159,37 @@
                 <span id="product-count" class="text-xs bg-emerald-100 text-emerald-800 font-semibold px-2 py-0.5 rounded-full">0 Produk</span>
             </div>
 
-            <!-- Fitur Pencarian Produk -->
-            <div class="relative">
-                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
-                <input type="text" id="search-input" placeholder="Cari nama produk atau kategori..." class="w-full pl-8 pr-3 py-2 text-xs border rounded-lg focus:border-emerald-600 focus:outline-none bg-gray-50">
+            <!-- Fitur Pencarian & Filter Kategori Kustom -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                <div class="relative">
+                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" id="search-input" placeholder="Cari nama produk..." class="w-full pl-8 pr-3 py-2 border rounded-lg focus:border-emerald-600 focus:outline-none bg-gray-50">
+                </div>
+
+                <div>
+                    <select id="category-filter" class="w-full p-2 border rounded-lg bg-gray-50 focus:border-emerald-600 focus:outline-none">
+                        <option value="ALL">-- Semua Kategori --</option>
+                        <option value="Sayuran">Sayuran</option>
+                        <option value="Ayam & Bebek">Ayam & Bebek</option>
+                        <option value="Ikan & Seafood">Ikan & Seafood</option>
+                        <option value="Daging Sapi">Daging Sapi</option>
+                        <option value="Tahu, Tempe & Oncom">Tahu, Tempe & Oncom</option>
+                        <option value="Ikan Asin & Pindang">Ikan Asin & Pindang</option>
+                        <option value="Bumbu & Bahan Masak">Bumbu & Bahan Masak</option>
+                        <option value="Lauk Siap Masak & Frozen Food">Lauk Siap Masak & Frozen Food</option>
+                        <option value="Lauk Matang">Lauk Matang</option>
+                        <option value="Buah">Buah</option>
+                        <option value="Beras, Telur, Minyak & Bahan Kue">Beras, Telur, Minyak & Bahan Kue</option>
+                        <option value="Mie, Bihun, Soun & Kwetiau">Mie, Bihun, Soun & Kwetiau</option>
+                        <option value="Kerupuk, Kulit Pangsit & Kulit Lumpia">Kerupuk, Kulit Pangsit & Kulit Lumpia</option>
+                        <option value="Teh, Kopi & Air Mineral">Teh, Kopi & Air Mineral</option>
+                        <option value="Roti, Cereal & Selai">Roti, Cereal & Selai</option>
+                        <option value="Susu & Olahan SUsu">Susu & Olahan SUsu</option>
+                        <option value="Baby & Mom Produk">Baby & Mom Produk</option>
+                        <option value="Sabun Pembersih">Sabun Pembersih</option>
+                        <option value="Perlengkapan Dapur">Perlengkapan Dapur</option>
+                    </select>
+                </div>
             </div>
 
             <div id="admin-product-list" class="space-y-3 text-xs">
@@ -160,13 +197,35 @@
             </div>
         </section>
 
+        <!-- Fitur Perubahan Masal (Ekspor & Impor Excel/CSV) -->
+        <section class="bg-white rounded-xl p-4 border shadow-sm space-y-3">
+            <h2 class="font-bold text-gray-800 text-sm flex items-center gap-2 border-b pb-2">
+                <i class="fas fa-file-excel text-emerald-600"></i> Kelola Masal (Import / Export Excel)
+            </h2>
+            <p class="text-[11px] text-gray-500">Unduh data produk ke Excel, ubah harga/stok sekaligus, lalu unggah kembali file tersebut ke Firebase.</p>
+            
+            <div class="flex flex-wrap gap-2 pt-1">
+                <button type="button" onclick="exportToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-2 rounded-lg text-xs transition flex items-center gap-1.5">
+                    <i class="fas fa-download"></i> Ekspor ke Excel
+                </button>
+                <label class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 py-2 rounded-lg text-xs cursor-pointer transition flex items-center gap-1.5">
+                    <i class="fas fa-upload"></i> Impor dari Excel
+                    <input type="file" id="excel-file-input" accept=".xlsx, .xls, .csv" class="hidden" onchange="importFromExcel(event)">
+                </label>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-4 right-4 bg-gray-900 text-white text-xs px-4 py-3 rounded-xl shadow-2xl hidden z-50 transition-all flex items-center gap-2">
+        <i class="fas fa-check-circle text-emerald-400"></i> <span id="toast-message">Notifikasi</span>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, writeBatch } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-        // Konfigurasi PIN Admin bawaan (bisa Anda ubah di sini)
         const ADMIN_PIN = "301915";
 
         window.checkAdminPin = function() {
@@ -179,7 +238,6 @@
             }
         };
 
-        // Otomatis buka jika sudah login dalam satu sesi peramban
         if (sessionStorage.getItem('admin_auth') === 'true') {
             document.getElementById('admin-lock-screen').classList.add('hidden');
         }
@@ -200,12 +258,23 @@
 
         let productsData = [];
 
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3000);
+        }
+
+        window.setPreset = function(field, value) {
+            if (field === 'variants') document.getElementById('prod-variants').value = value;
+            if (field === 'sizes') document.getElementById('prod-sizes').value = value;
+        };
+
         async function loadAdminProducts() {
             try {
                 const snapshot = await getDocs(productsCol);
                 productsData = [];
                 snapshot.forEach(d => productsData.push({ id: d.id, ...d.data() }));
-
                 filterAndRender();
             } catch (err) {
                 console.error(err);
@@ -213,13 +282,14 @@
             }
         }
 
-        // Fungsi Filter Berdasarkan Input Pencarian
         function filterAndRender() {
             const query = document.getElementById('search-input').value.toLowerCase().trim();
+            const selectedCat = document.getElementById('category-filter').value;
+
             const filtered = productsData.filter(p => {
                 const nameMatch = p.name ? p.name.toLowerCase().includes(query) : false;
-                const catMatch = p.category ? p.category.toLowerCase().includes(query) : false;
-                return nameMatch || catMatch;
+                const catMatch = selectedCat === "ALL" || p.category === selectedCat;
+                return nameMatch && catMatch;
             });
 
             document.getElementById('product-count').innerText = `${filtered.length} dari ${productsData.length} Produk`;
@@ -227,6 +297,7 @@
         }
 
         document.getElementById('search-input').addEventListener('input', filterAndRender);
+        document.getElementById('category-filter').addEventListener('change', filterAndRender);
 
         function renderAdminList(items) {
             const container = document.getElementById('admin-product-list');
@@ -242,22 +313,24 @@
             items.forEach(p => {
                 const img = (p.imageUrl && p.imageUrl.trim() !== '') ? p.imageUrl : fallbackImg;
                 const badge = p.type === 'po' ? '<span class="text-[9px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded font-semibold">PO</span>' : '<span class="text-[9px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded font-semibold">Ready</span>';
-                const descText = p.description ? p.description : '';
+                const isOutOfStock = p.isOutOfStock || false;
 
                 const html = `
-                    <div class="flex items-start justify-between p-2.5 bg-gray-50 rounded-xl border gap-2">
-                        <!-- Ditambahkan loading="lazy" -->
-                        <img src="${img}" loading="lazy" onerror="this.onerror=null;this.src='${fallbackImg}';" class="w-12 h-12 object-cover rounded-lg border mt-0.5">
+                    <div class="flex items-start justify-between p-2.5 ${isOutOfStock ? 'bg-red-50/60 border-red-200' : 'bg-gray-50 border-gray-200'} rounded-xl border gap-2 transition">
+                        <img src="${img}" loading="lazy" onerror="this.onerror=null;this.src='${fallbackImg}';" class="w-12 h-12 object-cover rounded-lg border mt-0.5 ${isOutOfStock ? 'grayscale opacity-60' : ''}">
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center gap-1.5">
-                                <h4 class="font-bold text-gray-800 truncate">${p.name}</h4>
+                                <h4 class="font-bold text-gray-800 truncate ${isOutOfStock ? 'line-through text-gray-400' : ''}">${p.name}</h4>
                                 ${badge}
+                                ${isOutOfStock ? '<span class="text-[9px] bg-red-100 text-red-700 px-1.5 py-0.5 rounded font-extrabold">HABIS</span>' : ''}
                             </div>
                             <p class="text-[11px] text-emerald-600 font-semibold">Rp ${Number(p.price).toLocaleString('id-ID')} <span class="text-gray-400 font-normal">/ ${p.unit || ''}</span></p>
                             <p class="text-[10px] text-gray-500 font-medium">${p.category}</p>
-                            ${descText ? `<p class="text-[10px] text-gray-400 line-clamp-1 italic mt-0.5">${descText}</p>` : ''}
                         </div>
-                        <div class="flex gap-1">
+                        <div class="flex items-center gap-1">
+                            <button onclick="toggleStockStatus('${p.id}', ${isOutOfStock})" class="${isOutOfStock ? 'bg-gray-200 text-gray-600' : 'bg-emerald-100 text-emerald-700'} p-2 rounded-lg transition text-[11px] font-bold" title="Ubah Stok">
+                                <i class="fas ${isOutOfStock ? 'fa-eye-slash' : 'fa-check'}"></i>
+                            </button>
                             <button onclick="setupEdit('${p.id}')" class="bg-amber-100 hover:bg-amber-200 text-amber-800 p-2 rounded-lg transition" title="Edit">
                                 <i class="fas fa-edit"></i>
                             </button>
@@ -270,6 +343,16 @@
                 container.innerHTML += html;
             });
         }
+
+        window.toggleStockStatus = async function(id, currentStatus) {
+            try {
+                await updateDoc(doc(db, "products", id), { isOutOfStock: !currentStatus });
+                showToast(!currentStatus ? "Produk ditandai HABIS" : "Produk ditandai TERSEDIA");
+                await loadAdminProducts();
+            } catch (err) {
+                alert("Gagal memperbarui stok: " + err.message);
+            }
+        };
 
         function parseInputToArray(str) {
             if (!str) return [];
@@ -309,13 +392,15 @@
 
             const btnSave = document.getElementById('btn-save');
             btnSave.disabled = true;
-            btnSave.innerText = "Saving...";
+            btnSave.innerText = "Simpan Data...";
 
             try {
                 if (id) {
                     await updateDoc(doc(db, "products", id), payload);
+                    showToast("Produk berhasil diperbarui!");
                 } else {
-                    await addDoc(productsCol, payload);
+                    await addDoc(productsCol, { ...payload, isOutOfStock: false });
+                    showToast("Produk baru berhasil ditambahkan!");
                 }
                 resetForm();
                 await loadAdminProducts();
@@ -351,6 +436,7 @@
             if (confirm(`Apakah kamu yakin ingin menghapus "${name}"?`)) {
                 try {
                     await deleteDoc(doc(db, "products", id));
+                    showToast("Produk berhasil dihapus");
                     await loadAdminProducts();
                 } catch (err) {
                     alert("Gagal menghapus: " + err.message);
@@ -363,6 +449,77 @@
             document.getElementById('prod-id').value = '';
             document.getElementById('form-title').innerHTML = `<i class="fas fa-plus-circle text-emerald-600"></i> Tambah Produk Baru`;
             document.getElementById('btn-cancel').classList.add('hidden');
+        };
+
+        // Fungsi Ekspor & Impor Masal (Excel)
+        window.exportToExcel = function() {
+            if (productsData.length === 0) return alert("Belum ada data untuk diekspor!");
+
+            const excelData = productsData.map(p => ({
+                ID: p.id,
+                Nama: p.name || '',
+                Harga: p.price || 0,
+                Satuan: p.unit || '',
+                Kategori: p.category || '',
+                Tipe: p.type || 'ready',
+                Deskripsi: p.description || '',
+                URL_Gambar: p.imageUrl || '',
+                Status_Habis: p.isOutOfStock ? 'YA' : 'TIDAK'
+            }));
+
+            const worksheet = XLSX.utils.json_to_sheet(excelData);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Produk_SayurBest");
+            XLSX.writeFile(workbook, `SayurBest_Products_${new Date().toISOString().slice(0,10)}.xlsx`);
+        };
+
+        window.importFromExcel = function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const sheetName = workbook.SheetNames[0];
+                    const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+                    if (jsonData.length === 0) return alert("File Excel kosong!");
+
+                    if (!confirm(`Apakah Anda yakin ingin memperbarui/mengunggah ${jsonData.length} produk masal secara langsung?`)) return;
+
+                    const batch = writeBatch(db);
+                    jsonData.forEach(item => {
+                        const payload = {
+                            name: String(item.Nama || '').trim(),
+                            price: Number(item.Harga || 0),
+                            unit: String(item.Satuan || '').trim(),
+                            category: String(item.Kategori || 'Sayuran').trim(),
+                            type: String(item.Tipe || 'ready').trim().toLowerCase(),
+                            description: String(item.Deskripsi || '').trim(),
+                            imageUrl: String(item.URL_Gambar || '').trim(),
+                            isOutOfStock: String(item.Status_Habis || '').toUpperCase() === 'YA'
+                        };
+
+                        if (item.ID && String(item.ID).trim() !== '') {
+                            batch.update(doc(db, "products", String(item.ID).trim()), payload);
+                        } else {
+                            const newRef = doc(productsCol);
+                            batch.set(newRef, payload);
+                        }
+                    });
+
+                    await batch.commit();
+                    showToast("Berhasil memproses perubahan masal!");
+                    await loadAdminProducts();
+                } catch (err) {
+                    alert("Gagal mengimpor Excel: " + err.message);
+                } finally {
+                    event.target.value = '';
+                }
+            };
+            reader.readAsArrayBuffer(file);
         };
 
         loadAdminProducts();
