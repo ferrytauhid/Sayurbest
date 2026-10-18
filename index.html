@@ -374,6 +374,7 @@ function setProducts(data) {
     if (!p) { delete cart[k]; return; }
     it.price = calcPrice(p, it.variant, it.size);
     it.imageUrl = p.imageUrl || '';
+    it.unit = p.unit || '';
   });
   saveCart();
   render();
@@ -493,7 +494,7 @@ function renderCartItems() {
         <img src="${esc(img(it.imageUrl, 120))}" alt="${esc(it.name)}" width="56" height="56" onerror="this.onerror=null;this.src=window.FALLBACK_IMG" class="w-14 h-14 object-cover rounded-xl border bg-gray-50 shrink-0">
         <div class="flex-1 min-w-0">
           <h4 class="text-xs font-bold text-gray-800 line-clamp-1 leading-snug">${esc(it.name)}</h4>
-          <p class="text-[10px] text-gray-400 mt-0.5">${esc(opt) || '1 pack'}</p>
+          <p class="text-[10px] text-gray-400 mt-0.5">${esc([opt, it.unit].filter(Boolean).join(' • ')) || '1 pack'}</p>
           <p class="text-xs font-extrabold text-emerald-700 mt-1">${rp(it.price)}</p>
         </div>
         <div class="flex items-center gap-2 border border-gray-200 rounded-lg px-2 py-1 bg-white shadow-sm shrink-0">
@@ -517,7 +518,7 @@ window.updateCart = (id, change) => {
   if (!p || p.isOutOfStock) return;
   const { variant = '', size = '' } = selectedOptions[id] || {};
   const price = calcPrice(p, variant, size), key = `${id}_${variant}_${size}`;
-  if (!cart[key]) cart[key] = { id, name: p.name, variant, size, price, imageUrl: p.imageUrl || '', qty: 0 };
+  if (!cart[key]) cart[key] = { id, name: p.name, variant, size, price, imageUrl: p.imageUrl || '', unit: p.unit || '', qty: 0 };
   cart[key].price = price;
   cart[key].qty += change;
   if (cart[key].qty <= 0) delete cart[key];
@@ -591,20 +592,25 @@ window.handleCheckout = e => {
   const d = new Date();
   const orderCode = 'SB' + String(d.getFullYear()).slice(2) + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0') + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();
 
-  let msg = `*HALO SAYURBEST, SAYA MAU PESAN:*\n*No. Pesanan:* ${orderCode}\n\n*DATA PEMESAN:*\n• Nama: ${name}\n• No. WA: ${phone}\n• Alamat: ${address}\n`;
-  if (notes) msg += `• Catatan: ${notes}\n`;
-  msg += '\n*DAFTAR PESANAN:*\n';
-  items.forEach((it, i) => {
-    const opt = [it.variant, it.size].filter(Boolean).join(', ');
-    msg += `${i + 1}. *${it.name}${opt ? ` (${opt})` : ''}*\n   ${it.qty} x ${rp(it.price)} = ${rp(it.price * it.qty)}\n`;
+  const totalQty = items.reduce((t, i) => t + i.qty, 0);
+  const shipLine = shipMethod === 'gojek' ? 'Gojek / GrabExpress (tarif dicek admin)' : `Kurir Toko - ${ship.cost === 0 ? 'GRATIS' : rp(ship.cost)}`;
+  let msg = `*PESANAN BARU - SAYURBEST*\nNo. Pesanan: *${orderCode}*\n\n*DATA PEMESAN*\nNama: ${name}\nNo. WA: ${phone}\nAlamat: ${address}\n`;
+  if (notes) msg += `Catatan: ${notes}\n`;
+  msg += `\n*DAFTAR BELANJA* (${items.length} produk, ${totalQty} barang)\n`;
+  items.forEach(it => {
+    msg += `\n▪ *${it.qty}x* ${it.name}\n`;
+    if (it.unit) msg += `   Satuan: ${it.unit}\n`;
+    if (it.variant) msg += `   Jenis: ${it.variant}\n`;
+    if (it.size) msg += `   Ukuran: ${it.size}\n`;
+    msg += `   ${rp(it.price)} x ${it.qty} = *${rp(it.price * it.qty)}*\n`;
   });
-  msg += `\n-----------------------------------\n*Total Produk:* ${rp(sub)}\n*Metode Pengiriman:* ${shipName}\n*Grand Total:* ${shipMethod === 'gojek' ? rp(sub) + ' + ongkir' : rp(grand)}\n-----------------------------------\n\n*Mohon diproses pesanan saya. Terima kasih!*`;
+  msg += `\n━━━━━━━━━━━━━━\nSubtotal produk: ${rp(sub)}\nPengiriman: ${shipLine}\n*TOTAL: ${shipMethod === 'gojek' ? rp(sub) + ' + ongkir' : rp(grand)}*\n━━━━━━━━━━━━━━\n\nMohon diproses ya. Terima kasih! 🙏`;
 
   // Simpan pesanan ke Firestore (koleksi "orders"). Jika gagal, WhatsApp tetap berjalan.
   addDoc(collection(db, 'orders'), {
     orderCode, status: 'baru', createdAt: serverTimestamp(),
     customer: { name, phone, address, notes },
-    items: items.map(i => ({ productId: i.id, name: i.name, variant: i.variant, size: i.size, price: i.price, qty: i.qty })),
+    items: items.map(i => ({ productId: i.id, name: i.name, unit: i.unit || '', variant: i.variant, size: i.size, price: i.price, qty: i.qty })),
     subtotal: sub, shipping: ship.cost, shippingMethod: shipName, total: grand
   }).catch(err => console.warn('Pesanan tidak tersimpan di database:', err.message));
 

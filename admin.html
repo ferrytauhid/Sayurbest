@@ -1,528 +1,435 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - SayurBest</title>
-    <!-- Tailwind CSS & FontAwesome CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- SheetJS CDN untuk Ekspor & Impor Excel/CSV -->
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin Panel - SayurBest</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans pb-10">
 
-    <!-- Modal Lock Screen Password / PIN Admin -->
-    <div id="admin-lock-screen" class="fixed inset-0 bg-slate-900/90 z-50 flex items-center justify-center p-4">
-        <div class="bg-white p-6 rounded-2xl max-w-xs w-full text-center space-y-4 shadow-2xl">
-            <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl">
-                <i class="fas fa-lock"></i>
-            </div>
-            <div>
-                <h3 class="font-bold text-gray-800 text-base">Akses Admin SayurBest</h3>
-                <p class="text-xs text-gray-500 mt-1">Masukkan PIN Keamanan untuk mengelola toko.</p>
-            </div>
-            <div>
-                <input type="password" id="pin-input" maxlength="6" placeholder="******" class="w-full border border-gray-300 rounded-xl p-3 text-center text-xl font-bold tracking-widest focus:outline-none focus:border-emerald-600">
-                <p id="pin-error" class="text-[11px] text-red-500 font-semibold mt-1.5 hidden">PIN Admin Salah!</p>
-            </div>
-            <button type="button" onclick="checkAdminPin()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-md">
-                Masuk Panel Admin
-            </button>
+<!-- LOGIN (Firebase Auth) -->
+<div id="login-screen" class="fixed inset-0 bg-slate-900/95 z-50 flex items-center justify-center p-4">
+  <form id="login-form" class="bg-white p-6 rounded-2xl max-w-xs w-full space-y-3 shadow-2xl">
+    <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl"><i class="fas fa-lock"></i></div>
+    <h3 class="font-bold text-center text-base">Masuk Admin SayurBest</h3>
+    <input type="email" id="login-email" required autocomplete="username" placeholder="Email admin" class="w-full border rounded-xl p-2.5 text-xs focus:border-emerald-600 focus:outline-none">
+    <input type="password" id="login-pass" required autocomplete="current-password" placeholder="Password" class="w-full border rounded-xl p-2.5 text-xs focus:border-emerald-600 focus:outline-none">
+    <p id="login-error" class="text-[11px] text-red-500 font-semibold hidden"></p>
+    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs">Masuk</button>
+  </form>
+</div>
+
+<header class="bg-emerald-700 text-white p-4 sticky top-0 z-40 shadow-md">
+  <div class="max-w-3xl mx-auto flex justify-between items-center">
+    <h1 class="text-lg font-bold flex items-center gap-2"><i class="fas fa-user-shield"></i> Admin SayurBest</h1>
+    <div class="flex gap-2">
+      <a href="index.html" target="_blank" class="bg-emerald-800 hover:bg-emerald-900 text-xs px-3 py-1.5 rounded-lg border border-emerald-500">Buka Toko</a>
+      <button type="button" onclick="logout()" class="bg-emerald-800 hover:bg-emerald-900 text-xs px-3 py-1.5 rounded-lg border border-emerald-500">Keluar</button>
+    </div>
+  </div>
+  <nav class="max-w-3xl mx-auto mt-3 flex gap-2 text-xs font-bold">
+    <button type="button" data-tab="produk" onclick="showTab('produk')" class="tab-btn flex-1 py-2 rounded-lg">Produk</button>
+    <button type="button" data-tab="pesanan" onclick="showTab('pesanan')" class="tab-btn flex-1 py-2 rounded-lg">Pesanan</button>
+    <button type="button" data-tab="laporan" onclick="showTab('laporan')" class="tab-btn flex-1 py-2 rounded-lg">Laporan</button>
+  </nav>
+</header>
+
+<div class="max-w-3xl mx-auto p-4 space-y-6">
+
+<!-- ================= TAB PRODUK ================= -->
+<div id="tab-produk" class="space-y-6 hidden">
+  <section class="bg-white rounded-xl p-4 border shadow-sm">
+    <h2 id="form-title" class="font-bold text-sm mb-3 border-b pb-2"><i class="fas fa-plus-circle text-emerald-600"></i> Tambah Produk Baru</h2>
+    <form id="product-form" class="space-y-3 text-xs">
+      <input type="hidden" id="prod-id">
+      <div><label class="block font-semibold mb-1">Nama Produk</label><input type="text" id="prod-name" required placeholder="Contoh: Bawang Merah Segar" class="w-full border rounded-lg p-2.5"></div>
+      <div class="grid grid-cols-2 gap-3">
+        <div><label class="block font-semibold mb-1">Harga Dasar (Rp)</label><input type="number" id="prod-price" required min="0" placeholder="8500" class="w-full border rounded-lg p-2.5"></div>
+        <div><label class="block font-semibold mb-1">Satuan Dasar</label><input type="text" id="prod-unit" required placeholder="100 gram / pack" class="w-full border rounded-lg p-2.5"></div>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div><label class="block font-semibold mb-1">Kategori</label><select id="prod-category" class="w-full border rounded-lg p-2.5 bg-white"></select></div>
+        <div><label class="block font-semibold mb-1">Tipe Penjualan</label>
+          <select id="prod-type" class="w-full border rounded-lg p-2.5 bg-white"><option value="ready">Ready Stock</option><option value="po">PO (Pre-Order)</option></select></div>
+      </div>
+      <div><label class="block font-semibold mb-1">Deskripsi Produk</label><textarea id="prod-description" rows="3" class="w-full border rounded-lg p-2.5"></textarea></div>
+      <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 space-y-2.5">
+        <p class="font-bold text-emerald-800 text-[11px]"><i class="fas fa-tags"></i> Varian (format: Nama:Harga, dipisah koma)</p>
+        <div>
+          <div class="flex justify-between mb-1"><label class="text-[10px] font-semibold text-gray-600">Jenis / Kondisi</label>
+            <button type="button" onclick="setPreset('prod-variants','Utuh, Potong 4, Potong 8, Fillet')" class="text-[9px] text-emerald-700 font-bold hover:underline">+ Preset Ayam/Ikan</button></div>
+          <input type="text" id="prod-variants" placeholder="Utuh:35000, Potong:38000" class="w-full border rounded-lg p-2 bg-white">
         </div>
-    </div>
-
-    <!-- Header Admin -->
-    <header class="bg-emerald-700 text-white p-4 sticky top-0 z-40 shadow-md">
-        <div class="max-w-xl mx-auto flex justify-between items-center">
-            <h1 class="text-lg font-bold flex items-center gap-2">
-                <i class="fas fa-user-shield"></i> CMS Admin SayurBest
-            </h1>
-            <a href="index.html" target="_blank" class="bg-emerald-800 hover:bg-emerald-900 text-xs px-3 py-1.5 rounded-lg transition border border-emerald-500">
-                <i class="fas fa-external-link-alt mr-1"></i> Buka Toko
-            </a>
+        <div>
+          <div class="flex justify-between mb-1"><label class="text-[10px] font-semibold text-gray-600">Ukuran / Berat</label>
+            <button type="button" onclick="setPreset('prod-sizes','250 gram, 500 gram, 1 Kg')" class="text-[9px] text-emerald-700 font-bold hover:underline">+ Preset Berat</button></div>
+          <input type="text" id="prod-sizes" placeholder="500 gram:20000, 1 Kg:39000" class="w-full border rounded-lg p-2 bg-white">
         </div>
-    </header>
+      </div>
+      <div><label class="block font-semibold mb-1">URL Gambar (opsional)</label><input type="url" id="prod-image" placeholder="https://ik.imagekit.io/..." class="w-full border rounded-lg p-2.5"></div>
+      <div class="flex gap-2 pt-2">
+        <button type="submit" id="btn-save" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg">Simpan Produk</button>
+        <button type="button" id="btn-cancel" onclick="resetForm()" class="hidden bg-gray-300 text-gray-700 font-bold px-4 py-2.5 rounded-lg">Batal</button>
+      </div>
+    </form>
+  </section>
 
-    <div class="max-w-xl mx-auto p-4 space-y-6">
-
-        <!-- Form Tambah / Edit Produk -->
-        <section class="bg-white rounded-xl p-4 border shadow-sm">
-            <h2 id="form-title" class="font-bold text-gray-800 text-sm mb-3 flex items-center gap-2 border-b pb-2">
-                <i class="fas fa-plus-circle text-emerald-600"></i> Tambah Produk Baru
-            </h2>
-
-            <form id="product-form" class="space-y-3 text-xs">
-                <input type="hidden" id="prod-id">
-
-                <div>
-                    <label class="block font-semibold text-gray-700 mb-1">Nama Produk</label>
-                    <input type="text" id="prod-name" placeholder="Contoh: Bawang Merah Segar" required class="w-full border rounded-lg p-2.5 focus:border-emerald-600 focus:outline-none">
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block font-semibold text-gray-700 mb-1">Harga Dasar (Rp)</label>
-                        <input type="number" id="prod-price" placeholder="8500" required class="w-full border rounded-lg p-2.5 focus:border-emerald-600 focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block font-semibold text-gray-700 mb-1">Satuan Dasar</label>
-                        <input type="text" id="prod-unit" placeholder="100 gram / pack" required class="w-full border rounded-lg p-2.5 focus:border-emerald-600 focus:outline-none">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block font-semibold text-gray-700 mb-1">Kategori</label>
-                        <select id="prod-category" class="w-full border rounded-lg p-2.5 bg-white focus:border-emerald-600 focus:outline-none">
-                            <option value="Sayuran">Sayuran</option>
-                            <option value="Ayam & Bebek">Ayam & Bebek</option>
-                            <option value="Ikan & Seafood">Ikan & Seafood</option>
-                            <option value="Daging Sapi">Daging Sapi</option>
-                            <option value="Tahu, Tempe & Oncom">Tahu, Tempe & Oncom</option>
-                            <option value="Ikan Asin & Pindang">Ikan Asin & Pindang</option>
-                            <option value="Bumbu & Bahan Masak">Bumbu & Bahan Masak</option>
-                            <option value="Lauk Siap Masak & Frozen Food">Lauk Siap Masak & Frozen Food</option>
-                            <option value="Lauk Matang">Lauk Matang</option>
-                            <option value="Buah">Buah</option>
-                            <option value="Beras, Telur, Minyak & Bahan Kue">Beras, Telur, Minyak & Bahan Kue</option>
-                            <option value="Mie, Bihun, Soun & Kwetiau">Mie, Bihun, Soun & Kwetiau</option>
-                            <option value="Kerupuk, Kulit Pangsit & Kulit Lumpia">Kerupuk, Kulit Pangsit & Kulit Lumpia</option>
-                            <option value="Teh, Kopi & Air Mineral">Teh, Kopi & Air Mineral</option>
-                            <option value="Roti, Cereal & Selai">Roti, Cereal & Selai</option>
-                            <option value="Susu & Olahan SUsu">Susu & Olahan SUsu</option>
-                            <option value="Baby & Mom Produk">Baby & Mom Produk</option>
-                            <option value="Sabun Pembersih">Sabun Pembersih</option>
-                            <option value="Perlengkapan Dapur">Perlengkapan Dapur</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block font-semibold text-gray-700 mb-1">Tipe Penjualan</label>
-                        <select id="prod-type" class="w-full border rounded-lg p-2.5 bg-white focus:border-emerald-600 focus:outline-none">
-                            <option value="ready">Ready Stock</option>
-                            <option value="po">PO (Pre-Order)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Input Deskripsi Produk -->
-                <div>
-                    <label class="block font-semibold text-gray-700 mb-1">Deskripsi Produk</label>
-                    <textarea id="prod-description" rows="3" placeholder="Contoh: Sayur dipetik langsung dari petani lokal..." class="w-full border rounded-lg p-2.5 focus:border-emerald-600 focus:outline-none"></textarea>
-                </div>
-
-                <!-- Opsi Varian Tambahan -->
-                <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 space-y-2.5">
-                    <p class="font-bold text-emerald-800 text-[11px] flex items-center justify-between">
-                        <span><i class="fas fa-tags"></i> Fitur Varian (Format: Nama:Harga, Dipisahkan Koma)</span>
-                    </p>
-
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <label class="block text-gray-600 text-[10px] font-semibold">Opsi Jenis / Kondisi</label>
-                            <button type="button" onclick="setPreset('variants', 'Utuh, Potong 4, Potong 8, Fillet')" class="text-[9px] text-emerald-700 font-bold hover:underline">+ Preset Ayam/Ikan</button>
-                        </div>
-                        <input type="text" id="prod-variants" placeholder="Contoh: Utuh:35000, Bersih/Potong:38000" class="w-full border rounded-lg p-2 focus:border-emerald-600 focus:outline-none bg-white">
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <label class="block text-gray-600 text-[10px] font-semibold">Opsi Ukuran / Berat</label>
-                            <button type="button" onclick="setPreset('sizes', '250 gram, 500 gram, 1 Kg')" class="text-[9px] text-emerald-700 font-bold hover:underline">+ Preset Berat</button>
-                        </div>
-                        <input type="text" id="prod-sizes" placeholder="Contoh: 500 gram:20000, 1 Kg:39000" class="w-full border rounded-lg p-2 focus:border-emerald-600 focus:outline-none bg-white">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block font-semibold text-gray-700 mb-1">URL Gambar (Opsional)</label>
-                    <input type="url" id="prod-image" placeholder="https://ik.imagekit.io/..." class="w-full border rounded-lg p-2.5 focus:border-emerald-600 focus:outline-none">
-                </div>
-
-                <div class="flex gap-2 pt-2">
-                    <button type="submit" id="btn-save" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg transition">
-                        <i class="fas fa-save mr-1"></i> Simpan Produk
-                    </button>
-                    <button type="button" id="btn-cancel" onclick="resetForm()" class="hidden bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold px-4 py-2.5 rounded-lg transition">
-                        Batal
-                    </button>
-                </div>
-            </form>
-        </section>
-
-        <!-- Kelola Stok Produk & Filter -->
-        <section class="bg-white rounded-xl p-4 border shadow-sm space-y-3">
-            <div class="flex justify-between items-center border-b pb-2">
-                <h2 class="font-bold text-gray-800 text-sm flex items-center gap-2">
-                    <i class="fas fa-boxes text-emerald-600"></i> Kelola Stok Produk
-                </h2>
-                <span id="product-count" class="text-xs bg-emerald-100 text-emerald-800 font-semibold px-2 py-0.5 rounded-full">0 Produk</span>
-            </div>
-
-            <!-- Fitur Pencarian & Filter Kategori Kustom -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
-                <div class="relative">
-                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                    <input type="text" id="search-input" placeholder="Cari nama produk..." class="w-full pl-8 pr-3 py-2 border rounded-lg focus:border-emerald-600 focus:outline-none bg-gray-50">
-                </div>
-
-                <div>
-                    <select id="category-filter" class="w-full p-2 border rounded-lg bg-gray-50 focus:border-emerald-600 focus:outline-none">
-                        <option value="ALL">-- Semua Kategori --</option>
-                        <option value="Sayuran">Sayuran</option>
-                        <option value="Ayam & Bebek">Ayam & Bebek</option>
-                        <option value="Ikan & Seafood">Ikan & Seafood</option>
-                        <option value="Daging Sapi">Daging Sapi</option>
-                        <option value="Tahu, Tempe & Oncom">Tahu, Tempe & Oncom</option>
-                        <option value="Ikan Asin & Pindang">Ikan Asin & Pindang</option>
-                        <option value="Bumbu & Bahan Masak">Bumbu & Bahan Masak</option>
-                        <option value="Lauk Siap Masak & Frozen Food">Lauk Siap Masak & Frozen Food</option>
-                        <option value="Lauk Matang">Lauk Matang</option>
-                        <option value="Buah">Buah</option>
-                        <option value="Beras, Telur, Minyak & Bahan Kue">Beras, Telur, Minyak & Bahan Kue</option>
-                        <option value="Mie, Bihun, Soun & Kwetiau">Mie, Bihun, Soun & Kwetiau</option>
-                        <option value="Kerupuk, Kulit Pangsit & Kulit Lumpia">Kerupuk, Kulit Pangsit & Kulit Lumpia</option>
-                        <option value="Teh, Kopi & Air Mineral">Teh, Kopi & Air Mineral</option>
-                        <option value="Roti, Cereal & Selai">Roti, Cereal & Selai</option>
-                        <option value="Susu & Olahan SUsu">Susu & Olahan SUsu</option>
-                        <option value="Baby & Mom Produk">Baby & Mom Produk</option>
-                        <option value="Sabun Pembersih">Sabun Pembersih</option>
-                        <option value="Perlengkapan Dapur">Perlengkapan Dapur</option>
-                    </select>
-                </div>
-            </div>
-
-            <div id="admin-product-list" class="space-y-3 text-xs">
-                <p class="text-center text-gray-400 py-6">Memuat daftar produk...</p>
-            </div>
-        </section>
-
-        <!-- Fitur Perubahan Masal (Ekspor & Impor Excel/CSV) -->
-        <section class="bg-white rounded-xl p-4 border shadow-sm space-y-3">
-            <h2 class="font-bold text-gray-800 text-sm flex items-center gap-2 border-b pb-2">
-                <i class="fas fa-file-excel text-emerald-600"></i> Kelola Masal (Import / Export Excel)
-            </h2>
-            <p class="text-[11px] text-gray-500">Unduh data produk ke Excel, ubah harga/stok sekaligus, lalu unggah kembali file tersebut ke Firebase.</p>
-            
-            <div class="flex flex-wrap gap-2 pt-1">
-                <button type="button" onclick="exportToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-2 rounded-lg text-xs transition flex items-center gap-1.5">
-                    <i class="fas fa-download"></i> Ekspor ke Excel
-                </button>
-                <label class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 py-2 rounded-lg text-xs cursor-pointer transition flex items-center gap-1.5">
-                    <i class="fas fa-upload"></i> Impor dari Excel
-                    <input type="file" id="excel-file-input" accept=".xlsx, .xls, .csv" class="hidden" onchange="importFromExcel(event)">
-                </label>
-            </div>
-        </section>
-
+  <section class="bg-white rounded-xl p-4 border shadow-sm space-y-3">
+    <div class="flex justify-between items-center border-b pb-2">
+      <h2 class="font-bold text-sm"><i class="fas fa-boxes text-emerald-600"></i> Kelola Stok Produk</h2>
+      <span id="product-count" class="text-xs bg-emerald-100 text-emerald-800 font-semibold px-2 py-0.5 rounded-full">0 Produk</span>
     </div>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-4 right-4 bg-gray-900 text-white text-xs px-4 py-3 rounded-xl shadow-2xl hidden z-50 transition-all flex items-center gap-2">
-        <i class="fas fa-check-circle text-emerald-400"></i> <span id="toast-message">Notifikasi</span>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+      <input type="search" id="search-input" placeholder="Cari nama produk..." class="w-full px-3 py-2 border rounded-lg bg-gray-50">
+      <select id="category-filter" class="w-full p-2 border rounded-lg bg-gray-50"></select>
     </div>
+    <div id="admin-product-list" class="space-y-3 text-xs"><p class="text-center text-gray-400 py-6">Memuat daftar produk...</p></div>
+  </section>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, writeBatch } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+  <section class="bg-white rounded-xl p-4 border shadow-sm space-y-3">
+    <h2 class="font-bold text-sm border-b pb-2"><i class="fas fa-file-excel text-emerald-600"></i> Import / Export Produk (Excel)</h2>
+    <p class="text-[11px] text-gray-500">Ekspor sekarang menyertakan kolom <b>Varian</b> dan <b>Ukuran</b> (format Nama:Harga, dipisah koma). Baris tanpa ID akan menjadi produk baru. Jika kolom Varian/Ukuran ada di file, isinya (termasuk yang dikosongkan) akan menggantikan data lama.</p>
+    <div class="flex flex-wrap gap-2">
+      <button type="button" onclick="exportProducts()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-2 rounded-lg text-xs"><i class="fas fa-download"></i> Ekspor Produk</button>
+      <label class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 py-2 rounded-lg text-xs cursor-pointer"><i class="fas fa-upload"></i> Impor Produk
+        <input type="file" accept=".xlsx,.xls,.csv" class="hidden" onchange="importProducts(event)"></label>
+    </div>
+  </section>
+</div>
 
-        const ADMIN_PIN = "301915";
+<!-- ================= TAB PESANAN ================= -->
+<div id="tab-pesanan" class="space-y-4 hidden">
+  <section class="bg-white rounded-xl p-4 border shadow-sm space-y-3">
+    <div class="flex justify-between items-center border-b pb-2">
+      <h2 class="font-bold text-sm"><i class="fas fa-receipt text-emerald-600"></i> Pesanan Masuk</h2>
+      <button type="button" onclick="loadOrders(true)" class="text-xs bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-lg"><i class="fas fa-rotate"></i> Muat ulang</button>
+    </div>
+    <select id="order-status-filter" class="w-full p-2 border rounded-lg bg-gray-50 text-xs"></select>
+    <div id="order-list" class="space-y-3 text-xs"><p class="text-center text-gray-400 py-6">Memuat pesanan...</p></div>
+  </section>
+</div>
 
-        window.checkAdminPin = function() {
-            const inputPin = document.getElementById('pin-input').value.trim();
-            if (inputPin === ADMIN_PIN) {
-                document.getElementById('admin-lock-screen').classList.add('hidden');
-                sessionStorage.setItem('admin_auth', 'true');
-            } else {
-                document.getElementById('pin-error').classList.remove('hidden');
-            }
-        };
+<!-- ================= TAB LAPORAN ================= -->
+<div id="tab-laporan" class="space-y-4 hidden">
+  <section class="bg-white rounded-xl p-4 border shadow-sm space-y-3 text-xs">
+    <h2 class="font-bold text-sm border-b pb-2"><i class="fas fa-chart-line text-emerald-600"></i> Laporan Penjualan</h2>
+    <div class="grid grid-cols-2 gap-3">
+      <div><label class="block font-semibold mb-1">Dari tanggal</label><input type="date" id="rep-from" class="w-full border rounded-lg p-2"></div>
+      <div><label class="block font-semibold mb-1">Sampai tanggal</label><input type="date" id="rep-to" class="w-full border rounded-lg p-2"></div>
+    </div>
+    <select id="rep-mode" class="w-full border rounded-lg p-2 bg-white">
+      <option value="selesai">Hanya pesanan berstatus Selesai</option>
+      <option value="semua">Semua kecuali Batal</option>
+    </select>
+    <div class="flex gap-2">
+      <button type="button" onclick="buildReport()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg">Tampilkan Laporan</button>
+      <button type="button" onclick="exportReport()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 rounded-lg"><i class="fas fa-download"></i> Excel</button>
+    </div>
+    <p class="text-[10px] text-gray-500">Omzet produk dan ongkir dipisahkan. Konsultasikan dasar perhitungan pajak dengan KPP / konsultan pajak.</p>
+  </section>
+  <div id="report-result" class="space-y-4"></div>
+</div>
 
-        if (sessionStorage.getItem('admin_auth') === 'true') {
-            document.getElementById('admin-lock-screen').classList.add('hidden');
-        }
+</div>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCkZoh9h3ckqqpsrBxRNEZsQFZWkzAX42o",
-            authDomain: "tokosayur-44c5e.firebaseapp.com",
-            projectId: "tokosayur-44c5e",
-            storageBucket: "tokosayur-44c5e.firebasestorage.app",
-            messagingSenderId: "272668584834",
-            appId: "1:272668584834:web:258a983b01bfbe08f87d9b",
-            measurementId: "G-XDC529DV1Y"
-        };
+<div id="toast" class="fixed bottom-4 right-4 bg-gray-900 text-white text-xs px-4 py-3 rounded-xl shadow-2xl hidden z-50"></div>
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const productsCol = collection(db, "products");
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, writeBatch, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
-        let productsData = [];
+const app = initializeApp({
+  apiKey: "AIzaSyCkZoh9h3ckqqpsrBxRNEZsQFZWkzAX42o",
+  authDomain: "tokosayur-44c5e.firebaseapp.com",
+  projectId: "tokosayur-44c5e",
+  storageBucket: "tokosayur-44c5e.firebasestorage.app",
+  messagingSenderId: "272668584834",
+  appId: "1:272668584834:web:258a983b01bfbe08f87d9b",
+  measurementId: "G-XDC529DV1Y"
+});
+const db = getFirestore(app), auth = getAuth(app), productsCol = collection(db, "products");
 
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-message').innerText = msg;
-            toast.classList.remove('hidden');
-            setTimeout(() => toast.classList.add('hidden'), 3000);
-        }
+const CATEGORIES = ["Sayuran","Ayam & Bebek","Ikan & Seafood","Daging Sapi","Tahu, Tempe & Oncom","Ikan Asin & Pindang","Bumbu & Bahan Masak","Lauk Siap Masak & Frozen Food","Lauk Matang","Buah","Beras, Telur, Minyak & Bahan Kue","Mie, Bihun, Soun & Kwetiau","Kerupuk, Kulit Pangsit & Kulit Lumpia","Teh, Kopi & Air Mineral","Roti, Cereal & Selai","Susu & Olahan Susu","Baby & Mom Produk","Sabun Pembersih","Perlengkapan Dapur"];
+const STATUSES = [["baru","Baru"],["diproses","Diproses"],["dikirim","Dikirim"],["selesai","Selesai"],["batal","Batal"]];
+const STATUS_CLR = { baru:"bg-amber-100 text-amber-800", diproses:"bg-blue-100 text-blue-800", dikirim:"bg-indigo-100 text-indigo-800", selesai:"bg-emerald-100 text-emerald-800", batal:"bg-red-100 text-red-700" };
 
-        window.setPreset = function(field, value) {
-            if (field === 'variants') document.getElementById('prod-variants').value = value;
-            if (field === 'sizes') document.getElementById('prod-sizes').value = value;
-        };
+const $ = id => document.getElementById(id);
+const rp = n => 'Rp ' + (Number(n) || 0).toLocaleString('id-ID');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm = s => String(s || '').toLowerCase().replace(/&/g, 'dan').replace(/,/g, ' ').replace(/\s+/g, ' ').trim();
+const FALLBACK = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="#10b981"/></svg>');
+window.FB = FALLBACK;
 
-        async function loadAdminProducts() {
-            try {
-                const snapshot = await getDocs(productsCol);
-                productsData = [];
-                snapshot.forEach(d => productsData.push({ id: d.id, ...d.data() }));
-                filterAndRender();
-            } catch (err) {
-                console.error(err);
-                document.getElementById('admin-product-list').innerHTML = `<p class="text-center text-red-500 py-4">Gagal memuat produk.</p>`;
-            }
-        }
+function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.remove('hidden'); clearTimeout(t._t); t._t = setTimeout(() => t.classList.add('hidden'), 3000); }
 
-        function filterAndRender() {
-            const query = document.getElementById('search-input').value.toLowerCase().trim();
-            const selectedCat = document.getElementById('category-filter').value;
+/* ---------- Login ---------- */
+$('login-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  $('login-error').classList.add('hidden');
+  try { await signInWithEmailAndPassword(auth, $('login-email').value.trim(), $('login-pass').value); }
+  catch (err) { $('login-error').textContent = 'Email atau password salah.'; $('login-error').classList.remove('hidden'); }
+});
+window.logout = () => signOut(auth);
+onAuthStateChanged(auth, user => {
+  $('login-screen').classList.toggle('hidden', !!user);
+  if (user) { loadProducts(); showTab('produk'); }
+});
 
-            const filtered = productsData.filter(p => {
-                const nameMatch = p.name ? p.name.toLowerCase().includes(query) : false;
-                const catMatch = selectedCat === "ALL" || p.category === selectedCat;
-                return nameMatch && catMatch;
-            });
+/* ---------- Tab ---------- */
+let ordersLoaded = false;
+window.showTab = name => {
+  ['produk','pesanan','laporan'].forEach(t => $('tab-' + t).classList.toggle('hidden', t !== name));
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    const on = b.dataset.tab === name;
+    b.className = 'tab-btn flex-1 py-2 rounded-lg ' + (on ? 'bg-white text-emerald-800' : 'bg-emerald-800 text-emerald-100');
+  });
+  if (name !== 'produk' && !ordersLoaded) loadOrders();
+};
 
-            document.getElementById('product-count').innerText = `${filtered.length} dari ${productsData.length} Produk`;
-            renderAdminList(filtered);
-        }
+/* ---------- Produk ---------- */
+let products = [];
+const optionsHTML = list => list.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
+$('prod-category').innerHTML = optionsHTML(CATEGORIES);
+$('category-filter').innerHTML = '<option value="ALL">-- Semua Kategori --</option>' + optionsHTML(CATEGORIES);
 
-        document.getElementById('search-input').addEventListener('input', filterAndRender);
-        document.getElementById('category-filter').addEventListener('change', filterAndRender);
+window.setPreset = (id, v) => { $(id).value = v; };
+const parseList = s => (s || '').split(',').map(x => x.trim()).filter(Boolean);
+const listToString = arr => Array.isArray(arr) ? arr.map(i => typeof i === 'object' && i ? (i.name ? i.name + (i.price != null ? ':' + i.price : '') : '') : String(i)).filter(Boolean).join(', ') : '';
 
-        function renderAdminList(items) {
-            const container = document.getElementById('admin-product-list');
-            container.innerHTML = '';
+async function loadProducts() {
+  try {
+    const snap = await getDocs(productsCol);
+    products = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderProducts();
+  } catch (err) {
+    console.error(err);
+    $('admin-product-list').innerHTML = '<p class="text-center text-red-500 py-4">Gagal memuat produk. Pastikan akun admin sudah terdaftar dan Rules Firestore sudah benar.</p>';
+  }
+}
+// hapus cache toko supaya perubahan langsung tampil di perangkat ini
+const bustCache = () => { try { localStorage.removeItem('sayurbest_products_v1'); } catch (e) {} };
 
-            if (items.length === 0) {
-                container.innerHTML = `<p class="text-center text-gray-400 py-6">Produk tidak ditemukan.</p>`;
-                return;
-            }
+function renderProducts() {
+  const q = $('search-input').value.toLowerCase().trim(), cat = norm($('category-filter').value === 'ALL' ? '' : $('category-filter').value);
+  const items = products.filter(p => (p.name || '').toLowerCase().includes(q) && (!cat || norm(p.category) === cat));
+  $('product-count').textContent = `${items.length} dari ${products.length} Produk`;
+  const box = $('admin-product-list');
+  if (!items.length) { box.innerHTML = '<p class="text-center text-gray-400 py-6">Produk tidak ditemukan.</p>'; return; }
+  box.innerHTML = items.map(p => {
+    const out = !!p.isOutOfStock;
+    return `<div class="flex items-start justify-between p-2.5 ${out ? 'bg-red-50/60 border-red-200' : 'bg-gray-50 border-gray-200'} rounded-xl border gap-2">
+      <img src="${esc(p.imageUrl || FALLBACK)}" loading="lazy" width="48" height="48" onerror="this.onerror=null;this.src=window.FB" class="w-12 h-12 object-cover rounded-lg border ${out ? 'grayscale opacity-60' : ''}">
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <h4 class="font-bold truncate ${out ? 'line-through text-gray-400' : ''}">${esc(p.name)}</h4>
+          <span class="text-[9px] ${p.type === 'po' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-700'} px-1.5 py-0.5 rounded font-semibold">${p.type === 'po' ? 'PO' : 'Ready'}</span>
+          ${out ? '<span class="text-[9px] bg-red-100 text-red-700 px-1.5 py-0.5 rounded font-extrabold">HABIS</span>' : ''}
+        </div>
+        <p class="text-[11px] text-emerald-600 font-semibold">${rp(p.price)} <span class="text-gray-400 font-normal">/ ${esc(p.unit || '')}</span></p>
+        <p class="text-[10px] text-gray-500">${esc(p.category)}</p>
+      </div>
+      <div class="flex items-center gap-1">
+        <button onclick="toggleStock('${p.id}')" title="Ubah stok" class="${out ? 'bg-gray-200 text-gray-600' : 'bg-emerald-100 text-emerald-700'} p-2 rounded-lg"><i class="fas ${out ? 'fa-eye-slash' : 'fa-check'}"></i></button>
+        <button onclick="setupEdit('${p.id}')" title="Edit" class="bg-amber-100 text-amber-800 p-2 rounded-lg"><i class="fas fa-edit"></i></button>
+        <button onclick="deleteProduct('${p.id}')" title="Hapus" class="bg-red-100 text-red-700 p-2 rounded-lg"><i class="fas fa-trash-alt"></i></button>
+      </div></div>`;
+  }).join('');
+}
+$('search-input').addEventListener('input', renderProducts);
+$('category-filter').addEventListener('change', renderProducts);
 
-            const fallbackImg = "https://placehold.co/300x300/10b981/ffffff?text=SayurBest";
+window.toggleStock = async id => {
+  const p = products.find(x => x.id === id); if (!p) return;
+  try { await updateDoc(doc(db, "products", id), { isOutOfStock: !p.isOutOfStock }); p.isOutOfStock = !p.isOutOfStock; bustCache(); renderProducts(); toast(p.isOutOfStock ? 'Ditandai HABIS' : 'Ditandai TERSEDIA'); }
+  catch (err) { alert('Gagal memperbarui stok: ' + err.message); }
+};
 
-            items.forEach(p => {
-                const img = (p.imageUrl && p.imageUrl.trim() !== '') ? p.imageUrl : fallbackImg;
-                const badge = p.type === 'po' ? '<span class="text-[9px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded font-semibold">PO</span>' : '<span class="text-[9px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded font-semibold">Ready</span>';
-                const isOutOfStock = p.isOutOfStock || false;
+$('product-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const id = $('prod-id').value;
+  const payload = {
+    name: $('prod-name').value.trim(), price: Number($('prod-price').value), unit: $('prod-unit').value.trim(),
+    category: $('prod-category').value, type: $('prod-type').value, description: $('prod-description').value.trim(),
+    imageUrl: $('prod-image').value.trim(), variants: parseList($('prod-variants').value), sizes: parseList($('prod-sizes').value)
+  };
+  const btn = $('btn-save'); btn.disabled = true; btn.textContent = 'Menyimpan...';
+  try {
+    if (id) await updateDoc(doc(db, "products", id), payload); else await addDoc(productsCol, { ...payload, isOutOfStock: false });
+    toast(id ? 'Produk diperbarui!' : 'Produk ditambahkan!');
+    bustCache(); resetForm(); await loadProducts();
+  } catch (err) { alert('Gagal menyimpan: ' + err.message); }
+  finally { btn.disabled = false; btn.textContent = 'Simpan Produk'; }
+});
 
-                const html = `
-                    <div class="flex items-start justify-between p-2.5 ${isOutOfStock ? 'bg-red-50/60 border-red-200' : 'bg-gray-50 border-gray-200'} rounded-xl border gap-2 transition">
-                        <img src="${img}" loading="lazy" onerror="this.onerror=null;this.src='${fallbackImg}';" class="w-12 h-12 object-cover rounded-lg border mt-0.5 ${isOutOfStock ? 'grayscale opacity-60' : ''}">
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center gap-1.5">
-                                <h4 class="font-bold text-gray-800 truncate ${isOutOfStock ? 'line-through text-gray-400' : ''}">${p.name}</h4>
-                                ${badge}
-                                ${isOutOfStock ? '<span class="text-[9px] bg-red-100 text-red-700 px-1.5 py-0.5 rounded font-extrabold">HABIS</span>' : ''}
-                            </div>
-                            <p class="text-[11px] text-emerald-600 font-semibold">Rp ${Number(p.price).toLocaleString('id-ID')} <span class="text-gray-400 font-normal">/ ${p.unit || ''}</span></p>
-                            <p class="text-[10px] text-gray-500 font-medium">${p.category}</p>
-                        </div>
-                        <div class="flex items-center gap-1">
-                            <button onclick="toggleStockStatus('${p.id}', ${isOutOfStock})" class="${isOutOfStock ? 'bg-gray-200 text-gray-600' : 'bg-emerald-100 text-emerald-700'} p-2 rounded-lg transition text-[11px] font-bold" title="Ubah Stok">
-                                <i class="fas ${isOutOfStock ? 'fa-eye-slash' : 'fa-check'}"></i>
-                            </button>
-                            <button onclick="setupEdit('${p.id}')" class="bg-amber-100 hover:bg-amber-200 text-amber-800 p-2 rounded-lg transition" title="Edit">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button onclick="deleteProduct('${p.id}', '${p.name}')" class="bg-red-100 hover:bg-red-200 text-red-700 p-2 rounded-lg transition" title="Hapus">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                container.innerHTML += html;
-            });
-        }
+window.setupEdit = id => {
+  const p = products.find(x => x.id === id); if (!p) return;
+  $('prod-id').value = p.id; $('prod-name').value = p.name || ''; $('prod-price').value = p.price ?? '';
+  $('prod-unit').value = p.unit || '';
+  const match = CATEGORIES.find(c => norm(c) === norm(p.category));   // menangani salah ketik lama ("SUsu")
+  $('prod-category').value = match || CATEGORIES[0];
+  $('prod-type').value = p.type || 'ready'; $('prod-description').value = p.description || '';
+  $('prod-image').value = p.imageUrl || '';
+  $('prod-variants').value = listToString(p.variants); $('prod-sizes').value = listToString(p.sizes);
+  $('form-title').innerHTML = `<i class="fas fa-edit text-amber-500"></i> Edit Produk: ${esc(p.name)}`;
+  $('btn-cancel').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
 
-        window.toggleStockStatus = async function(id, currentStatus) {
-            try {
-                await updateDoc(doc(db, "products", id), { isOutOfStock: !currentStatus });
-                showToast(!currentStatus ? "Produk ditandai HABIS" : "Produk ditandai TERSEDIA");
-                await loadAdminProducts();
-            } catch (err) {
-                alert("Gagal memperbarui stok: " + err.message);
-            }
-        };
+window.deleteProduct = async id => {
+  const p = products.find(x => x.id === id); if (!p) return;
+  if (!confirm(`Hapus "${p.name}"?`)) return;
+  try { await deleteDoc(doc(db, "products", id)); bustCache(); toast('Produk dihapus'); await loadProducts(); }
+  catch (err) { alert('Gagal menghapus: ' + err.message); }
+};
 
-        function parseInputToArray(str) {
-            if (!str) return [];
-            return str.split(',')
-                      .map(s => s.trim())
-                      .filter(s => s.length > 0);
-        }
+window.resetForm = () => {
+  $('product-form').reset(); $('prod-id').value = '';
+  $('form-title').innerHTML = '<i class="fas fa-plus-circle text-emerald-600"></i> Tambah Produk Baru';
+  $('btn-cancel').classList.add('hidden');
+};
 
-        function formatArrayToString(arr) {
-            if (!arr || !Array.isArray(arr)) return '';
-            return arr.map(item => {
-                if (typeof item === 'object' && item !== null) {
-                    return item.name ? `${item.name}${item.price !== null && item.price !== undefined ? ':' + item.price : ''}` : JSON.stringify(item);
-                }
-                return String(item);
-            }).join(', ');
-        }
+/* ---------- Export / Import Produk ---------- */
+const stamp = () => new Date().toISOString().slice(0, 10);
+function download(wb, name) { XLSX.writeFile(wb, `${name}_${stamp()}.xlsx`); }
 
-        document.getElementById('product-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const id = document.getElementById('prod-id').value;
-            
-            const variantStr = document.getElementById('prod-variants').value;
-            const sizeStr = document.getElementById('prod-sizes').value;
+window.exportProducts = () => {
+  if (!products.length) return alert('Belum ada data untuk diekspor!');
+  const rows = products.map(p => ({
+    ID: p.id, Nama: p.name || '', Harga: p.price || 0, Satuan: p.unit || '', Kategori: p.category || '', Tipe: p.type || 'ready',
+    Deskripsi: p.description || '', URL_Gambar: p.imageUrl || '', Varian: listToString(p.variants), Ukuran: listToString(p.sizes),
+    Status_Habis: p.isOutOfStock ? 'YA' : 'TIDAK'
+  }));
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows), "Produk_SayurBest");
+  download(wb, 'SayurBest_Produk');
+};
 
-            const payload = {
-                name: document.getElementById('prod-name').value.trim(),
-                price: Number(document.getElementById('prod-price').value),
-                unit: document.getElementById('prod-unit').value.trim(),
-                category: document.getElementById('prod-category').value,
-                type: document.getElementById('prod-type').value,
-                description: document.getElementById('prod-description').value.trim(),
-                imageUrl: document.getElementById('prod-image').value.trim(),
-                variants: parseInputToArray(variantStr),
-                sizes: parseInputToArray(sizeStr)
-            };
-
-            const btnSave = document.getElementById('btn-save');
-            btnSave.disabled = true;
-            btnSave.innerText = "Simpan Data...";
-
-            try {
-                if (id) {
-                    await updateDoc(doc(db, "products", id), payload);
-                    showToast("Produk berhasil diperbarui!");
-                } else {
-                    await addDoc(productsCol, { ...payload, isOutOfStock: false });
-                    showToast("Produk baru berhasil ditambahkan!");
-                }
-                resetForm();
-                await loadAdminProducts();
-            } catch (err) {
-                alert("Gagal menyimpan data: " + err.message);
-            } finally {
-                btnSave.disabled = false;
-                btnSave.innerText = "Simpan Produk";
-            }
+window.importProducts = event => {
+  const file = event.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async e => {
+    try {
+      const wb = XLSX.read(new Uint8Array(e.target.result), { type: 'array' });
+      const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: '' });
+      if (!rows.length) return alert('File Excel kosong!');
+      const bad = rows.findIndex(r => !String(r.Nama).trim() || isNaN(Number(r.Harga)));
+      if (bad > -1) return alert(`Baris ${bad + 2}: Nama kosong atau Harga bukan angka. Perbaiki file lalu coba lagi.`);
+      if (!confirm(`Proses ${rows.length} produk sekarang? Baris dengan ID akan memperbarui produk lama, tanpa ID menjadi produk baru.`)) return;
+      for (let i = 0; i < rows.length; i += 400) {            // batas Firestore 500 operasi per batch
+        const batch = writeBatch(db);
+        rows.slice(i, i + 400).forEach(r => {
+          const payload = {
+            name: String(r.Nama).trim(), price: Number(r.Harga) || 0, unit: String(r.Satuan).trim(),
+            category: String(r.Kategori || 'Sayuran').trim(), type: String(r.Tipe || 'ready').trim().toLowerCase(),
+            description: String(r.Deskripsi).trim(), imageUrl: String(r.URL_Gambar).trim(),
+            isOutOfStock: String(r.Status_Habis).toUpperCase() === 'YA'
+          };
+          if ('Varian' in r) payload.variants = parseList(String(r.Varian));
+          if ('Ukuran' in r) payload.sizes = parseList(String(r.Ukuran));
+          const id = String(r.ID).trim();
+          if (id) batch.update(doc(db, "products", id), payload); else batch.set(doc(productsCol), payload);
         });
+        await batch.commit();
+      }
+      bustCache(); toast('Impor berhasil!'); await loadProducts();
+    } catch (err) { alert('Gagal mengimpor: ' + err.message); }
+    finally { event.target.value = ''; }
+  };
+  reader.readAsArrayBuffer(file);
+};
 
-        window.setupEdit = function(id) {
-            const p = productsData.find(item => item.id === id);
-            if (!p) return;
+/* ---------- Pesanan ---------- */
+let orders = [];
+$('order-status-filter').innerHTML = '<option value="ALL">Semua status</option>' + STATUSES.map(([v, l]) => `<option value="${v}">${l}</option>`).join('');
+$('order-status-filter').addEventListener('change', renderOrders);
+const orderDate = o => o.createdAt?.toDate ? o.createdAt.toDate() : null;
+const fmtDate = d => d ? d.toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' }) : '-';
+const waLink = phone => { let n = String(phone || '').replace(/\D/g, ''); if (n.startsWith('0')) n = '62' + n.slice(1); return 'https://wa.me/' + n; };
 
-            document.getElementById('prod-id').value = p.id;
-            document.getElementById('prod-name').value = p.name;
-            document.getElementById('prod-price').value = p.price;
-            document.getElementById('prod-unit').value = p.unit || '';
-            document.getElementById('prod-category').value = p.category || 'Sayuran';
-            document.getElementById('prod-type').value = p.type || 'ready';
-            document.getElementById('prod-description').value = p.description || '';
-            document.getElementById('prod-image').value = p.imageUrl || '';
-            document.getElementById('prod-variants').value = formatArrayToString(p.variants);
-            document.getElementById('prod-sizes').value = formatArrayToString(p.sizes);
+window.loadOrders = async force => {
+  $('order-list').innerHTML = '<p class="text-center text-gray-400 py-6">Memuat pesanan...</p>';
+  try {
+    const snap = await getDocs(query(collection(db, "orders"), orderBy("createdAt", "desc"), limit(500)));
+    orders = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    ordersLoaded = true; renderOrders();
+  } catch (err) {
+    console.error(err);
+    $('order-list').innerHTML = '<p class="text-center text-red-500 py-6">Gagal memuat pesanan. Cek Rules Firestore untuk koleksi "orders" (lihat panduan).</p>';
+  }
+};
 
-            document.getElementById('form-title').innerHTML = `<i class="fas fa-edit text-amber-500"></i> Edit Produk: ${p.name}`;
-            document.getElementById('btn-cancel').classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
+function renderOrders() {
+  const f = $('order-status-filter').value, list = orders.filter(o => f === 'ALL' || o.status === f);
+  if (!list.length) { $('order-list').innerHTML = '<p class="text-center text-gray-400 py-6">Belum ada pesanan.</p>'; return; }
+  $('order-list').innerHTML = list.map(o => {
+    const c = o.customer || {};
+    return `<div class="border rounded-xl p-3 bg-gray-50 space-y-2">
+      <div class="flex justify-between items-start gap-2">
+        <div><p class="font-bold">${esc(o.orderCode)}</p><p class="text-[10px] text-gray-500">${fmtDate(orderDate(o))}</p></div>
+        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${STATUS_CLR[o.status] || 'bg-gray-100'}">${esc(o.status)}</span>
+      </div>
+      <p><b>${esc(c.name)}</b> · <a class="text-emerald-700 underline" target="_blank" href="${waLink(c.phone)}">${esc(c.phone)}</a></p>
+      <p class="text-gray-600">${esc(c.address)}${c.notes ? ' <i>(' + esc(c.notes) + ')</i>' : ''}</p>
+      <ul class="list-disc pl-4 text-gray-700">${(o.items || []).map(i => `<li>${i.qty} × ${esc(i.name)}${i.unit ? ' [' + esc(i.unit) + ']' : ''}${i.variant || i.size ? ' (' + esc([i.variant, i.size].filter(Boolean).join(', ')) + ')' : ''} — ${rp(i.price * i.qty)}</li>`).join('')}</ul>
+      <p class="text-gray-600">Produk ${rp(o.subtotal)} · Ongkir ${rp(o.shipping)} · <b class="text-emerald-700">Total ${rp(o.total)}</b></p>
+      <div class="flex items-center gap-2"><label class="text-[10px] font-semibold">Status:</label>
+        <select onchange="setOrderStatus('${o.id}',this.value)" class="border rounded-lg p-1 text-xs bg-white">${STATUSES.map(([v, l]) => `<option value="${v}" ${v === o.status ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
+    </div>`;
+  }).join('');
+}
 
-        window.deleteProduct = async function(id, name) {
-            if (confirm(`Apakah kamu yakin ingin menghapus "${name}"?`)) {
-                try {
-                    await deleteDoc(doc(db, "products", id));
-                    showToast("Produk berhasil dihapus");
-                    await loadAdminProducts();
-                } catch (err) {
-                    alert("Gagal menghapus: " + err.message);
-                }
-            }
-        };
+window.setOrderStatus = async (id, status) => {
+  try { await updateDoc(doc(db, "orders", id), { status }); orders.find(o => o.id === id).status = status; renderOrders(); toast('Status diperbarui'); }
+  catch (err) { alert('Gagal mengubah status: ' + err.message); }
+};
 
-        window.resetForm = function() {
-            document.getElementById('product-form').reset();
-            document.getElementById('prod-id').value = '';
-            document.getElementById('form-title').innerHTML = `<i class="fas fa-plus-circle text-emerald-600"></i> Tambah Produk Baru`;
-            document.getElementById('btn-cancel').classList.add('hidden');
-        };
+/* ---------- Laporan ---------- */
+let reportData = null;
+{ const now = new Date(), first = new Date(now.getFullYear(), now.getMonth(), 1); const iso = d => d.toLocaleDateString('sv-SE'); $('rep-from').value = iso(first); $('rep-to').value = iso(now); }
 
-        // Fungsi Ekspor & Impor Masal (Excel)
-        window.exportToExcel = function() {
-            if (productsData.length === 0) return alert("Belum ada data untuk diekspor!");
+window.buildReport = () => {
+  if (!ordersLoaded) { loadOrders().then(buildReport); return; }
+  const from = new Date($('rep-from').value + 'T00:00:00'), to = new Date($('rep-to').value + 'T23:59:59'), mode = $('rep-mode').value;
+  const list = orders.filter(o => { const d = orderDate(o); return d && d >= from && d <= to && (mode === 'selesai' ? o.status === 'selesai' : o.status !== 'batal'); });
+  const byDay = {}, byProd = {};
+  list.forEach(o => {
+    const day = orderDate(o).toLocaleDateString('sv-SE');
+    const r = byDay[day] ||= { Tanggal: day, Jumlah_Pesanan: 0, Omzet_Produk: 0, Ongkir: 0, Total: 0 };
+    r.Jumlah_Pesanan++; r.Omzet_Produk += o.subtotal || 0; r.Ongkir += o.shipping || 0; r.Total += o.total || 0;
+    (o.items || []).forEach(i => {
+      const k = [i.name, i.variant, i.size].filter(Boolean).join(' | ');
+      const p = byProd[k] ||= { Produk: k, Qty: 0, Omzet: 0 };
+      p.Qty += i.qty; p.Omzet += i.price * i.qty;
+    });
+  });
+  const days = Object.values(byDay).sort((a, b) => a.Tanggal.localeCompare(b.Tanggal));
+  const prods = Object.values(byProd).sort((a, b) => b.Omzet - a.Omzet);
+  const sum = k => days.reduce((t, d) => t + d[k], 0);
+  const detail = list.map(o => ({ No_Pesanan: o.orderCode, Tanggal: fmtDate(orderDate(o)), Status: o.status, Nama: o.customer?.name, Telepon: o.customer?.phone, Omzet_Produk: o.subtotal, Ongkir: o.shipping, Total: o.total, Pengiriman: o.shippingMethod }));
+  reportData = { days, prods, detail, tot: { Jumlah_Pesanan: list.length, Omzet_Produk: sum('Omzet_Produk'), Ongkir: sum('Ongkir'), Total: sum('Total') } };
+  const table = (head, rows) => `<div class="overflow-x-auto"><table class="w-full text-xs"><thead><tr class="text-left border-b">${head.map(h => `<th class="py-1 pr-3">${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr class="border-b">${r.map(c => `<td class="py-1 pr-3">${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  $('report-result').innerHTML = `
+    <div class="grid grid-cols-2 gap-3 text-xs">
+      ${[['Jumlah Pesanan', list.length], ['Omzet Produk', rp(reportData.tot.Omzet_Produk)], ['Ongkir', rp(reportData.tot.Ongkir)], ['Total Diterima', rp(reportData.tot.Total)]].map(([l, v]) => `<div class="bg-white border rounded-xl p-3 shadow-sm"><p class="text-gray-500">${l}</p><p class="text-base font-extrabold text-emerald-700">${v}</p></div>`).join('')}
+    </div>
+    <section class="bg-white border rounded-xl p-4 shadow-sm"><h3 class="font-bold text-sm mb-2">Per Hari</h3>${days.length ? table(['Tanggal', 'Pesanan', 'Produk', 'Ongkir', 'Total'], days.map(d => [d.Tanggal, d.Jumlah_Pesanan, rp(d.Omzet_Produk), rp(d.Ongkir), rp(d.Total)])) : '<p class="text-xs text-gray-400">Tidak ada data pada rentang ini.</p>'}</section>
+    <section class="bg-white border rounded-xl p-4 shadow-sm"><h3 class="font-bold text-sm mb-2">Per Produk</h3>${prods.length ? table(['Produk', 'Qty', 'Omzet'], prods.map(p => [esc(p.Produk), p.Qty, rp(p.Omzet)])) : '<p class="text-xs text-gray-400">Tidak ada data.</p>'}</section>`;
+};
 
-            const excelData = productsData.map(p => ({
-                ID: p.id,
-                Nama: p.name || '',
-                Harga: p.price || 0,
-                Satuan: p.unit || '',
-                Kategori: p.category || '',
-                Tipe: p.type || 'ready',
-                Deskripsi: p.description || '',
-                URL_Gambar: p.imageUrl || '',
-                Status_Habis: p.isOutOfStock ? 'YA' : 'TIDAK'
-            }));
-
-            const worksheet = XLSX.utils.json_to_sheet(excelData);
-            const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, "Produk_SayurBest");
-            XLSX.writeFile(workbook, `SayurBest_Products_${new Date().toISOString().slice(0,10)}.xlsx`);
-        };
-
-        window.importFromExcel = function(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = async (e) => {
-                try {
-                    const data = new Uint8Array(e.target.result);
-                    const workbook = XLSX.read(data, { type: 'array' });
-                    const sheetName = workbook.SheetNames[0];
-                    const jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
-
-                    if (jsonData.length === 0) return alert("File Excel kosong!");
-
-                    if (!confirm(`Apakah Anda yakin ingin memperbarui/mengunggah ${jsonData.length} produk masal secara langsung?`)) return;
-
-                    const batch = writeBatch(db);
-                    jsonData.forEach(item => {
-                        const payload = {
-                            name: String(item.Nama || '').trim(),
-                            price: Number(item.Harga || 0),
-                            unit: String(item.Satuan || '').trim(),
-                            category: String(item.Kategori || 'Sayuran').trim(),
-                            type: String(item.Tipe || 'ready').trim().toLowerCase(),
-                            description: String(item.Deskripsi || '').trim(),
-                            imageUrl: String(item.URL_Gambar || '').trim(),
-                            isOutOfStock: String(item.Status_Habis || '').toUpperCase() === 'YA'
-                        };
-
-                        if (item.ID && String(item.ID).trim() !== '') {
-                            batch.update(doc(db, "products", String(item.ID).trim()), payload);
-                        } else {
-                            const newRef = doc(productsCol);
-                            batch.set(newRef, payload);
-                        }
-                    });
-
-                    await batch.commit();
-                    showToast("Berhasil memproses perubahan masal!");
-                    await loadAdminProducts();
-                } catch (err) {
-                    alert("Gagal mengimpor Excel: " + err.message);
-                } finally {
-                    event.target.value = '';
-                }
-            };
-            reader.readAsArrayBuffer(file);
-        };
-
-        loadAdminProducts();
-    </script>
+window.exportReport = () => {
+  if (!reportData) return alert('Tampilkan laporan terlebih dahulu.');
+  const wb = XLSX.utils.book_new();
+  const days = [...reportData.days, { Tanggal: 'TOTAL', ...reportData.tot }];
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(days), 'Per_Hari');
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(reportData.prods), 'Per_Produk');
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(reportData.detail), 'Detail_Pesanan');
+  download(wb, `SayurBest_Laporan_${$('rep-from').value}_sd_${$('rep-to').value}`);
+};
+</script>
 </body>
 </html>
